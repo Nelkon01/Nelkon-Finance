@@ -24,10 +24,70 @@ class Month(db.Model):
         # __repr__ method for Month class to return a string representation of the object
         return f"Month('{self.month_name}')"
     
-
+MONTH_ID = 'month.month_id'
+USER_ID = 'users.id'
 class BudgetedIncome(db.Model):
     # schema for budgeted income table
     income_id = db.Column(db.Integer, primary_key=True)
     income_name = db.Column(db.String(20), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    month_id = db.Column(db.Integer, db.ForeignKey('month.month_id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(USER_ID), nullable=False)
+    month_id = db.Column(db.Integer, db.ForeignKey(MONTH_ID), nullable=False)
+    budget_amount = db.Column(db.Float, nullable=False)
+    
+    def __repr__(self):
+        # __repr__ method for BudgetedIncome class to return a string representation of the object
+        return f"BudgetedIncome('{self.income_name}', '{self.user_id}', '{self.month_id}', '{self.budget_amount}')"
+    
+
+
+class ActualIncome(db.Model):
+    # schema for actual income table
+    income_id = db.Column(db.Integer, primary_key=True)
+    income_name = db.Column(db.String(20), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(USER_ID), nullable=False)
+    month_id = db.Column(db.Integer, db.ForeignKey(MONTH_ID), nullable=False)
+    actual_amount = db.Column(db.Float, nullable=False)
+    
+    def __repr__(self):
+        # __repr__ method for ActualIncome class to return a string representation of the object
+        return f"ActualIncome('{self.income_name}', '{self.user_id}', '{self.month_id}', '{self.actual_amount}')"
+    
+    
+
+class BudgetedExpenses(db.Model):
+    # schema for budgeted expenses table
+    expense_id = db.Column(db.Integer, primary_key=True)
+    expense_name = db.Column(db.String(20), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(USER_ID), nullable=False)
+    month_id = db.Column(db.Integer, db.ForeignKey(MONTH_ID), nullable=False)
+    budget_amount = db.Column(db.Float, nullable=False)
+    
+    def __repr__(self):
+        # __repr__ method for BudgetedExpenses class to return a string representation of the object
+        return f"BudgetedExpenses('{self.expense_name}', '{self.user_id}', '{self.month_id}', '{self.budget_amount}')"
+    
+
+class ActualExpenses(db.Model):
+    # schema for actual expenses table
+    expense_id = db.Column(db.Integer, primary_key=True)
+    expense_name = db.Column(db.String(20), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(USER_ID), nullable=False)
+    month_id = db.Column(db.Integer, db.ForeignKey(MONTH_ID), nullable=False)
+    actual_amount = db.Column(db.Float, nullable=False)
+    
+    def __repr__(self):
+        # __repr__ method for ActualExpenses class to return a string representation of the object
+        return f"ActualExpenses('{self.expense_name}', '{self.user_id}', '{self.month_id}', '{self.actual_amount}')"
+    
+
+class Category(db.Model):
+    # schema for catgory table
+    id = db.Column(db.Integer, primary_key=True)
+    category_name = db.Column(db.String(20), nullable=False, unique=True)
+    expenses = db.relationship('ActualExpenses', backref='category', lazy=True)
+    
+    def __repr__(self):
+        # __repr__ method for Category class to return a string representation of the object
+        return f"Category('{self.category_name}')"
+    
+    
