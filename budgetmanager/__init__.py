@@ -1,6 +1,6 @@
 import os  # Module that enables interaction with operating system
 from flask import Flask  # Framework to build python webapps
-from flask_sqlalchemy import SQLAlchemy  # library that allows pytHon work with db
+from flask_sqlalchemy import SQLAlchemy  # ORM to interact with database
 
 # check if env.py exists which would store environment variables like
 # db credentials
