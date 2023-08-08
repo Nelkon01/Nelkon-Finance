@@ -1,11 +1,75 @@
 {% extends "base.html" %}
 {% block content %}
-
+<!--Jumbotron-->
 <div class="row">
-        <div class=" text-center">
-            <h1>Welcome to your Budget App</h1>
+    <div class="mt-4 p-5 rounded bg-success text-center">
+        <h1 class="text-light">Welcome to your Budget App</h1>
+    </div>
+</div>
+
+<!--Div to display figures -->
+<div class="row my-5">
+    <div class="col-md-6 mb-4">
+        <div class="card text-center">
+            <div class="card-header">
+                Budget Income
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Monthly Budgeted Income</h5>
+                <p class="card-text">Provide context and details about the budgeted income.</p>
+                <a href="#" class="btn btn-primary">Learn More</a>
+            </div>
+            <div class="card-footer text-muted">
+                Posted 2 days ago
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card text-center">
+            <div class="card-header">
+                Actual Income
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Actual Monthly Income</h5>
+                <p class="card-text">Share insights and information about the actual income.</p>
+                <a href="#" class="btn btn-primary">Explore</a>
+            </div>
+            <div class="card-footer text-muted">
+                Posted 2 days ago
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card text-center">
+            <div class="card-header">
+                Budget Expense
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Budget Monthly Expense</h5>
+                <p class="card-text">Share insights and information about the actual income.</p>
+                <a href="#" class="btn btn-primary">Explore</a>
+            </div>
+            <div class="card-footer text-muted">
+                Posted 2 days ago
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card text-center">
+            <div class="card-header">
+                Actual Expense
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Actual Monthly Expense</h5>
+                <p class="card-text">Share insights and information about the actual income.</p>
+                <a href="#" class="btn btn-primary">Explore</a>
+            </div>
+            <div class="card-footer text-muted">
+                Posted 2 days ago
+            </div>
         </div>
     </div>
 </div>
+
 
 {% endblock %}
