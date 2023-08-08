@@ -58,14 +58,14 @@ class ActualIncome(db.Model):
 class BudgetedExpenses(db.Model):
     # schema for budgeted expenses table
     expense_id = db.Column(db.Integer, primary_key=True)
-    expense_name = db.Column(db.String(20), nullable=False)
+    category_name = db.Column(db.String(20), db.ForeignKey('category.category_name'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(USER_ID), nullable=False)
     month_id = db.Column(db.Integer, db.ForeignKey(MONTH_ID), nullable=False)
     budget_amount = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
         # __repr__ method for BudgetedExpenses class to return a string representation of the object
-        return f"BudgetedExpenses('{self.expense_name}', '{self.user_id}', '{self.month_id}', '{self.budget_amount}')"
+        return f"BudgetedExpenses('{self.category_name}', '{self.user_id}', '{self.month_id}', '{self.budget_amount}')"
 
 
 class ActualExpenses(db.Model):
@@ -74,18 +74,19 @@ class ActualExpenses(db.Model):
     expense_name = db.Column(db.String(20), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(USER_ID), nullable=False)
     month_id = db.Column(db.Integer, db.ForeignKey(MONTH_ID), nullable=False)
+    category_name = db.Column(db.String(20), nullable=False)
     actual_amount = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
         # __repr__ method for ActualExpenses class to return a string representation of the object
-        return f"ActualExpenses('{self.expense_name}', '{self.user_id}', '{self.month_id}', '{self.actual_amount}')"
+        return (f"ActualExpenses('{self.expense_name}', '{self.user_id}', '{self.month_id}', '{self.category_name}',"
+                f" '{self.actual_amount}')")
 
 
 class Category(db.Model):
     # schema for category table
     id = db.Column(db.Integer, primary_key=True)
     category_name = db.Column(db.String(20), nullable=False, unique=True)
-    expenses = db.relationship('ActualExpenses', backref='category', lazy=True)
 
     def __repr__(self):
         # __repr__ method for Category class to return a string representation of the object

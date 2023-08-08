@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a975cf4b-401b-4198-be0e-d9ecc04d5416" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/budgetmanager/templates/add_budget_expense.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/budgetmanager/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/budgetmanager/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/budgetmanager/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/budgetmanager/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
