@@ -12,7 +12,7 @@ class Users(db.Model):
 
     def __repr__(self):
         # __repr__ method for Users class to return a string representation of the object
-        return f"User('{self.username}', '{self.firstname}', '{self.lastname}', '{self.email}')"
+        return f"#:{self.id} -  Username: {self.username} - Firstname: {self.firstname} - Lastname: {self.lastname} - Password: {self.password} - Email: {self.email}"
 
 
 class Month(db.Model):
@@ -58,7 +58,8 @@ class ActualIncome(db.Model):
 class BudgetedExpenses(db.Model):
     # schema for budgeted expenses table
     expense_id = db.Column(db.Integer, primary_key=True)
-    category_name = db.Column(db.String(20), db.ForeignKey('category.category_name'), nullable=False)
+    category_name = db.Column(db.String(20), db.ForeignKey(
+        'category.category_name'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(USER_ID), nullable=False)
     month_id = db.Column(db.Integer, db.ForeignKey(MONTH_ID), nullable=False)
     budget_amount = db.Column(db.Float, nullable=False)
