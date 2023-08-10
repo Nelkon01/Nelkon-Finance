@@ -71,16 +71,33 @@
                 <div class="modal-body">
                     <form method="POST" action="url_for{{ url_for('add_budget_expense') }}">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="selectMonth"
-                                   placeholder="Month">
-                            <label for="selectMonth">Month</label>
+                            <label for="month_name"></label>
+                            <select name="month_name" id="month_name" class="form-control">
+                                <option value="" disabled selected>Select Month</option>
+                                <option value="January">January</option>
+                                <option value="February">February</option>
+                                <option value="March">March</option>
+                                <option value="April">April</option>
+                                <option value="May">May</option>
+                                <option value="June">June</option>
+                                <option value="July">July</option>
+                                <option value="August">August</option>
+                                <option value="September">September</option>
+                                <option value="October">October</option>
+                                <option value="November">November</option>
+                                <option value="December">December</option>
+                            </select>
                         </div>
                         <div class="form-floating mb-3">
-                            <label for="category_name">Category</label>
                             <select name="category_name" id="category_name" class="form-control">
-                                {% for category in categories %}
-                                <option value="{{ category.id }}">{{ category.category_name }}</option>
-                                {% endfor %}
+                                <option value="" disabled selected>Select Spending Category</option>
+                                <option value="shopping">Shopping</option>
+                                <option value="groceries">Groceries</option>
+                                <option value="eating-out">Eating Out</option>
+                                <option value="transport">Transport</option>
+                                <option value="bills">Bills</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="miscellaneous">Miscellaneous</option>
                             </select>
                         </div>
                         <div class="form-floating mb-3">
