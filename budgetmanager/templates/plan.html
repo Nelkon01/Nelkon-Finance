@@ -3,7 +3,7 @@
 <!--Jumbotron-->
 <div class="row">
     <div class="mt-4 p-5 rounded bg-success text-center">
-        <h1 class="text-light">Welcome to your Budget App</h1>
+        <h1 class="text-light">Welcome to your Budget App {{ usr }}</h1>
     </div>
 </div>
 
@@ -71,7 +71,7 @@
                 <div class="modal-body">
                     <form method="POST" action="url_for{{ url_for('add_budget_expense') }}">
                         <div class="form-floating mb-3">
-                            <input type="input" class="form-control" id="selectMonth"
+                            <input type="text" class="form-control" id="selectMonth"
                                    placeholder="Month">
                             <label for="selectMonth">Month</label>
                         </div>
