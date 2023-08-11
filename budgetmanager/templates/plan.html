@@ -41,7 +41,7 @@
                 </div>
                 <div class="modal-body">
                     <!--                    budget form-->
-                    <form method="POST" action="url_for{{ url_for('add_budget_income') }}">
+                    <form action="{{url_for('add_budget_income')}}" method="POST" >
 
                         <!--                        Select Month -->
                         <div class="form-floating mb-3">
@@ -73,14 +73,14 @@
                                    placeholder="Month" name="budget_amount">
                             <label for="budget_income_amount">Amount</label>
                         </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">
+                                Add Income
+                                <i class="fas fa-plus-square end"></i>
+                            </button>
+                        </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">
-                        Add Income
-                        <i class="fas fa-plus-square end"></i>
-                    </button>
                 </div>
             </div>
         </div>
@@ -118,7 +118,7 @@
                 <div class="modal-body">
 
                     <!--                Form-->
-                    <form method="POST" action="url_for{{ url_for('add_actual_income') }}">
+                    <form method="POST" action="{{ url_for('add_actual_income') }}">
 
                         <!--                     Date-->
                         <div class="form-floating mb-3">
@@ -138,14 +138,14 @@
                                    placeholder="Month" name="actual_amount">
                             <label for="actual_exp_amount">Amount</label>
                         </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button class="btn btn-primary" type="submit">
+                                Add Income
+                                <i class="fas fa-plus-square end"></i>
+                            </button>
+                        </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" type="submit">
-                        Add Income
-                        <i class="fas fa-plus-square end"></i>
-                    </button>
                 </div>
             </div>
         </div>
@@ -182,7 +182,7 @@
                 </div>
                 <div class="modal-body">
                     <!--                    budget form-->
-                    <form method="POST" action="url_for{{ url_for('add_budget_expense') }}">
+                    <form method="POST" action="{{ url_for('add_budget_expense') }}">
 
                         <!--                        Select Month -->
                         <div class="form-floating mb-3">
@@ -222,13 +222,13 @@
                             <label for="budget_amount">Amount</label>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" type="submit">
-                        Add Expense
-                        <i class="fas fa-plus-square end"></i>
-                    </button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit">
+                            Add Expense
+                            <i class="fas fa-plus-square end"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -266,7 +266,7 @@
             <div class="modal-body">
 
                 <!--                Form-->
-                <form method="POST" action="url_for{{ url_for('add_actual_expense') }}">
+                <form method="POST" action="{{ url_for('add_actual_expense') }}">
 
                     <!--                     Date-->
                     <div class="form-floating mb-3">
@@ -302,13 +302,13 @@
                         <label for="actual_exp_amount">Amount</label>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button class="btn btn-primary" type="submit">
-                    Add Expense
-                    <i class="fas fa-plus-square end"></i>
-                </button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" type="submit">
+                        Add Expense
+                        <i class="fas fa-plus-square end"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
