@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-<!--Jumbotron-->
+
+<!--Jumbo-tron-->
 <div class="row">
     <div class="mt-4 p-5 rounded bg-success text-center">
         <h1 class="text-light">Welcome to your Budget App {{ usr }}</h1>
@@ -76,8 +77,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" type="submit"
-                            href="{{ url_for('add_budget_income')}}">
+                    <button type="submit" class="btn btn-primary">
                         Add Income
                         <i class="fas fa-plus-square end"></i>
                     </button>
@@ -142,8 +142,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" type="submit"
-                            href="{{ url_for('add_actual_income')}}">
+                    <button class="btn btn-primary" type="submit">
                         Add Income
                         <i class="fas fa-plus-square end"></i>
                     </button>
@@ -226,8 +225,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" type="submit"
-                            href="{{ url_for('add_budget_expense')}}">
+                    <button class="btn btn-primary" type="submit">
                         Add Expense
                         <i class="fas fa-plus-square end"></i>
                     </button>
@@ -307,8 +305,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" type="submit"
-                        href="{{ url_for('add_actual_expense')}}">
+                <button class="btn btn-primary" type="submit">
                     Add Expense
                     <i class="fas fa-plus-square end"></i>
                 </button>
