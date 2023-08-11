@@ -8,24 +8,85 @@
 </div>
 
 <!--Div to display figures -->
-
-<!--Budget Income-->
 <div class="row my-5">
+
+    <!--Budget Income-->
     <div class="col-md-6 mb-4">
         <div class="card text-center">
             <div class="card-header">
                 Budget Income
             </div>
             <div class="card-body">
-                <h5 class="card-title">Monthly Budgeted Income</h5>
-                <p class="card-text">Provide context and details about the budgeted income.</p>
-                <a href="#" class="btn btn-primary">Learn More</a>
+                <h5 class="card-title">Budget Monthly Income</h5>
+                <p class="card-text">Share insights and information about your income budget for the month.</p>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#budgetIncomeModal">
+                    Add Budget Income
+                </button>
             </div>
             <div class="card-footer text-muted">
                 Posted 2 days ago
             </div>
         </div>
     </div>
+    <!--    Modal for Budget Income form-->
+    <div class="modal fade" id="budgetIncomeModal" tabindex="-1" aria-labelledby="budgetIncomeModal"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="budgetIncomeModalLabel">Add Budget Income</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!--                    budget form-->
+                    <form method="POST" action="url_for{{ url_for('add_budget_income') }}">
+
+                        <!--                        Select Month -->
+                        <div class="form-floating mb-3">
+                            <select name="month_name" id="budget_income_month" class="form-control">
+                                <option value="" disabled selected>Select Month</option>
+                                <option value="January">January</option>
+                                <option value="February">February</option>
+                                <option value="March">March</option>
+                                <option value="April">April</option>
+                                <option value="May">May</option>
+                                <option value="June">June</option>
+                                <option value="July">July</option>
+                                <option value="August">August</option>
+                                <option value="September">September</option>
+                                <option value="October">October</option>
+                                <option value="November">November</option>
+                                <option value="December">December</option>
+                            </select>
+                        </div>
+                        <!--                        Income Name-->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="income_name" id="budget_income_name"
+                                   placeholder="Income Name">
+                            <label for="expense_name">Income Name</label>
+                        </div>
+                        <!--                        Amount-->
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="budget_income_amount"
+                                   placeholder="Month" name="budget_amount">
+                            <label for="budget_income_amount">Amount</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" type="submit"
+                            href="{{ url_for('add_budget_income')}}">
+                        Add Income
+                        <i class="fas fa-plus-square end"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--    Actual Income Card -->
     <div class="col-md-6 mb-4">
         <div class="card text-center">
             <div class="card-header">
@@ -33,14 +94,64 @@
             </div>
             <div class="card-body">
                 <h5 class="card-title">Actual Monthly Income</h5>
-                <p class="card-text">Share insights and information about the actual income.</p>
-                <a href="#" class="btn btn-primary">Explore</a>
+                <p class="card-text">Share insights and information about your actual income for the month.</p>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#actualIncomeModal">
+                    Add Actual Income
+                </button>
             </div>
             <div class="card-footer text-muted">
                 Posted 2 days ago
             </div>
         </div>
     </div>
+
+    <!--    Modal for Actual income form-->
+    <div class="modal fade" id="actualIncomeModal" tabindex="-1" aria-labelledby="actualIncomeModal"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="actualIncomeModalLabel">Add Actual Income</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <!--                Form-->
+                    <form method="POST" action="url_for{{ url_for('add_actual_income') }}">
+
+                        <!--                     Date-->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control datepicker" id="date" name="date" placeholder="date">
+                            <label for="date">Date <span><i class="fa fa-calendar"></i></span></label>
+                        </div>
+
+                        <!--                    Income name input-->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="income_name" id="income_name"
+                                   placeholder="Income Name">
+                            <label for="expense_name">Income Name</label>
+                        </div>
+                        <!--                    Amount -->
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="actual_income_amount"
+                                   placeholder="Month" name="actual_amount">
+                            <label for="actual_exp_amount">Amount</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" type="submit"
+                            href="{{ url_for('add_actual_income')}}">
+                        Add Income
+                        <i class="fas fa-plus-square end"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!--    Budget Expense Card-->
     <div class="col-md-6 mb-4">
@@ -71,7 +182,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <!--                    budget form-->
                     <form method="POST" action="url_for{{ url_for('add_budget_expense') }}">
+
+                        <!--                        Select Month -->
                         <div class="form-floating mb-3">
                             <select name="month_name" id="month_name" class="form-control">
                                 <option value="" disabled selected>Select Month</option>
@@ -89,6 +203,7 @@
                                 <option value="December">December</option>
                             </select>
                         </div>
+                        <!--                        Select Category-->
                         <div class="form-floating mb-3">
                             <select name="category_name" id="category_name" class="form-control">
                                 <option value="" disabled selected>Select Spending Category</option>
@@ -101,6 +216,7 @@
                                 <option value="miscellaneous">Miscellaneous</option>
                             </select>
                         </div>
+                        <!--                        Amount-->
                         <div class="form-floating mb-3">
                             <input type="number" class="form-control" id="budget_amount"
                                    placeholder="Month" name="budget_amount">
@@ -157,7 +273,7 @@
                     <!--                     Date-->
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="datepicker" name="date" placeholder="date">
-                        <label for="datepicker">Date <span><i class="fa fa-calendar"></span></i></label>
+                        <label for="datepicker">Date <span><i class="fa fa-calendar"></i></span></label>
                     </div>
 
                     <!--                    Expense name input-->
