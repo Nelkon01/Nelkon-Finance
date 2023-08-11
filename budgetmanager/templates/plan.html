@@ -52,7 +52,6 @@
                 <h5 class="card-title">Budget Monthly Expense</h5>
                 <p class="card-text">Share insights and information about your budget Expenses for the month.</p>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        onclick="triggerModalAndInsertCategories('{{ url_for('categories') }}')"
                         data-bs-target="#budgetExpenseModal">
                     Add Budget Expenses
                 </button>
@@ -74,7 +73,7 @@
                 <div class="modal-body">
                     <form method="POST" action="url_for{{ url_for('add_budget_expense') }}">
                         <div class="form-floating mb-3">
-                             <select name="month_name" id="month_name" class="form-control">
+                            <select name="month_name" id="month_name" class="form-control">
                                 <option value="" disabled selected>Select Month</option>
                                 <option value="January">January</option>
                                 <option value="February">February</option>
@@ -129,11 +128,74 @@
             </div>
             <div class="card-body">
                 <h5 class="card-title">Actual Monthly Expense</h5>
-                <p class="card-text">Share insights and information about the actual income.</p>
-                <a href="#" class="btn btn-primary">Explore</a>
+                <p class="card-text">Share insights and information about your actual expenses for the month.</p>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#actualExpenseModal">
+                    Add Actual Expenses
+                </button>
             </div>
             <div class="card-footer text-muted">
                 Posted 2 days ago
+            </div>
+        </div>
+    </div>
+</div>
+<!--    Modal for Actual Expenses form-->
+<div class="modal fade" id="actualExpenseModal" tabindex="-1" aria-labelledby="actualExpenseModal"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="actualExpenseModalLabel">Add Expenses</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <!--                Form-->
+                <form method="POST" action="url_for{{ url_for('add_actual_expense') }}">
+
+                    <!--                     Date-->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="datepicker" name="date" placeholder="date">
+                        <label for="datepicker">Date <span><i class="fa fa-calendar"></span></i></label>
+                    </div>
+
+                    <!--                    Expense name input-->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="expense_name" id="expense_name"
+                               placeholder="Expense Name">
+                        <label for="expense_name">Expense Name</label>
+                    </div>
+
+                    <!--                    Categories -->
+                    <div class="form-floating mb-3">
+                        <select name="category_name" id="actual_exp_category_name" class="form-control">
+                            <option value="" disabled selected>Select Spending Category</option>
+                            <option value="shopping">Shopping</option>
+                            <option value="groceries">Groceries</option>
+                            <option value="eating-out">Eating Out</option>
+                            <option value="transport">Transport</option>
+                            <option value="bills">Bills</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="miscellaneous">Miscellaneous</option>
+                        </select>
+                    </div>
+
+                    <!--                    Amount -->
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="actual_exp_amount"
+                               placeholder="Month" name="actual_amount">
+                        <label for="actual_exp_amount">Amount</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" type="submit"
+                        href="{{ url_for('add_actual_expense')}}">
+                    Add Expense
+                    <i class="fas fa-plus-square end"></i>
+                </button>
             </div>
         </div>
     </div>
