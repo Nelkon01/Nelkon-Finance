@@ -11,8 +11,8 @@ class Users(db.Model):
     email = db.Column(db.String(50), nullable=False, unique=True)
     budgeted_incomes = db.relationship("BudgetedIncome", backref="user", cascade="all, delete", lazy=True)
     actual_incomes = db.relationship("ActualIncome", backref="user", cascade="all, delete", lazy=True)
-    budgeted_expenses = db.relationship("BudgetedIncome", backref="user", cascade="all, delete", lazy=True)
-    actual_expenses = db.relationship("ActualIncome", backref="user", cascade="all, delete", lazy=True)
+    budgeted_expenses = db.relationship("BudgetedExpenses", backref="user", cascade="all, delete", lazy=True)
+    actual_expenses = db.relationship("ActualExpenses", backref="user", cascade="all, delete", lazy=True)
 
     def __repr__(self):
         # __repr__ method for Users class to return a string representation of the object
@@ -72,5 +72,5 @@ class ActualExpenses(db.Model):
 
     def __repr__(self):
         # __repr__ method for ActualExpenses class to return a string representation of the object
-        return (f"ActualExpenses('{self.expense_name}', '{self.user_id}', '{self.month_name}', '{self.category_name}',"
+        return (f"ActualExpenses('{self.expense_name}', '{self.user_id}', '{self.date}', '{self.category_name}',"
                 f" '{self.actual_amount}')")
