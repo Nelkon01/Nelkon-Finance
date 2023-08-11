@@ -54,6 +54,24 @@ def add_budget_expense():
     return redirect(url_for('home'))
 
 
+@app.route('/add_budget_income', methods=['POST', 'GET'])
+def add_budget_income():
+    #     collect form data from add_budget_expense form
+    month_name = request.form.get('month_name')
+    income_name = request.form.get('income_name')
+    budget_amount = request.form.get('budget_amount')
+
+    budgeted_income = BudgetedExpenses(
+        income_name=income_name,
+        user_id=user.user_id,
+        month_name=month_name,
+        budget_amount=budget_amount
+    )
+    db.session.add(budgeted_income)
+    db.session.commit()
+    return redirect(url_for('home'))
+
+
 @app.route('/add_actual_expense', methods=['POST', 'GET'])
 def add_actual_expense():
     #     collect form data from add_actual_expense form
@@ -70,5 +88,23 @@ def add_actual_expense():
         expense_name=expense_name
     )
     db.session.add(actual_expense)
+    db.session.commit()
+    return redirect(url_for('home'))
+
+
+@app.route('/add_actual_income', methods=['POST', 'GET'])
+def add_actual_income():
+    #     collect form data from add_actual_expense form
+    date = request.form.get('date')
+    income_name = request.form.get('income_name')
+    actual_amount = request.form.get('actual_amount')
+
+    actual_income = ActualIncome(
+        income_name=income_name,
+        user_id=user.user_id,
+        date=date,
+        actual_amount=actual_amount,
+    )
+    db.session.add(actual_income)
     db.session.commit()
     return redirect(url_for('home'))

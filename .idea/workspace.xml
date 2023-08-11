@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a975cf4b-401b-4198-be0e-d9ecc04d5416" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/budgetmanager/templates/add_budget_expense.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/budgetmanager/templates/signup.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/budgetmanager/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/budgetmanager/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/budgetmanager/static/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/static/js/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/budgetmanager/templates/add_budget_expense.html" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/templates/add_budget_expense.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/budgetmanager/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/templates/plan.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,11 +36,14 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/nelkon/Desktop/Projects /nelkon_finance",
+    "last_opened_file_path": "/Users/nelkon/Desktop/Projects /nelkon_finance/budgetmanager/templates",
     "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/budgetmanager/templates" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/budgetmanager/static/images" />
       <recent name="$PROJECT_DIR$/budgetmanager/static" />
@@ -81,5 +87,16 @@
       <updated>1691356307910</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
