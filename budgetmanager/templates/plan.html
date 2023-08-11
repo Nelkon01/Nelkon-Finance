@@ -8,6 +8,8 @@
 </div>
 
 <!--Div to display figures -->
+
+<!--Budget Income-->
 <div class="row my-5">
     <div class="col-md-6 mb-4">
         <div class="card text-center">
@@ -39,6 +41,7 @@
             </div>
         </div>
     </div>
+
     <!--    Budget Expense Card-->
     <div class="col-md-6 mb-4">
         <div class="card text-center">
@@ -71,8 +74,7 @@
                 <div class="modal-body">
                     <form method="POST" action="url_for{{ url_for('add_budget_expense') }}">
                         <div class="form-floating mb-3">
-                            <label for="month_name"></label>
-                            <select name="month_name" id="month_name" class="form-control">
+                             <select name="month_name" id="month_name" class="form-control">
                                 <option value="" disabled selected>Select Month</option>
                                 <option value="January">January</option>
                                 <option value="February">February</option>
