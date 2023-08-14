@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a975cf4b-401b-4198-be0e-d9ecc04d5416" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/budgetmanager/templates/signup.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/budgetmanager/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/budgetmanager/static/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/static/js/script.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/budgetmanager/templates/add_budget_expense.html" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/templates/add_budget_expense.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/budgetmanager/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/templates/plan.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/budgetmanager/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,15 +27,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/nelkon/Desktop/Projects /nelkon_finance/budgetmanager/templates",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/nelkon/Desktop/Projects /nelkon_finance/budgetmanager/templates&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/budgetmanager/templates" />

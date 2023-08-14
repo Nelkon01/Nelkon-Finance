@@ -1,4 +1,7 @@
-from flask import render_template, request, redirect, url_for, session
+from flask import render_template, request, redirect, url_for, session, flash
+from flask_login import login_user
+from werkzeug.security import check_password_hash
+
 from budgetmanager import app, db
 from budgetmanager.models import Users, BudgetedIncome, ActualIncome, BudgetedExpenses, ActualExpenses
 
@@ -6,6 +9,23 @@ from budgetmanager.models import Users, BudgetedIncome, ActualIncome, BudgetedEx
 @app.route('/')
 def home():
     return render_template('plan.html')
+
+
+@app.route('/login', mmethods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        user = Users.query.filter_by(username=username).first()
+        if user and check_password_hash(user.password, password):
+            login_user(user)  # Login the user in
+            flash('Logged in successfully!', 'success')
+            return redirect(url_for('home'))
+        else:
+            flash('Invalid username or password', 'error')
+
+    return render_template('login.html')
 
 
 @app.route('/signup', methods=['GET', 'POST'])
