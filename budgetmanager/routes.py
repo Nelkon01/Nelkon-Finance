@@ -11,7 +11,7 @@ def home():
     return render_template('plan.html')
 
 
-@app.route('/login', mmethods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form.get('username')
