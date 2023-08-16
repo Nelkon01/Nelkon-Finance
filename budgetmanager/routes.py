@@ -8,7 +8,7 @@ from budgetmanager.models import Users, BudgetedIncome, ActualIncome, BudgetedEx
 
 @app.route('/')
 def home():
-    if "user" in session:
+    if "user_id" in session:
         user_id = session["user_id"]
         curr_user = Users.query.get(user_id)
         return render_template('plan.html', user=curr_user)
@@ -76,15 +76,6 @@ def login():
     return render_template('login.html')
 
 
-@app.route("/user")
-def user():
-    if "users" in session:
-        users = session.get("users.username")
-        return f"{users}"
-    else:
-        return render_template("signup.html")
-
-
 @app.route('/add_budget_expense', methods=['POST', 'GET'])
 def add_budget_expense():
     if not current_user.is_authenticated:
@@ -109,13 +100,16 @@ def add_budget_expense():
 @app.route('/add_budget_income', methods=['POST', 'GET'])
 def add_budget_income():
     #     collect form data from add_budget_expense form
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+
     month_name = request.form.get('month_name')
     income_name = request.form.get('income_name')
     budget_amount = request.form.get('budget_amount')
 
-    budgeted_income = BudgetedExpenses(
+    budgeted_income = BudgetedIncome(
         income_name=income_name,
-        user_id=user.user_id,
+        user_id=current_user.id,
         month_name=month_name,
         budget_amount=budget_amount
     )
@@ -126,6 +120,8 @@ def add_budget_income():
 
 @app.route('/add_actual_expense', methods=['POST', 'GET'])
 def add_actual_expense():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     #     collect form data from add_actual_expense form
     date = request.form.get('date')
     expense_name = request.form.get('expense_name')
@@ -134,7 +130,7 @@ def add_actual_expense():
 
     actual_expense = ActualExpenses(
         category_name=category_name,
-        user_id=user.user_id,
+        user_id=current_user.id,
         date=date,
         actual_amount=actual_amount,
         expense_name=expense_name
@@ -146,6 +142,8 @@ def add_actual_expense():
 
 @app.route('/add_actual_income', methods=['POST', 'GET'])
 def add_actual_income():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     #     collect form data from add_actual_expense form
     date = request.form.get('date')
     income_name = request.form.get('income_name')
@@ -153,7 +151,7 @@ def add_actual_income():
 
     actual_income = ActualIncome(
         income_name=income_name,
-        user_id=user.user_id,
+        user_id=current_user.id,
         date=date,
         actual_amount=actual_amount,
     )

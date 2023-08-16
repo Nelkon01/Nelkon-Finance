@@ -4,6 +4,12 @@
     <div class="container-fluid pt-5">
         <h2>Login</h2>
         <div class="card">
+            <div class="alert alert-danger">
+                {{ get_flashed_messages(category_filter=['error']) | join }}
+            </div>
+            <div class="alert alert-success">
+                {{ get_flashed_messages(category_filter=['success']) | join }}
+            </div>
             <form action="{{ url_for('login') }}" method="POST">
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="username" name="username"
@@ -12,7 +18,7 @@
                 </div>
                 <div class="form-floating mb-3">
                     <input type="password" class="form-control" id="password" name="password"
-                           placeholder="Please Enter First Name">
+                           placeholder="Please enter password">
                     <label for="password">Password</label>
                 </div>
                 <div class="card-footer">
@@ -39,8 +45,20 @@
                     </div>
                     <div class="modal-body">
 
+
                         <!--Form-->
                         <div class="card">
+
+                            {#                        Flash Message #}
+                            {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ message[0] }}. Go to <a href="{{ url_for('login') }}" class="alert-link">Login</a>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
                             <form action="{{ url_for('signup') }}" method="POST">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="username" name="username"
@@ -65,7 +83,7 @@
                                 <div class="form-floating mb-3">
                                     <input type="email" class="form-control" id="email" name="email"
                                            placeholder="Please enter your email">
-                                    <label for="email">email</label>
+                                    <label for="email">mail</label>
                                 </div>
                                 <div class="card-footer">
                                     <button class="btn btn-primary" type="submit">

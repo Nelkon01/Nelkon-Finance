@@ -1,4 +1,6 @@
 import os  # Module that enables interaction with operating system
+from datetime import timedelta
+
 from flask import Flask  # Framework to build python webapps
 from flask_sqlalchemy import SQLAlchemy  # ORM to interact with database
 from flask_login import LoginManager  # Import LoginManager
@@ -13,6 +15,7 @@ app = Flask(__name__)
 
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_URL")
+app.permanent_session_lifetime = timedelta(minutes=15)
 
 db = SQLAlchemy(app)
 
