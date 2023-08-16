@@ -1,18 +1,23 @@
 from budgetmanager import db
+from flask_login import UserMixin  # Import UserMixin
 
 
-class Users(db.Model):
+class Users(db.Model, UserMixin):
     # schema for users table
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     firstname = db.Column(db.String(20), nullable=False)
     lastname = db.Column(db.String(20), nullable=False)
-    password = db.Column(db.String(20), nullable=False)
+    password = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)
     budgeted_incomes = db.relationship("BudgetedIncome", backref="user", cascade="all, delete", lazy=True)
     actual_incomes = db.relationship("ActualIncome", backref="user", cascade="all, delete", lazy=True)
     budgeted_expenses = db.relationship("BudgetedExpenses", backref="user", cascade="all, delete", lazy=True)
     actual_expenses = db.relationship("ActualExpenses", backref="user", cascade="all, delete", lazy=True)
+
+    def is_active(self):
+        # is_active method for Users class to return True if user is active
+        return True
 
     def __repr__(self):
         # __repr__ method for Users class to return a string representation of the object
