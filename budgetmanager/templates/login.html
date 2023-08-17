@@ -44,12 +44,10 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-
-
                         <!--Form-->
                         <div class="card">
 
-                            {#                        Flash Message #}
+{#                                                    Flash Message #}
                             {% with messages = get_flashed_messages() %}
                                 {% if messages %}
                                     {% for message in messages %}
@@ -83,7 +81,7 @@
                                 <div class="form-floating mb-3">
                                     <input type="email" class="form-control" id="email" name="email"
                                            placeholder="Please enter your email">
-                                    <label for="email">mail</label>
+                                    <label for="email">Email</label>
                                 </div>
                                 <div class="card-footer">
                                     <button class="btn btn-primary" type="submit">

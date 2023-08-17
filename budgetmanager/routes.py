@@ -1,11 +1,12 @@
 from flask import render_template, request, redirect, url_for, session, flash
-from flask_login import login_user, current_user
+from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from budgetmanager import app, db
 from budgetmanager.models import Users, BudgetedIncome, ActualIncome, BudgetedExpenses, ActualExpenses
 
 
+# Home route
 @app.route('/')
 def home():
     if "user_id" in session:
@@ -16,54 +17,53 @@ def home():
         return redirect(url_for("login"))
 
 
+# Signup route
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == "POST":
-        encrypted_password = generate_password_hash(request.form.get("password"), method="sha256")
-        users = Users(
-            username=request.form.get("username"),
-            firstname=request.form.get("firstname"),
-            lastname=request.form.get("lastname"),
-            password=encrypted_password,
-            email=request.form.get("email")
-        )
-        db.session.add(users)
-        db.session.commit()
-        return redirect(url_for("login"))
+        username = request.form.get("username")
+        firstname = request.form.get("firstname")
+        lastname = request.form.get("lastname")
+        password = request.form.get("password")
+        email = request.form.get("email")
+
+        user_check = Users.query.filter_by(username=username).first()
+        email_check = Users.query.filter_by(email=email).first()
+
+        if user_check:
+            flash('Username already exists', 'error')
+            return redirect(url_for('signup'))
+        elif email_check:
+            flash('Email already exists', 'error')
+            return redirect(url_for('signup'))
+        else:
+            encrypted_password = generate_password_hash(password, method="sha256")
+            new_user = Users(username=username, firstname=firstname, lastname=lastname, password=encrypted_password,
+                             email=email)
+            db.session.add(new_user)
+            db.session.commit()
+            flash('Account created successfully!', 'success')
+            return redirect(url_for('login'))
     else:
-        return render_template("signup.html")
-
-
-@app.route('/signup', methods=['POST'])
-def signup_post():
-    username = request.form.get('username')
-    firstname = request.form.get('firstname')
-    lastname = request.form.get('lastname')
-    password = request.form.get('password')
-    email = request.form.get('email')
-
-    user_check = Users.query.filter_by(username=username).first()
-    email_check = Users.query.filter_by(email=email).first()
-    if user_check:
-        flash('Username already exists', 'error')
-        return redirect(url_for('signup'))
-    elif email_check:
-        flash('Email already exists', 'error')
-        return redirect(url_for('signup'))
-    else:
-        new_user = Users(username=username, firstname=firstname, lastname=lastname, password=password, email=email)
-        db.session.add(new_user)
-        db.session.commit()
-        flash('Account created successfully!', 'success')
         return redirect(url_for('login'))
 
 
+# Login route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if not current_user.is_authenticated:
+        flash('Please log in to access your account', 'error')
+    else:
+        return redirect(url_for('home'))
+
     if request.method == 'POST':
         session.permanent = True
         username = request.form['username']
         password = request.form['password']
+
+        if not username or not password:  # Check for empty fields
+            flash('Please enter both username and password', 'error')
+            return redirect(url_for('login'))
 
         curr_user = Users.query.filter_by(username=username).first()
         if curr_user and check_password_hash(curr_user.password, password):
@@ -158,3 +158,12 @@ def add_actual_income():
     db.session.add(actual_income)
     db.session.commit()
     return redirect(url_for('home'))
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    session.clear()
+    flash('Logged out successfully!', 'success')
+    return redirect(url_for('login'))

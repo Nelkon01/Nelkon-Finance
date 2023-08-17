@@ -1,5 +1,5 @@
 from budgetmanager import db
-from flask_login import UserMixin  # Import UserMixin
+from flask_login import UserMixin
 
 
 class Users(db.Model, UserMixin):
