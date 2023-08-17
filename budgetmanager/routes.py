@@ -17,6 +17,16 @@ def home():
         return redirect(url_for("login"))
 
 
+@app.route('/track')
+def track():
+    if "user_id" in session:
+        user_id = session["user_id"]
+        curr_user = Users.query.get(user_id)
+        return render_template('track.html', user=curr_user)
+    else:
+        return redirect(url_for("login"))
+
+
 # Signup route
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
