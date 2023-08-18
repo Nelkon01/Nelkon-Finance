@@ -4,12 +4,20 @@
     <div class="container-fluid pt-5">
         <h2>Login</h2>
         <div class="card">
-            <div class="alert alert-danger">
-                {{ get_flashed_messages(category_filter=['error']) | join }}
-            </div>
-            <div class="alert alert-success">
-                {{ get_flashed_messages(category_filter=['success']) | join }}
-            </div>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="alert-container">
+                        {% for message in messages %}
+                            {% set alert_class = 'alert-success' if 'success' in message else 'alert-danger' %}
+                            <div class="alert {{ alert_class }}" role="alert">
+                                {{ message | replace('success:', '') | replace('error:', '') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
             <form action="{{ url_for('login') }}" method="POST">
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="username" name="username"
@@ -47,7 +55,7 @@
                         <!--Form-->
                         <div class="card">
 
-{#                                                    Flash Message #}
+                            {#                                                    Flash Message #}
                             {% with messages = get_flashed_messages() %}
                                 {% if messages %}
                                     {% for message in messages %}
