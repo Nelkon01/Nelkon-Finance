@@ -4,11 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a975cf4b-401b-4198-be0e-d9ecc04d5416" name="Changes" comment="" />
+    <list default="true" id="a975cf4b-401b-4198-be0e-d9ecc04d5416" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/budgetmanager/templates/goldmine.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/budgetmanager/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/budgetmanager/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/templates/base.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
   </component>
   <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
     <envs>
@@ -37,6 +49,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
@@ -122,6 +135,8 @@
       <workItem from="1692093318423" duration="19598000" />
       <workItem from="1692119384221" duration="616000" />
       <workItem from="1692136345911" duration="11639000" />
+      <workItem from="1692328135946" duration="5907000" />
+      <workItem from="1692783733576" duration="15616000" />
     </task>
     <task id="LOCAL-00001" summary="Add signup modal to login page to enable ease of signup">
       <option name="closed" value="true" />
@@ -153,6 +168,7 @@
     <option name="LAST_COMMIT_MESSAGE" value="Add signup modal to login page to enable ease of signup" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/nelkon_finance$run.coverage" NAME="run Coverage Results" MODIFIED="1692233604635" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/nelkon_finance$run.coverage" NAME="run Coverage Results" MODIFIED="1692789632395" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/nelkon_finance$nelkon_finance.coverage" NAME="nelkon_finance Coverage Results" MODIFIED="1692783732844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

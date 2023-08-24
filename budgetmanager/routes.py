@@ -27,6 +27,16 @@ def track():
         return redirect(url_for("login"))
 
 
+@app.route('/goldmine')
+def goldmine():
+    if "user_id" in session:
+        user_id = session["user_id"]
+        curr_user = Users.query.get(user_id)
+        return render_template('goldmine.html', user=curr_user)
+    else:
+        return redirect(url_for("login"))
+
+
 # Signup route
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -177,3 +187,5 @@ def logout():
     session.clear()
     flash('Logged out successfully!', 'success')
     return redirect(url_for('login'))
+
+
