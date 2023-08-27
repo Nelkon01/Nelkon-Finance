@@ -1,66 +1,47 @@
 {% extends "base.html" %}
 {% block content %}
 
-   <!DOCTYPE html>
-<body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3 bg-dark sidebar">
-                <h2 class="mt-3 ">Select Month</h2>
-                <form action="" method="post">
-                    <div class="form-group my-5">
-                        <label for="selected_month"></label>
-                        <select class="form-control" name="selected_month" id="selected_month">
-                            <option value="Please Select" disabled selected>Please Select</option>
-                            <option value="January">January</option>
-                            <option value="February">February</option>
-                            <option value="February">March</option>
-                            <option value="February">April</option>
-                            <option value="May">May</option>
-                            <option value="June">June</option>
-                            <option value="July">July</option>
-                            <option value="August">August</option>
-                            <option value="September">September</option>
-                            <option value="October">October</option>
-                            <option value="November">November</option>
-                            <option value="December">December</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-primary" type="submit">Show Data</button>
-                </form>
+    <div class="container-fluid pt-5">
+        <h2>Goldmine Dashboard</h2>
+
+        {#   Total Income Card#}
+        <div class="card mb-4">
+            <div class="card-header">
+                Total Income
             </div>
-            <div class="col-md-9 content">
-                <h1>Welcome to the Dashboard</h1>
-
-                <div class="data-container">
-                    <h2>Data Display</h2>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Column 1</th>
-                                <th>Column 2</th>
-                                <th>Column 3</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for row in data %}
-                                <tr>
-                                    <td>{{ row.column1 }}</td>
-                                    <td>{{ row.column2 }}</td>
-                                    <td>{{ row.column3 }}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+            <div class="card-body">
+                <p>Select a month:</p>
+                <select id="month-dropdown" class="form-select mb-3">
+                    <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                </select>
+                <div id="total-income-card">
+                    {# total income content will be inserted here using javascript #}
                 </div>
-
-                <div class="charts-container">
-                    <h2>Charts</h2>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"> Total Budget Income</h5>
+                    <p class="card-text" id="total-budget-income"></p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Actual Income</h5>
+                    <p class="card-text" id="total-actual-income"></p>
                 </div>
             </div>
         </div>
     </div>
-</body>
 
 
 {% endblock %}

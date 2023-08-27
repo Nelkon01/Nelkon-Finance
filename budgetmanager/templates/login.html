@@ -20,9 +20,9 @@
             {% endwith %}
             <form action="{{ url_for('login') }}" method="POST">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="username" name="username"
-                           placeholder="Please enter username">
-                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="identifier" name="identifier"
+                           placeholder="Please enter username/email">
+                    <label for="identifier">Username/Email</label>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="password" class="form-control" id="password" name="password"
@@ -41,7 +41,6 @@
                 </div>
             </form>
         </div>
-
         <!--    Modal Signups-->
         <div class="modal fade" id="signup" tabindex="-1" aria-labelledby="signup"
              aria-hidden="true">
