@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="container-fluid pt-5">
-        {#        Page Header #}
+        {# Page Header #}
         <div class="row justify-content-center align-items-center">
             <div class="col-12 text-center mb-4">
                 <h3 class="mb-0 text-gray-800">Welcome to your Goldmine Dashboard {{ user.firstname }}</h3>
             </div>
         </div>
 
+        {# Option to select Month #}
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow mb-4">
@@ -36,6 +37,7 @@
             </div>
         </div>
 
+        {# Cards #}
         <div class="row">
             {#Total Earnings fot the month card#}
             <div class="col-xl-3 col-md-6 mb-4">
@@ -46,7 +48,8 @@
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Earnings
                                     FTM
                                 </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">£ 40,000</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    £ {{ total_budget_income or 0 }}</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fa-solid fa-hand-holding-dollar fa-2x text-gray-300"></i>
@@ -55,6 +58,7 @@
                     </div>
                 </div>
             </div>
+
             {#     Total Expenses for the month card #}
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-success shadow h-100 py-2">
@@ -64,7 +68,7 @@
                                 <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Total Expenses
                                     FTM
                                 </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">£ 215,000</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">£ {{  }}</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fa-solid fa-money-bill-wheat fa-2x text-gray-300"></i>
@@ -122,8 +126,7 @@
 
             <div class="col-xl-8 col-lg-7">
 
-                {#                Charts #}
-
+                {#  Charts #}
                 <!-- Area Chart -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
@@ -173,8 +176,5 @@
             </div>
         </div>
     </div>
-
-
-
 
 {% endblock %}

@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import render_template, request, redirect, url_for, session, flash, jsonify
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.security import check_password_hash, generate_password_hash
-from sqlalchemy import and_
+from sqlalchemy import func
 
 from budgetmanager import app, db
 from budgetmanager.models import Users, BudgetedIncome, ActualIncome, BudgetedExpenses, ActualExpenses
@@ -30,12 +30,20 @@ def track():
         return redirect(url_for("login"))
 
 
-@app.route('/goldmine')
+@app.route('/goldmine', methods=['GET', 'POST'])
 def goldmine():
     if "user_id" in session:
         user_id = session["user_id"]
         curr_user = Users.query.get(user_id)
-        return render_template('goldmine.html', user=curr_user)
+
+        # get the month request from form
+        selected_month = request.args.get('month')
+
+        # get and calculate the total budget income
+        total_budget_income = (db.session.query(func.sum(BudgetedIncome.budget_amount))
+                               .filter_by(user_id=user_id, month_name=selected_month).scalar())
+        return render_template('goldmine.html', user=curr_user, selected_month=selected_month,
+                               total_budget_income=total_budget_income)
     else:
         return redirect(url_for("login"))
 
