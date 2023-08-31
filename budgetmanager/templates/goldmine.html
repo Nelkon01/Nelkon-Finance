@@ -66,10 +66,12 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Total Expenses
-                                    FTM
+                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">{{ selected_month or ""}} Expenses</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    Budget: £ {{ total_budget_expense or 0 }}
+                                    <hr>
+                                    Actual: £ {{ total_actual_expense or 0 }}
                                 </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">£</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fa-solid fa-money-bill-wheat fa-2x text-gray-300"></i>
@@ -88,7 +90,19 @@
                                 <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Income:Expense</div>
                                 <div class="row no-gutters align-items-center">
                                     <div class="col-auto">
-                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">Budget: 50%</div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="progress progress-sm mr-2">
+                                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%"
+                                                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">Actual: 50%</div>
                                     </div>
                                     <div class="col">
                                         <div class="progress progress-sm mr-2">

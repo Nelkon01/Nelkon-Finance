@@ -217,8 +217,19 @@ def goldmine():
                                .filter(extract('month', ActualIncome.date) == selected_month_number)
                                .scalar())
 
+        # get and calculate the budget total expenses
+        total_budget_expense = (db.session.query(func.sum(BudgetedExpenses.budget_amount))
+                                .filter_by(user_id=user_id, month_name=selected_month).scalar())
+
+        # get and calculate total actual expenses
+        total_actual_expense = (db.session.query(func.sum(ActualExpenses.actual_amount))
+                                .filter_by(user_id=user_id)
+                                .filter(extract('month', ActualExpenses.date) == selected_month_number)
+                                .scalar())
+
         return render_template('goldmine.html', user=curr_user, selected_month=selected_month,
-                               total_budget_income=total_budget_income, total_actual_income=total_actual_income)
+                               total_budget_income=total_budget_income, total_actual_income=total_actual_income,
+                               total_actual_expense=total_actual_expense, total_budget_expense=total_budget_expense)
     else:
         return redirect(url_for("login"))
 
