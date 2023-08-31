@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import render_template, request, redirect, url_for, session, flash, jsonify
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.security import check_password_hash, generate_password_hash
-from sqlalchemy import func
+from sqlalchemy import func, extract
 
 from budgetmanager import app, db
 from budgetmanager.models import Users, BudgetedIncome, ActualIncome, BudgetedExpenses, ActualExpenses
@@ -26,24 +26,6 @@ def track():
         user_id = session["user_id"]
         curr_user = Users.query.get(user_id)
         return render_template('track.html', user=curr_user)
-    else:
-        return redirect(url_for("login"))
-
-
-@app.route('/goldmine', methods=['GET', 'POST'])
-def goldmine():
-    if "user_id" in session:
-        user_id = session["user_id"]
-        curr_user = Users.query.get(user_id)
-
-        # get the month request from form
-        selected_month = request.args.get('month')
-
-        # get and calculate the total budget income
-        total_budget_income = (db.session.query(func.sum(BudgetedIncome.budget_amount))
-                               .filter_by(user_id=user_id, month_name=selected_month).scalar())
-        return render_template('goldmine.html', user=curr_user, selected_month=selected_month,
-                               total_budget_income=total_budget_income)
     else:
         return redirect(url_for("login"))
 
@@ -173,6 +155,7 @@ def add_actual_expense():
     return redirect(url_for('track'))
 
 
+# Add Actual Income route
 @app.route('/add_actual_income', methods=['POST', 'GET'])
 def add_actual_income():
     if not current_user.is_authenticated:
@@ -183,6 +166,7 @@ def add_actual_income():
     actual_amount = request.form.get('actual_amount')
 
     date = datetime.strptime(date_str, "%d/%m/%Y")
+    month_string = date.strftime('%B')
     actual_income = ActualIncome(
         income_name=income_name,
         user_id=session["user_id"],
@@ -192,6 +176,51 @@ def add_actual_income():
     db.session.add(actual_income)
     db.session.commit()
     return redirect(url_for('track'))
+
+
+month_name_to_number = {
+    'January': '01',
+    'February': '02',
+    'March': '03',
+    'April': '04',
+    'May': '05',
+    'June': '06',
+    'July': '07',
+    'August': '08',
+    'September': '09',
+    'October': '10',
+    'November': '11',
+    'December': '12',
+}
+
+
+# Goldmine route
+@app.route('/goldmine', methods=['GET', 'POST'])
+def goldmine():
+    if "user_id" in session:
+        user_id = session["user_id"]
+        curr_user = Users.query.get(user_id)
+
+        # get the month request from form
+        selected_month = request.args.get('month')
+
+        # Get the corresponding month number from the dictionary
+        selected_month_number = month_name_to_number.get(selected_month)
+
+        # get and calculate the total budget income
+        total_budget_income = (db.session.query(func.sum(BudgetedIncome.budget_amount))
+                               .filter_by(user_id=user_id, month_name=selected_month).scalar())
+
+        # get and calculate the total actual income
+        total_actual_income = (db.session.query(func.sum(ActualIncome.actual_amount))
+                               .filter_by(user_id=user_id)
+                               .filter(extract('month', ActualIncome.date) == selected_month_number)
+                               .scalar())
+
+        return render_template('goldmine.html', user=curr_user, selected_month=selected_month,
+                               total_budget_income=total_budget_income, total_actual_income=total_actual_income)
+    else:
+        return redirect(url_for("login"))
 
 
 @app.route('/logout')

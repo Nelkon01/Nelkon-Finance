@@ -45,11 +45,12 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Earnings
-                                    FTM
-                                </div>
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1"> {{ selected_month or ""}} Earnings</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    £ {{ total_budget_income or 0 }}</div>
+                                    Budget: £ {{ total_budget_income or 0 }}
+                                    <hr>
+                                    Actual: £ {{ total_actual_income or 0 }}
+                                </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fa-solid fa-hand-holding-dollar fa-2x text-gray-300"></i>
@@ -68,7 +69,7 @@
                                 <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Total Expenses
                                     FTM
                                 </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">£ {{  }}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">£</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fa-solid fa-money-bill-wheat fa-2x text-gray-300"></i>
