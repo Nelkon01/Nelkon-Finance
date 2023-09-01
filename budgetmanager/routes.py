@@ -227,9 +227,27 @@ def goldmine():
                                 .filter(extract('month', ActualExpenses.date) == selected_month_number)
                                 .scalar())
 
+        # to calculate the total budget income to expense ratio in percentage
+        if total_budget_income is None or total_budget_income == 0:
+            budget_income_coverage = 0
+        elif total_budget_expense is None or total_budget_expense == 0:
+            budget_income_coverage = 100
+        else:
+            budget_income_coverage = round((total_budget_income / total_budget_expense) * 100, 2)
+
+        # to calculate the total budget income to expense ratio in percentage
+        if total_actual_expense is None or total_actual_expense == 0:
+            actual_income_coverage = 0
+        elif total_actual_income is None or total_actual_income == 0:
+            actual_income_coverage = 100
+        else:
+            actual_income_coverage = round((total_actual_income / total_actual_expense) * 100, 2)
+
         return render_template('goldmine.html', user=curr_user, selected_month=selected_month,
                                total_budget_income=total_budget_income, total_actual_income=total_actual_income,
-                               total_actual_expense=total_actual_expense, total_budget_expense=total_budget_expense)
+                               total_actual_expense=total_actual_expense, total_budget_expense=total_budget_expense,
+                               budget_income_coverage=budget_income_coverage,
+                               actual_income_coverage=actual_income_coverage)
     else:
         return redirect(url_for("login"))
 
