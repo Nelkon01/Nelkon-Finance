@@ -15,7 +15,10 @@ def home():
     if "user_id" in session:
         user_id = session["user_id"]
         curr_user = Users.query.get(user_id)
-        return render_template('plan.html', user=curr_user)
+        budget_incomes = list(BudgetedIncome.query.order_by(BudgetedIncome.month_name).all())
+        budget_expenses = list(BudgetedExpenses.query.order_by(BudgetedExpenses.month_name).all())
+        return render_template('plan.html', user=curr_user, budget_incomes=budget_incomes,
+                               budget_expenses=budget_expenses)
     else:
         return redirect(url_for("login"))
 
