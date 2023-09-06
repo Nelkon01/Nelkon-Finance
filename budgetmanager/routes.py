@@ -15,8 +15,11 @@ def home():
     if "user_id" in session:
         user_id = session["user_id"]
         curr_user = Users.query.get(user_id)
-        budget_incomes = list(BudgetedIncome.query.order_by(BudgetedIncome.month_name).all())
-        budget_expenses = list(BudgetedExpenses.query.order_by(BudgetedExpenses.month_name).all())
+
+        # Filter budget incomes and expenses by user ID
+        budget_incomes = BudgetedIncome.query.filter_by(user_id=user_id).order_by(BudgetedIncome.month_name).all()
+        budget_expenses = BudgetedExpenses.query.filter_by(user_id=user_id).order_by(BudgetedExpenses.month_name).all()
+
         return render_template('plan.html', user=curr_user, budget_incomes=budget_incomes,
                                budget_expenses=budget_expenses)
     else:
@@ -169,7 +172,6 @@ def edit_budget_expense(expense_id):
     #     Get budget expenses by id
     budget_expenses = BudgetedExpenses.query.get_or_404(expense_id)
     if request.method == 'POST':
-
         #   Collect form data from form
         month_name = request.form.get('month_name')
         category_name = request.form.get('category_name')
@@ -183,7 +185,6 @@ def edit_budget_expense(expense_id):
         db.session.commit()
         flash("Budget Expense updated Successfully", 'success')
     return redirect(url_for('home'))
-
 
 
 @app.route('/add_actual_expense', methods=['POST', 'GET'])
