@@ -116,10 +116,11 @@ def add_budget_expense():
 
 @app.route('/add_budget_income', methods=['POST', 'GET'])
 def add_budget_income():
-    #     collect form data from add_budget_expense form
+    # Validate user
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
 
+    #     collect form data from add_budget_expense form
     month_name = request.form.get('month_name')
     income_name = request.form.get('income_name')
     budget_amount = request.form.get('budget_amount')
@@ -132,6 +133,30 @@ def add_budget_income():
     )
     db.session.add(budgeted_income)
     db.session.commit()
+    return redirect(url_for('home'))
+
+
+@app.route('/edit_budget_income/<int:income_id>', methods=['POST', 'GET'])
+def edit_budget_income(income_id):
+    # Validate user
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+
+    # Get the budget income record by income id
+    budget_income = BudgetedIncome.query.get_or_404(income_id)
+    if request.method == 'POST':
+        #     collect form data from add_budget_expense form
+        month_name = request.form.get('month_name')
+        income_name = request.form.get('income_name')
+        budget_amount = request.form.get('budget_amount')
+
+        # update the budget income values of that id
+        budget_income.month_name = month_name
+        budget_income.income_name = income_name
+        budget_income.budget_amount = budget_amount
+
+        db.session.commit()
+        flash("Budget Income updated Successfully", 'success')
     return redirect(url_for('home'))
 
 

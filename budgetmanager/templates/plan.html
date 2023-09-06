@@ -8,6 +8,16 @@
         </div>
     </div>
 
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message[0] }}. Go to <a href="{{ url_for('login') }}" class="alert-link">Login</a>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
     <!--Div to display figures -->
     <div class="row my-5">
 
@@ -30,7 +40,7 @@
                 </div>
             </div>
         </div>
-        <!--    Modal for Budget Income form-->
+        <!--    Modal for Add Budget Income form-->
         <div class="modal fade" id="budgetIncomeModal" tabindex="-1" aria-labelledby="budgetIncomeModal"
              aria-hidden="true">
             <div class="modal-dialog">
@@ -177,22 +187,82 @@
     <div class="row">
         <div class="col-md-6">
             <div class="row">
+                {#    Edit  Budget Income #}
                 {% for budget_income in budget_incomes %}
                     <div class="card border-light mb-3 mx-2 text-center" style="max-width: 18rem;">
                         <div class="card-header">Budget Income Entry</div>
                         <div class="card-body">
                             <h5 class="card-title">{{ budget_income.month_name }}</h5>
+                            <hr>
                             <p class="card-text">Income Name: {{ budget_income.income_name }}</p>
                             <p class="card-text">Budget Amount: £ {{ budget_income.budget_amount }}</p>
-                            <button type="button" class="btn btn-outline-light">Edit</button>
+                            <a href="#" data-bs-toggle="modal"
+                               data-bs-target="#editBudgetIncomeModal{{ budget_income.income_id }}"
+                               class="btn btn-outline-light">Edit</a>
                             <button type="button" class="btn btn-outline-danger">Delete</button>
+                        </div>
+                    </div>
+
+                    <!-- Modal for Edit Budget Income form -->
+                    <div class="modal fade" id="editBudgetIncomeModal{{ budget_income.income_id }}" tabindex="-1"
+                         aria-labelledby="editBudgetIncomeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="editBudgetIncomeModalLabel">Edit Budget Income</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Edit budget form -->
+                                    <form action="{{ url_for('edit_budget_income', income_id=budget_income.income_id) }}"
+                                          method="POST">
+
+                                        <!-- Select Month -->
+                                        <div class="form-floating mb-3">
+                                            <label for="budget_income_month"></label>
+                                            <select name="month_name" id="budget_income_month" class="form-control">
+                                                {% for month_option in ["January", "February", "March", "April",
+                                            "May", "June", "July", "August", "September", "October", "November",
+                                            "December"] %}
+                                                    <option value="{{ month_option }}"
+                                                            {% if month_option == budget_income.month_name %}selected{% endif %}>{{ month_option }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <!-- Income Name -->
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" name="income_name"
+                                                   id="budget_income_name" placeholder="Income Name"
+                                                   value="{{ budget_income.income_name }}">
+                                            <label for="budget_income_name">Income Name</label>
+                                        </div>
+                                        <!-- Amount -->
+                                        <div class="form-floating mb-3">
+                                            <input type="number" class="form-control" id="budget_income_amount"
+                                                   placeholder="Month" name="budget_amount"
+                                                   value="{{ budget_income.budget_amount }}">
+                                            <label for="budget_income_amount">Amount</label>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">
+                                                Edit Income
+                                                <i class="fas fa-edit end"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 {% endfor %}
             </div>
         </div>
-
-
+{#    Edit Budget Expense #}
         <div class="col-md-6">
             <div class="row">
                 {% for budget_expense in budget_expenses %}
@@ -200,6 +270,7 @@
                         <div class="card-header">Budget Expense Entry</div>
                         <div class="card-body">
                             <h5 class="card-title">{{ budget_expense.month_name }}</h5>
+                            <hr>
                             <p class="card-text">Expense Category: {{ budget_expense.category_name }}</p>
                             <p class="card-text">Budget Amount: £ {{ budget_expense.budget_amount }}</p>
                             <button type="button" class="btn btn-outline-light">Edit</button>
@@ -209,8 +280,14 @@
                 {% endfor %}
             </div>
         </div>
-
     </div>
+
+
+
+
+
+
+
 
 
 {% endblock %}
