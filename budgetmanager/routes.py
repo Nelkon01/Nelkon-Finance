@@ -160,6 +160,32 @@ def edit_budget_income(income_id):
     return redirect(url_for('home'))
 
 
+@app.route('/edit_budget_expense/<int:expense_id>', methods=['POST', 'GET'])
+def edit_budget_expense(expense_id):
+    # Validate User
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+
+    #     Get budget expenses by id
+    budget_expenses = BudgetedExpenses.query.get_or_404(expense_id)
+    if request.method == 'POST':
+
+        #   Collect form data from form
+        month_name = request.form.get('month_name')
+        category_name = request.form.get('category_name')
+        budget_amount = request.form.get('budget_amount')
+
+        #   update the budget expense values
+        budget_expenses.month_name = month_name
+        budget_expenses.category_name = category_name
+        budget_expenses.budget_amount = budget_amount
+
+        db.session.commit()
+        flash("Budget Expense updated Successfully", 'success')
+    return redirect(url_for('home'))
+
+
+
 @app.route('/add_actual_expense', methods=['POST', 'GET'])
 def add_actual_expense():
     if not current_user.is_authenticated:

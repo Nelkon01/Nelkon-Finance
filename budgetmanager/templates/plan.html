@@ -154,13 +154,13 @@
                                 <label for="category_name"></label>
                                 <select name="category_name" id="category_name" class="form-control">
                                     <option value="" disabled selected>Select Spending Category</option>
-                                    <option value="shopping">Shopping</option>
-                                    <option value="groceries">Groceries</option>
-                                    <option value="eating-out">Eating Out</option>
-                                    <option value="transport">Transport</option>
-                                    <option value="bills">Bills</option>
-                                    <option value="entertainment">Entertainment</option>
-                                    <option value="miscellaneous">Miscellaneous</option>
+                                    <option value="Shopping">Shopping</option>
+                                    <option value="Groceries">Groceries</option>
+                                    <option value="Eating-Out">Eating Out</option>
+                                    <option value="Transport">Transport</option>
+                                    <option value="Bills">Bills</option>
+                                    <option value="Entertainment">Entertainment</option>
+                                    <option value="Miscellaneous">Miscellaneous</option>
                                 </select>
                             </div>
                             <!--                        Amount-->
@@ -220,7 +220,7 @@
 
                                         <!-- Select Month -->
                                         <div class="form-floating mb-3">
-                                            <label for="budget_income_month"></label>
+                                            <label for="edit_budget_income_month"></label>
                                             <select name="month_name" id="budget_income_month" class="form-control">
                                                 {% for month_option in ["January", "February", "March", "April",
                                             "May", "June", "July", "August", "September", "October", "November",
@@ -262,7 +262,8 @@
                 {% endfor %}
             </div>
         </div>
-{#    Edit Budget Expense #}
+
+        {#    Edit Budget Expense #}
         <div class="col-md-6">
             <div class="row">
                 {% for budget_expense in budget_expenses %}
@@ -273,8 +274,73 @@
                             <hr>
                             <p class="card-text">Expense Category: {{ budget_expense.category_name }}</p>
                             <p class="card-text">Budget Amount: £ {{ budget_expense.budget_amount }}</p>
-                            <button type="button" class="btn btn-outline-light">Edit</button>
+                            <a href="#" data-bs-toggle="modal"
+                               data-bs-target="#editBudgetExpenseModal{{ budget_expense.expense_id }}"
+                               class="btn btn-outline-light">Edit</a>
                             <button type="button" class="btn btn-outline-danger">Delete</button>
+                        </div>
+                    </div>
+
+                    {#                    Modal for Edit Budget Expense #}
+                    <div class="modal fade" id="editBudgetExpenseModal{{ budget_expense.expense_id }}" tabindex="-1"
+                         aria-labelledby="budgetExpenseModal"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="editBudgetExpenseModalLabel">Add Budget
+                                        Expense</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!--                    budget form-->
+                                    <form method="POST"
+                                          action="{{ url_for('edit_budget_expense', expense_id=budget_expense.expense_id) }}">
+
+                                        <!--                        Select Month -->
+
+                                        <div class="form-floating mb-3">
+                                            <label for="edit_budget_expense_month"></label>
+                                            <select name="month_name" id="budget_expense_month" class="form-control">
+                                                {% for month_option in ["January", "February", "March", "April",
+                                            "May", "June", "July", "August", "September", "October", "November",
+                                            "December"] %}
+                                                    <option value="{{ month_option }}"
+                                                            {% if month_option == budget_expense.month_name %}selected{% endif %}>{{ month_option }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <!--                        Select Category-->
+                                        <div class="form-floating mb-3">
+                                            <label for="category_name"></label>
+                                            <select name="category_name" id="edit_category_name" class="form-control">
+                                                {% for category in ["Shopping", "Groceries", "Eating-Out", "Transport",
+                                                 "Bills", "Entertainment", "Miscellaneous"] %}
+                                                    <option value="{{ category }}"
+                                                            {% if category == budget_expense.category_name %}selected{% endif %}>{{ category }}</option>
+                                                    {% endfor %}
+                                            </select>
+                                        </div>
+                                        <!--                        Amount-->
+                                        <div class="form-floating mb-3">
+                                            <input type="number" class="form-control" id="budget_amount"
+                                                   placeholder="Month" name="budget_amount"
+                                                    value="{{ budget_expense.budget_amount }}">
+                                            <label for="budget_amount">Amount</label>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <button class="btn btn-primary" type="submit">
+                                                Edit Expense
+                                                <i class="fas fa-edit end"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 {% endfor %}
