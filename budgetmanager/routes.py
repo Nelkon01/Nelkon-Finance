@@ -163,6 +163,19 @@ def edit_budget_income(income_id):
     return redirect(url_for('home'))
 
 
+@app.route('/delete_budget_income/<int:income_id>', methods=['POST', 'GET'])
+def delete_budget_income(income_id):
+    #     Validate user
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+
+    budget_income = BudgetedIncome.query.get_or_404(income_id)
+    db.session.delete(budget_income)
+    db.session.commit()
+    flash('Budget Income Deleted Successfully', 'success')
+    return redirect(url_for('home'))
+
+
 @app.route('/edit_budget_expense/<int:expense_id>', methods=['POST', 'GET'])
 def edit_budget_expense(expense_id):
     # Validate User
@@ -184,6 +197,19 @@ def edit_budget_expense(expense_id):
 
         db.session.commit()
         flash("Budget Expense updated Successfully", 'success')
+    return redirect(url_for('home'))
+
+
+@app.route('/delete_budget_expense/<int:expense_id>', methods=['POST', 'GET'])
+def delete_budget_expense(expense_id):
+    #    user validation
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+
+    budget_expense = BudgetedExpenses.query.get_or_404(expense_id)
+    db.session.delete(budget_expense)
+    db.session.commit()
+    flash('Budget Expense Deleted Successfully', 'success')
     return redirect(url_for('home'))
 
 

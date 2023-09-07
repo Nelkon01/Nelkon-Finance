@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a975cf4b-401b-4198-be0e-d9ecc04d5416" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/budgetmanager/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/budgetmanager/templates/plan.html" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/templates/plan.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +137,7 @@
       <workItem from="1692136345911" duration="11639000" />
       <workItem from="1692328135946" duration="5907000" />
       <workItem from="1692783733576" duration="77083000" />
-      <workItem from="1693390134786" duration="91558000" />
+      <workItem from="1693390134786" duration="100511000" />
     </task>
     <task id="LOCAL-00001" summary="Add signup modal to login page to enable ease of signup">
       <option name="closed" value="true" />
@@ -167,7 +169,7 @@
     <option name="LAST_COMMIT_MESSAGE" value="Add signup modal to login page to enable ease of signup" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/nelkon_finance$run.coverage" NAME="run Coverage Results" MODIFIED="1693951843036" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/nelkon_finance$run.coverage" NAME="run Coverage Results" MODIFIED="1694097388587" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/nelkon_finance$nelkon_finance.coverage" NAME="nelkon_finance Coverage Results" MODIFIED="1692783732844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
