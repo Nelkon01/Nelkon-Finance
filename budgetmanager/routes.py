@@ -31,7 +31,13 @@ def track():
     if "user_id" in session:
         user_id = session["user_id"]
         curr_user = Users.query.get(user_id)
-        return render_template('track.html', user=curr_user)
+
+        # query and filter the actual incomes and expenses
+        actual_incomes = ActualIncome.query.filter_by(user_id=user_id).order_by(ActualIncome.date).all()
+        actual_expenses = ActualExpenses.query.filter_by(user_id=user_id).order_by(ActualExpenses.date).all()
+
+        return render_template('track.html', user=curr_user, actual_incomes=actual_incomes,
+                               actual_expenses=actual_expenses)
     else:
         return redirect(url_for("login"))
 
@@ -139,6 +145,22 @@ def add_budget_income():
     return redirect(url_for('home'))
 
 
+month_name_to_number = {
+    'January': '01',
+    'February': '02',
+    'March': '03',
+    'April': '04',
+    'May': '05',
+    'June': '06',
+    'July': '07',
+    'August': '08',
+    'September': '09',
+    'October': '10',
+    'November': '11',
+    'December': '12',
+}
+
+
 @app.route('/edit_budget_income/<int:income_id>', methods=['POST', 'GET'])
 def edit_budget_income(income_id):
     # Validate user
@@ -236,6 +258,43 @@ def add_actual_expense():
     return redirect(url_for('track'))
 
 
+@app.route('/edit_actual_expense/<int:expense_id>', methods=['POST', 'GET'])
+def edit_actual_expense(expense_id):
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+
+    #   Get Actual Expenses by ID
+    actual_expense = ActualExpenses.query.get_or_404(expense_id)
+    if request.method == 'POST':
+        #   collect data from form
+        date = request.form.get('date')
+        expense_name = request.form.get('expense_name')
+        category_name = request.form.get('category_name')
+        actual_amount = request.form.get('actual_amount')
+
+        #         update values
+        actual_expense.date = date
+        actual_expense.expense_name = expense_name
+        actual_expense.category_name = category_name
+        actual_expense.actual_amount = actual_amount
+
+        db.session.commit()
+        flash('Actual Expense Updated Successfully', 'success')
+    return redirect(url_for('track'))
+
+
+@app.route('/delete_actual_expense/<int:expense_id>', methods=['POST', 'GET'])
+def delete_actual_expense(expense_id):
+    if not current_user.is_authenticated:
+        redirect(url_for('login'))
+
+    actual_expense = ActualExpenses.query.get_or_404(expense_id)
+    db.session.delete(actual_expense)
+    db.session.commit()
+    flash('Actual Expense Deleted Successfully', 'success')
+    return redirect(url_for('track'))
+
+
 # Add Actual Income route
 @app.route('/add_actual_income', methods=['POST', 'GET'])
 def add_actual_income():
@@ -259,20 +318,39 @@ def add_actual_income():
     return redirect(url_for('track'))
 
 
-month_name_to_number = {
-    'January': '01',
-    'February': '02',
-    'March': '03',
-    'April': '04',
-    'May': '05',
-    'June': '06',
-    'July': '07',
-    'August': '08',
-    'September': '09',
-    'October': '10',
-    'November': '11',
-    'December': '12',
-}
+@app.route('/edit_actual_income/<int:income_id>', methods=['POST', 'GET'])
+def edit_actual_income(income_id):
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+
+    #   Get Actual Income by ID
+    actual_income = ActualIncome.query.get_or_404(income_id)
+    if request.method == 'POST':
+        #   collect data from form
+        date = request.form.get('date')
+        income_name = request.form.get('income_name')
+        actual_amount = request.form.get('actual_amount')
+
+        #         update values
+        actual_income.date = date
+        actual_income.income_name = income_name
+        actual_income.actual_amount = actual_amount
+
+        db.session.commit()
+        flash('Actual Expense Updated Successfully', 'success')
+    return redirect(url_for('track'))
+
+
+@app.route('/delete_actual_income/<int:income_id>', methods=['POST', 'GET'])
+def delete_actual_income(income_id):
+    if not current_user.is_authenticated:
+        redirect(url_for('login'))
+
+    actual_income = ActualIncome.query.get_or_404(income_id)
+    db.session.delete(actual_income)
+    db.session.commit()
+    flash('Actual Income Deleted Successfully', 'success')
+    return redirect(url_for('track'))
 
 
 # Goldmine route
