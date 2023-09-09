@@ -411,6 +411,44 @@ def goldmine():
         return redirect(url_for("login"))
 
 
+@app.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
+    user_id = session["user_id"]
+    curr_user = Users.query.get(user_id)
+
+    if request.method == 'POST':
+        # get form details
+        username = request.form.get('username')
+        firstname = request.form.get('firstname')
+        lastname = request.form.get('lastname')
+        password = request.form.get('password')
+        email = request.form.get('email')
+        # Check if the username or email already exists in the database
+        user_check = Users.query.filter(Users.username == username, Users.id != user_id).first()
+        email_check = Users.query.filter(Users.email == email, Users.id != user_id).first()
+
+        if user_check:
+            flash('Username already exists', 'error')
+        elif email_check:
+            flash('Email already exists', 'error')
+
+        else:
+            if password:
+                encrypted_password = generate_password_hash(password, method="sha256")
+                curr_user.password = encrypted_password
+            curr_user.username = username
+            curr_user.firstname = firstname
+            curr_user.lastname = lastname
+            curr_user.email = email
+
+        db.session.commit()
+        flash("User Information Updated Successfully", 'success')
+        return redirect(url_for('home'))
+
+    return render_template('profile.html', user=curr_user)
+
+
 @app.route('/logout')
 @login_required
 def logout():
