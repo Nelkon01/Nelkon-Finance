@@ -21,7 +21,8 @@ class Users(db.Model, UserMixin):
 
     def __repr__(self):
         # __repr__ method for Users class to return a string representation of the object
-        return f"#:{self.id} -  Username: {self.username} - Firstname: {self.firstname} - Lastname: {self.lastname} - Password: {self.password} - Email: {self.email}"
+        return (f"#:{self.id} -  Username: {self.username} - Firstname: {self.firstname} - Lastname: {self.lastname} - "
+                f"Password: {self.password} - Email: {self.email}")
 
 
 USER_ID = 'users.id'

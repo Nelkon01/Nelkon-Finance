@@ -386,6 +386,16 @@ def goldmine():
                                 .filter(extract('month', ActualExpenses.date) == selected_month_number)
                                 .scalar())
 
+        # Query and calculate budget expenses by category
+        budget_expenses_by_category = (db.session.query(BudgetedExpenses.category_name,
+                                                        func.sum(BudgetedExpenses.budget_amount))
+                                       .filter_by(user_id=user_id, month_name=selected_month)
+                                       .group_by(BudgetedExpenses.category_name).all())
+        # Convert the data to a format that can be serialised to JSON
+        budget_expenses_by_category_json = [{"category_name": item[0], "budget_amount": item[1]} for item in
+                                            budget_expenses_by_category]
+        print("Budget Expenses by Category:", budget_expenses_by_category_json)
+
         # to calculate the total budget income to expense ratio in percentage
         if total_budget_income is None or total_budget_income == 0:
             budget_income_coverage = 0
@@ -394,7 +404,7 @@ def goldmine():
         else:
             budget_income_coverage = round((total_budget_income / total_budget_expense) * 100, 2)
 
-        # to calculate the total budget income to expense ratio in percentage
+        # to calculate the total actual income to expense ratio in percentage
         if total_actual_expense is None or total_actual_expense == 0:
             actual_income_coverage = 0
         elif total_actual_income is None or total_actual_income == 0:
@@ -406,7 +416,8 @@ def goldmine():
                                total_budget_income=total_budget_income, total_actual_income=total_actual_income,
                                total_actual_expense=total_actual_expense, total_budget_expense=total_budget_expense,
                                budget_income_coverage=budget_income_coverage,
-                               actual_income_coverage=actual_income_coverage)
+                               actual_income_coverage=actual_income_coverage,
+                               budget_expenses_by_category=budget_expenses_by_category_json)
     else:
         return redirect(url_for("login"))
 
