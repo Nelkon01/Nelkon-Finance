@@ -14,8 +14,8 @@
                 <div class="card shadow mb-4">
                     <div class="card-body">
                         <form method="GET" action="{{ url_for('goldmine') }}">
-                            <label for="month">Select Month:</label>
-                            <select name="month" id="month" class="form-control">
+                            <label for="monthSelector">Select Month:</label>
+                            <select name="month" id="monthSelector" class="form-control">
                                 <option value="" disabled selected>Please Select</option>
                                 <option value="January">January</option>
                                 <option value="February">February</option>
@@ -30,7 +30,8 @@
                                 <option value="November">November</option>
                                 <option value="December">December</option>
                             </select>
-                            <button type="submit" class="btn btn-primary mt-3">View</button>
+                            <button type="submit" id="updateChartButton" class="btn btn-primary mt-3">Update Chart
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -45,7 +46,9 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1"> {{ selected_month or ""}} Earnings</div>
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1"> {{ selected_month or "" }}
+                                    Earnings
+                                </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                     Budget: £ {{ total_budget_income or 0 }}
                                     <hr>
@@ -66,7 +69,9 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">{{ selected_month or ""}} Expenses</div>
+                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">{{ selected_month or "" }}
+                                    Expenses
+                                </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                     Budget: £ {{ total_budget_expense or 0 }}
                                     <hr>
@@ -82,47 +87,49 @@
             </div>
 
             {#            Income Coverage card #}
-           <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-info shadow h-100 py-2">
-        <div class="card-body">
-            <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">{{ selected_month or ""}} Income Coverage</div>
-                    <div class="row no-gutters align-items-center">
-                        <div class="col-auto">
-                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">Budget: </div>
-                        </div>
-                        <div class="col progress-container">
-                            <div class="progress progress-sm mr-2">
-                                <div class="progress-bar bg-info" role="progressbar" style="width: {{ budget_income_coverage }}%">
-                                    {{ budget_income_coverage }}%
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">{{ selected_month or "" }}
+                                    Income Coverage
                                 </div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">Budget:</div>
+                                    </div>
+                                    <div class="col progress-container">
+                                        <div class="progress progress-sm mr-2">
+                                            <div class="progress-bar bg-info" role="progressbar"
+                                                 style="width: {{ budget_income_coverage }}%">
+                                                {{ budget_income_coverage }}%
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">Actual:</div>
+                                    </div>
+                                    <div class="col progress-container">
+                                        <div class="progress progress-sm mr-2">
+                                            <div class="progress-bar bg-info" role="progressbar"
+                                                 style="width: {{ actual_income_coverage }}%">
+                                                {{ actual_income_coverage }}%
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-money-bill-transfer fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
-                    <hr>
-                    <div class="row no-gutters align-items-center">
-                        <div class="col-auto">
-                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">Actual:</div>
-                        </div>
-                        <div class="col progress-container">
-                            <div class="progress progress-sm mr-2">
-                                <div class="progress-bar bg-info" role="progressbar" style="width: {{ actual_income_coverage }}%">
-                                    {{ actual_income_coverage }}%
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <i class="fas fa-money-bill-transfer fa-2x text-gray-300"></i>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-
-
 
 
             <div class="col-xl-3 col-md-6 mb-4">
@@ -153,7 +160,7 @@
                     </div>
                     <div class="card-body">
                         <div class="bar-chart">
-{#                            <div id="budgetExpensesPieChart"  data-expenses='{{ budget_expenses_by_category | tojson | safe }}'></div>#}
+                            {#                            <div id="budgetExpensesPieChart"  data-expenses='{{ budget_expenses_by_category | tojson | safe }}'></div>#}
                             <canvas id="barChart"></canvas>
                         </div>
                         <hr>
@@ -179,19 +186,70 @@
             <div class="col-xl-4 col-lg-5">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Doughnut Chart</h6>
+                        <h6 class="m-0 font-weight-bold text-primary text-center">Expenses by Category</h6>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
-                        <div class="chart-pie">
-                            <canvas id="doughnutChart"></canvas>
+                        <div class="chart-doughnut">
+                            <h6 class="text-center">Budget</h6>
+                            <canvas id="budgetDoughnutChart"></canvas>
+                            <hr>
+                            <h6 class="text-center">Actual</h6>
+                            <canvas id="actualDoughnutChart"></canvas>
+
                         </div>
-                        <hr>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/goldmine.js') }}"></script>
+    <script>
+{#      Budget Expenses by Category Doughnut Chart#}
+        const budgetDoughnutChart = document.getElementById('budgetDoughnutChart').getContext('2d');
+        const budgetDoughnut = new Chart(budgetDoughnutChart, {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    {% for category in budget_category_name_list %}
+                        '{{ category }}',
+                    {% endfor %}
+                ],
+                datasets: [{
+                    label: 'Amount',
+                    data: [
+                        {% for amount in budget_amount_list%}
+                            {{ amount }},
+                        {% endfor %}
+                    ],
 
+                }]
+            }
+        })
+    {#      Actual Expenses by Category Doughnut Chart#}
+        const actualDoughnutChart = document.getElementById('actualDoughnutChart').getContext('2d');
+        const actualDoughnut = new Chart(actualDoughnutChart, {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    {% for category in actual_category_name_list %}
+                        '{{ category }}',
+                    {% endfor %}
+                ],
+                datasets: [{
+                    label: 'Amount',
+                    data: [
+                        {% for amount in actual_amount_list%}
+                            {{ amount }},
+                        {% endfor %}
+                    ],
 
+                }]
+            }
+        })
+    </script>
+
+    </body>
+    </html>
 {% endblock %}

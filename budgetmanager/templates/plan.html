@@ -8,17 +8,19 @@
         </div>
     </div>
 
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-danger" role="alert">
-                    {{ message[0] }}. Go to <a href="{{ url_for('login') }}" class="alert-link">Login</a>
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
 
-    <!--Div to display figures -->
+    <!-- Main cards to add budget Income and Expenses -->
     <div class="row my-5">
 
         <!--Budget Income-->

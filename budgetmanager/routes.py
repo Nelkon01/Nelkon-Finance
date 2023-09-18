@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 
 from flask import render_template, request, redirect, url_for, session, flash, jsonify
@@ -386,15 +387,24 @@ def goldmine():
                                 .filter(extract('month', ActualExpenses.date) == selected_month_number)
                                 .scalar())
 
-        # Query and calculate budget expenses by category
+        # Query and calculate budget expenses by category which returns a list of tuples
         budget_expenses_by_category = (db.session.query(BudgetedExpenses.category_name,
                                                         func.sum(BudgetedExpenses.budget_amount))
                                        .filter_by(user_id=user_id, month_name=selected_month)
                                        .group_by(BudgetedExpenses.category_name).all())
-        # Convert the data to a format that can be serialised to JSON
-        budget_expenses_by_category_json = [{"category_name": item[0], "budget_amount": item[1]} for item in
-                                            budget_expenses_by_category]
-        print("Budget Expenses by Category:", budget_expenses_by_category_json)
+        # Convert budget_expense_by_category list of tuples to separate lists for category name and budget amount
+        budget_category_name_list = [item[0] for item in budget_expenses_by_category]
+        budget_amount_list = [item[1] for item in budget_expenses_by_category]
+
+        # Query and calculate total actual expenses by category which returns a list of tuples
+        actual_expenses_by_category = (db.session.query(ActualExpenses.category_name,
+                                                        func.sum(ActualExpenses.actual_amount))
+                                       .filter_by(user_id=user_id)
+                                       .filter(extract('month', ActualExpenses.date) == selected_month_number)
+                                       .group_by(ActualExpenses.category_name).all())
+        # convert actual_expenses_by_category to separate lists for name and amount
+        actual_category_name_list = [item[0] for item in actual_expenses_by_category]
+        actual_amount_list = [item[1] for item in actual_expenses_by_category]
 
         # to calculate the total budget income to expense ratio in percentage
         if total_budget_income is None or total_budget_income == 0:
@@ -417,7 +427,11 @@ def goldmine():
                                total_actual_expense=total_actual_expense, total_budget_expense=total_budget_expense,
                                budget_income_coverage=budget_income_coverage,
                                actual_income_coverage=actual_income_coverage,
-                               budget_expenses_by_category=budget_expenses_by_category_json)
+                               budget_category_name_list=budget_category_name_list,
+                               budget_amount_list=budget_amount_list,
+                               actual_category_name_list=actual_category_name_list,
+                               actual_amount_list=actual_amount_list
+                               )
     else:
         return redirect(url_for("login"))
 
