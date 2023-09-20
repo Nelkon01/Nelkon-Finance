@@ -361,8 +361,15 @@ def goldmine():
         user_id = session["user_id"]
         curr_user = Users.query.get(user_id)
 
+        years_in_db = (db.session.query(extract('year', ActualIncome.date).distinct())
+                       .filter_by(user_id=user_id).all())
+        print(years_in_db)
+
         # get the month request from form
         selected_month = request.args.get('month')
+
+        # Get the Year in question
+        selected_year = request.args.get('year')
 
         # Get the corresponding month number from the dictionary
         selected_month_number = month_name_to_number.get(selected_month)
@@ -424,6 +431,8 @@ def goldmine():
         actual_income_sources_name = [item[0] for item in actual_income_sources]
         actual_income_sources_amount = [item[1] for item in actual_income_sources]
 
+
+
         # to calculate the total budget income to expense ratio in percentage
         if total_budget_income is None or total_budget_income == 0:
             budget_income_coverage = 0
@@ -441,7 +450,8 @@ def goldmine():
             actual_income_coverage = round((total_actual_income / total_actual_expense) * 100, 2)
 
         return render_template('goldmine.html', user=curr_user, selected_month=selected_month,
-                               total_budget_income=total_budget_income, total_actual_income=total_actual_income,
+                               years_in_db=years_in_db, total_budget_income=total_budget_income,
+                               total_actual_income=total_actual_income,
                                total_actual_expense=total_actual_expense, total_budget_expense=total_budget_expense,
                                budget_income_coverage=budget_income_coverage,
                                actual_income_coverage=actual_income_coverage,

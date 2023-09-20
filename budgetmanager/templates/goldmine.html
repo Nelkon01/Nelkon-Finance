@@ -8,7 +8,7 @@
             </div>
         </div>
 
-        {# Option to select Month #}
+        {# Option to select Month and Year#}
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow mb-4">
@@ -29,6 +29,13 @@
                                 <option value="October">October</option>
                                 <option value="November">November</option>
                                 <option value="December">December</option>
+                            </select>
+                            <label for="yearSelector">Select Year</label>
+                            <select name="year" id="yearSelector" class="form-control">
+
+                                {% for year in  years_in_db %}
+                                <option value="{{ year[0] }}">{{ year[0] }}</option>
+                                {% endfor %}
                             </select>
                             <button type="submit" id="updateChartButton" class="btn btn-primary mt-3">Update Chart
                             </button>
