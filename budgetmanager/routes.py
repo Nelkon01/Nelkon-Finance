@@ -363,7 +363,6 @@ def goldmine():
 
         years_in_db = (db.session.query(extract('year', ActualIncome.date).distinct())
                        .filter_by(user_id=user_id).all())
-        print(years_in_db)
 
         # get the month request from form
         selected_month = request.args.get('month')
@@ -431,7 +430,22 @@ def goldmine():
         actual_income_sources_name = [item[0] for item in actual_income_sources]
         actual_income_sources_amount = [item[1] for item in actual_income_sources]
 
+        # Total Actual Income and Expenses over time
+        # Income
+        income_over_time = (db.session.query(
+            extract('month', ActualIncome.date).label('income_month'),
+            func.sum(ActualIncome.actual_amount).label('total_income'))
+                            .filter_by(user_id=user_id)
+                            .filter(extract('year', ActualIncome.date) == selected_year)
+                            .group_by('income_month')
+                            .order_by('income_month')
+                            .all()
+                            )
+        months = [row.income_month for row in income_over_time]
+        total_income = [row.total_income for row in income_over_time]
 
+        print(months)
+        print(total_income)
 
         # to calculate the total budget income to expense ratio in percentage
         if total_budget_income is None or total_budget_income == 0:
@@ -451,7 +465,7 @@ def goldmine():
 
         return render_template('goldmine.html', user=curr_user, selected_month=selected_month,
                                years_in_db=years_in_db, total_budget_income=total_budget_income,
-                               total_actual_income=total_actual_income,
+                               selected_year=selected_year, total_actual_income=total_actual_income,
                                total_actual_expense=total_actual_expense, total_budget_expense=total_budget_expense,
                                budget_income_coverage=budget_income_coverage,
                                actual_income_coverage=actual_income_coverage,
@@ -463,6 +477,7 @@ def goldmine():
                                budget_income_sources_amount=budget_income_sources_amount,
                                actual_income_sources_name=actual_income_sources_name,
                                actual_income_sources_amount=actual_income_sources_amount,
+                               income_over_time=income_over_time
                                )
     else:
         return redirect(url_for("login"))

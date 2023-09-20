@@ -34,7 +34,7 @@
                             <select name="year" id="yearSelector" class="form-control">
 
                                 {% for year in  years_in_db %}
-                                <option value="{{ year[0] }}">{{ year[0] }}</option>
+                                    <option value="{{ year[0] }}">{{ year[0] }}</option>
                                 {% endfor %}
                             </select>
                             <button type="submit" id="updateChartButton" class="btn btn-primary mt-3">Update Chart
@@ -163,7 +163,8 @@
                 <!-- Bar Chart -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary text-center">{{ selected_month or "" }} Income Sources</h6>
+                        <h6 class="m-0 font-weight-bold text-primary text-center">{{ selected_month or "" }} Income
+                            Sources</h6>
                     </div>
                     <div class="card-body">
                         <div class="chart-bar">
@@ -179,11 +180,16 @@
                 <!-- Line Chart -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Line Chart</h6>
+                        <h6 class="m-0 font-weight-bold text-primary text-center">Actual Income and Expense over
+                            Time</h6>
                     </div>
                     <div class="card-body">
-                        <div class="line-chart">
-                            <canvas id="lineChart"></canvas>
+                        <div class="chart-line">
+                            <h6 class="text-center">Income</h6>
+                            <canvas id="incomeLineChart"></canvas>
+                            <hr>
+                            <h6 class="text-center">Expenses</h6>
+                            <canvas id="expenseLineChart"></canvas>
                         </div>
                         <hr>
                     </div>
@@ -195,7 +201,8 @@
             <div class="col-xl-4 col-lg-5">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary text-center">{{ selected_month or "" }} Expenses by Category</h6>
+                        <h6 class="m-0 font-weight-bold text-primary text-center">{{ selected_month or "" }} Expenses by
+                            Category</h6>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
@@ -215,7 +222,7 @@
     <script src="{{ url_for('static', filename='js/goldmine.js') }}"></script>
     <script>
         {#    Bar Chart #}
-{#        Budget Bar Chart #}
+        {#        Budget Bar Chart #}
         const budgetBarChart = document.getElementById('budgetBarChart');
 
         new Chart(budgetBarChart, {
@@ -317,6 +324,33 @@
                 }]
             }
         })
+        {# Line Chart#}
+        const incomeLineChart = document.getElementById('incomeLineChart').getContext('2d');
+        new Chart(incomeLineChart, {
+            type: 'line',
+            data: {
+                labels: [{% for row in income_over_time %} "{{ row.income_month }}", {% endfor %}],
+                datasets: [
+                    {
+                        label: "Total Monthly Income for {{ selected_year }}",
+                        data: [{% for row in income_over_time %} {{ row.total_income }}, {% endfor %}],
+                        fill: false,
+                        borderColor: "rgb(75, 192, 192)",
+                        lineTension: 0.1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
     </script>
 
     </body>
