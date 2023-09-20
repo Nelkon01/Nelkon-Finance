@@ -406,6 +406,24 @@ def goldmine():
         actual_category_name_list = [item[0] for item in actual_expenses_by_category]
         actual_amount_list = [item[1] for item in actual_expenses_by_category]
 
+        # Earnings Sources
+        # Budget Income
+        budget_income_sources = (db.session.query(BudgetedIncome.income_name,
+                                                  func.sum(BudgetedIncome.budget_amount))
+                                 .filter_by(user_id=user_id, month_name=selected_month)
+                                 .group_by(BudgetedIncome.income_name).all())
+        budget_income_sources_name = [item[0] for item in budget_income_sources]
+        budget_income_sources_amount = [item[1] for item in budget_income_sources]
+
+        # Actual Income
+        actual_income_sources = (db.session.query(ActualIncome.income_name,
+                                                  func.sum(ActualIncome.actual_amount))
+                                 .filter_by(user_id=user_id)
+                                 .filter(extract('month', ActualIncome.date) == selected_month_number)
+                                 .group_by(ActualIncome.income_name).all())
+        actual_income_sources_name = [item[0] for item in actual_income_sources]
+        actual_income_sources_amount = [item[1] for item in actual_income_sources]
+
         # to calculate the total budget income to expense ratio in percentage
         if total_budget_income is None or total_budget_income == 0:
             budget_income_coverage = 0
@@ -430,7 +448,11 @@ def goldmine():
                                budget_category_name_list=budget_category_name_list,
                                budget_amount_list=budget_amount_list,
                                actual_category_name_list=actual_category_name_list,
-                               actual_amount_list=actual_amount_list
+                               actual_amount_list=actual_amount_list,
+                               budget_income_sources_name=budget_income_sources_name,
+                               budget_income_sources_amount=budget_income_sources_amount,
+                               actual_income_sources_name=actual_income_sources_name,
+                               actual_income_sources_amount=actual_income_sources_amount,
                                )
     else:
         return redirect(url_for("login"))

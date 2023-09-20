@@ -153,17 +153,19 @@
             <div class="col-xl-8 col-lg-7">
 
                 {#  Charts #}
-                <!-- Area Chart -->
+                <!-- Bar Chart -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Budget Expenses by Category</h6>
+                        <h6 class="m-0 font-weight-bold text-primary text-center">{{ selected_month or "" }} Income Sources</h6>
                     </div>
                     <div class="card-body">
-                        <div class="bar-chart">
-                            {#                            <div id="budgetExpensesPieChart"  data-expenses='{{ budget_expenses_by_category | tojson | safe }}'></div>#}
-                            <canvas id="barChart"></canvas>
+                        <div class="chart-bar">
+                            <h6 class="text-center">Budget</h6>
+                            <canvas id="budgetBarChart"></canvas>
+                            <hr>
+                            <h6 class="text-center">Actual</h6>
+                            <canvas id="actualBarChart"></canvas>
                         </div>
-                        <hr>
                     </div>
                 </div>
 
@@ -186,7 +188,7 @@
             <div class="col-xl-4 col-lg-5">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary text-center">Expenses by Category</h6>
+                        <h6 class="m-0 font-weight-bold text-primary text-center">{{ selected_month or "" }} Expenses by Category</h6>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
@@ -196,7 +198,6 @@
                             <hr>
                             <h6 class="text-center">Actual</h6>
                             <canvas id="actualDoughnutChart"></canvas>
-
                         </div>
                     </div>
                 </div>
@@ -206,7 +207,68 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ url_for('static', filename='js/goldmine.js') }}"></script>
     <script>
-{#      Budget Expenses by Category Doughnut Chart#}
+        {#    Bar Chart #}
+{#        Budget Bar Chart #}
+        const budgetBarChart = document.getElementById('budgetBarChart');
+
+        new Chart(budgetBarChart, {
+            type: 'bar',
+            data: {
+                labels: [ {% for income in budget_income_sources_name %}
+                    '{{ income }}',
+                {% endfor %}
+                ],
+
+                datasets: [{
+                    label: 'Budget Income',
+                    data: [
+                        {% for amount in budget_income_sources_amount %}
+                            {{ amount }},
+                        {% endfor %}
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        {#        Actual Bar Chart #}
+        const actualBarChart = document.getElementById('actualBarChart');
+
+        new Chart(actualBarChart, {
+            type: 'bar',
+            data: {
+                labels: [ {% for income in actual_income_sources_name %}
+                    '{{ income }}',
+                {% endfor %}
+                ],
+
+                datasets: [{
+                    label: 'Actual Income',
+                    data: [
+                        {% for amount in actual_income_sources_amount %}
+                            {{ amount }},
+                        {% endfor %}
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        {# Doughnut Chart #}
+        {#      Budget Expenses by Category Doughnut Chart#}
         const budgetDoughnutChart = document.getElementById('budgetDoughnutChart').getContext('2d');
         const budgetDoughnut = new Chart(budgetDoughnutChart, {
             type: 'doughnut',
@@ -227,7 +289,7 @@
                 }]
             }
         })
-    {#      Actual Expenses by Category Doughnut Chart#}
+        {#      Actual Expenses by Category Doughnut Chart#}
         const actualDoughnutChart = document.getElementById('actualDoughnutChart').getContext('2d');
         const actualDoughnut = new Chart(actualDoughnutChart, {
             type: 'doughnut',
