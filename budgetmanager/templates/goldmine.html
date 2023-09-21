@@ -191,7 +191,6 @@
                             <h6 class="text-center">Expenses</h6>
                             <canvas id="expenseLineChart"></canvas>
                         </div>
-                        <hr>
                     </div>
                 </div>
 
@@ -325,6 +324,7 @@
             }
         })
         {# Line Chart#}
+{#        Income over time #}
         const incomeLineChart = document.getElementById('incomeLineChart').getContext('2d');
         new Chart(incomeLineChart, {
             type: 'line',
@@ -332,8 +332,34 @@
                 labels: [{% for row in income_over_time %} "{{ row.income_month }}", {% endfor %}],
                 datasets: [
                     {
-                        label: "Total Monthly Income for {{ selected_year }}",
+                        label: "Monthly Income Trend for {{ selected_year }}",
                         data: [{% for row in income_over_time %} {{ row.total_income }}, {% endfor %}],
+                        fill: false,
+                        borderColor: "rgb(75, 192, 192)",
+                        lineTension: 0.1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+        {#        Expense over time #}
+        const expenseLineChart = document.getElementById('expenseLineChart').getContext('2d');
+        new Chart(expenseLineChart, {
+            type: 'line',
+            data: {
+                labels: [{% for row in expense_over_time %} "{{ row.expense_month }}", {% endfor %}],
+                datasets: [
+                    {
+                        label: "Monthly Expenses Trend for {{ selected_year }}",
+                        data: [{% for row in expense_over_time %} {{ row.total_expense }}, {% endfor %}],
                         fill: false,
                         borderColor: "rgb(75, 192, 192)",
                         lineTension: 0.1

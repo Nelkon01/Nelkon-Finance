@@ -441,11 +441,18 @@ def goldmine():
                             .order_by('income_month')
                             .all()
                             )
-        months = [row.income_month for row in income_over_time]
-        total_income = [row.total_income for row in income_over_time]
 
-        print(months)
-        print(total_income)
+        # Expense
+        expense_over_time = (db.session.query(
+            extract('month', ActualExpenses.date).label('expense_month'),
+            func.sum(ActualExpenses.actual_amount).label('total_expense')
+        )
+                             .filter_by(user_id=user_id)
+                             .filter(extract('year', ActualExpenses.date) == selected_year)
+                             .group_by('expense_month')
+                             .order_by('expense_month')
+                             .all()
+                             )
 
         # to calculate the total budget income to expense ratio in percentage
         if total_budget_income is None or total_budget_income == 0:
@@ -477,7 +484,7 @@ def goldmine():
                                budget_income_sources_amount=budget_income_sources_amount,
                                actual_income_sources_name=actual_income_sources_name,
                                actual_income_sources_amount=actual_income_sources_amount,
-                               income_over_time=income_over_time
+                               income_over_time=income_over_time, expense_over_time=expense_over_time
                                )
     else:
         return redirect(url_for("login"))
