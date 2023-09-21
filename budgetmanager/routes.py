@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 
-from flask import render_template, request, redirect, url_for, session, flash, jsonify
+from flask import render_template, request, redirect, url_for, session, flash, jsonify, abort
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.security import check_password_hash, generate_password_hash
 from sqlalchemy import func, extract
@@ -103,27 +103,6 @@ def login():
     return render_template('login.html')
 
 
-@app.route('/add_budget_expense', methods=['POST', 'GET'])
-def add_budget_expense():
-    if not current_user.is_authenticated:
-        return redirect(url_for('login'))
-
-    #     collect form data from add_budget_expense form
-    month_name = request.form.get('month_name')
-    category_name = request.form.get('category_name')
-    budget_amount = request.form.get('budget_amount')
-
-    budgeted_expense = BudgetedExpenses(
-        category_name=category_name,
-        user_id=session["user_id"],
-        month_name=month_name,
-        budget_amount=budget_amount
-    )
-    db.session.add(budgeted_expense)
-    db.session.commit()
-    return redirect(url_for('home'))
-
-
 @app.route('/add_budget_income', methods=['POST', 'GET'])
 def add_budget_income():
     # Validate user
@@ -132,6 +111,7 @@ def add_budget_income():
 
     #     collect form data from add_budget_expense form
     month_name = request.form.get('month_name')
+    year = request.form.get('year')
     income_name = request.form.get('income_name')
     budget_amount = request.form.get('budget_amount')
 
@@ -139,6 +119,7 @@ def add_budget_income():
         income_name=income_name,
         user_id=session["user_id"],
         month_name=month_name,
+        year=year,
         budget_amount=budget_amount
     )
     db.session.add(budgeted_income)
@@ -196,6 +177,29 @@ def delete_budget_income(income_id):
     db.session.delete(budget_income)
     db.session.commit()
     flash('Budget Income Deleted Successfully', 'success')
+    return redirect(url_for('home'))
+
+
+@app.route('/add_budget_expense', methods=['POST', 'GET'])
+def add_budget_expense():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+
+    #     collect form data from add_budget_expense form
+    month_name = request.form.get('month_name')
+    year = request.form.get('year')
+    category_name = request.form.get('category_name')
+    budget_amount = request.form.get('budget_amount')
+
+    budgeted_expense = BudgetedExpenses(
+        category_name=category_name,
+        user_id=session["user_id"],
+        month_name=month_name,
+        year=year,
+        budget_amount=budget_amount
+    )
+    db.session.add(budgeted_expense)
+    db.session.commit()
     return redirect(url_for('home'))
 
 
@@ -357,17 +361,20 @@ def delete_actual_income(income_id):
 # Goldmine route
 @app.route('/goldmine', methods=['GET', 'POST'])
 def goldmine():
-    if "user_id" in session:
-        user_id = session["user_id"]
-        curr_user = Users.query.get(user_id)
+    if "user_id" not in session:
+        return redirect(url_for('login'))
 
+    user_id = session["user_id"]
+    curr_user = Users.query.get(user_id)
+
+    try:
         years_in_db = (db.session.query(extract('year', ActualIncome.date).distinct())
                        .filter_by(user_id=user_id).all())
 
         # get the month request from form
         selected_month = request.args.get('month')
 
-        # Get the Year in question
+        # Get the Year from form
         selected_year = request.args.get('year')
 
         # Get the corresponding month number from the dictionary
@@ -375,28 +382,33 @@ def goldmine():
 
         # get and calculate the total budget income
         total_budget_income = (db.session.query(func.sum(BudgetedIncome.budget_amount))
-                               .filter_by(user_id=user_id, month_name=selected_month).scalar())
+                               .filter_by(user_id=user_id, month_name=selected_month, year=selected_year)
+                               .scalar())
 
         # get and calculate the total actual income
         total_actual_income = (db.session.query(func.sum(ActualIncome.actual_amount))
                                .filter_by(user_id=user_id)
-                               .filter(extract('month', ActualIncome.date) == selected_month_number)
+                               .filter(extract('month', ActualIncome.date) == selected_month_number,
+                                       extract('year', ActualIncome.date) == selected_year)
                                .scalar())
 
         # get and calculate the budget total expenses
         total_budget_expense = (db.session.query(func.sum(BudgetedExpenses.budget_amount))
-                                .filter_by(user_id=user_id, month_name=selected_month).scalar())
+                                .filter_by(user_id=user_id, month_name=selected_month, year=selected_year)
+                                .scalar())
 
         # get and calculate total actual expenses
         total_actual_expense = (db.session.query(func.sum(ActualExpenses.actual_amount))
                                 .filter_by(user_id=user_id)
-                                .filter(extract('month', ActualExpenses.date) == selected_month_number)
+                                .filter(extract('month', ActualExpenses.date) == selected_month_number,
+                                        extract('year', ActualExpenses.date) == selected_year)
                                 .scalar())
 
         # Query and calculate budget expenses by category which returns a list of tuples
         budget_expenses_by_category = (db.session.query(BudgetedExpenses.category_name,
                                                         func.sum(BudgetedExpenses.budget_amount))
-                                       .filter_by(user_id=user_id, month_name=selected_month)
+                                       .filter_by(user_id=user_id, month_name=selected_month,
+                                                  year=selected_year)
                                        .group_by(BudgetedExpenses.category_name).all())
         # Convert budget_expense_by_category list of tuples to separate lists for category name and budget amount
         budget_category_name_list = [item[0] for item in budget_expenses_by_category]
@@ -406,7 +418,8 @@ def goldmine():
         actual_expenses_by_category = (db.session.query(ActualExpenses.category_name,
                                                         func.sum(ActualExpenses.actual_amount))
                                        .filter_by(user_id=user_id)
-                                       .filter(extract('month', ActualExpenses.date) == selected_month_number)
+                                       .filter(extract('month', ActualExpenses.date) == selected_month_number,
+                                               extract('year', ActualExpenses.date) == selected_year)
                                        .group_by(ActualExpenses.category_name).all())
         # convert actual_expenses_by_category to separate lists for name and amount
         actual_category_name_list = [item[0] for item in actual_expenses_by_category]
@@ -416,7 +429,7 @@ def goldmine():
         # Budget Income
         budget_income_sources = (db.session.query(BudgetedIncome.income_name,
                                                   func.sum(BudgetedIncome.budget_amount))
-                                 .filter_by(user_id=user_id, month_name=selected_month)
+                                 .filter_by(user_id=user_id, month_name=selected_month, year=selected_year)
                                  .group_by(BudgetedIncome.income_name).all())
         budget_income_sources_name = [item[0] for item in budget_income_sources]
         budget_income_sources_amount = [item[1] for item in budget_income_sources]
@@ -425,7 +438,8 @@ def goldmine():
         actual_income_sources = (db.session.query(ActualIncome.income_name,
                                                   func.sum(ActualIncome.actual_amount))
                                  .filter_by(user_id=user_id)
-                                 .filter(extract('month', ActualIncome.date) == selected_month_number)
+                                 .filter(extract('month', ActualIncome.date) == selected_month_number,
+                                         extract('year', ActualIncome.date) == selected_year)
                                  .group_by(ActualIncome.income_name).all())
         actual_income_sources_name = [item[0] for item in actual_income_sources]
         actual_income_sources_amount = [item[1] for item in actual_income_sources]
@@ -457,7 +471,7 @@ def goldmine():
         # to calculate the total budget income to expense ratio in percentage
         if total_budget_income is None or total_budget_income == 0:
             budget_income_coverage = 0
-        elif total_budget_expense is None or total_budget_expense == 0:
+        elif total_budget_income >= total_budget_expense:
             budget_income_coverage = 100
         else:
             budget_income_coverage = round((total_budget_income / total_budget_expense) * 100, 2)
@@ -465,7 +479,7 @@ def goldmine():
         # to calculate the total actual income to expense ratio in percentage
         if total_actual_expense is None or total_actual_expense == 0:
             actual_income_coverage = 0
-        elif total_actual_income is None or total_actual_income == 0:
+        elif total_actual_income >= total_actual_expense:
             actual_income_coverage = 100
         else:
             actual_income_coverage = round((total_actual_income / total_actual_expense) * 100, 2)
@@ -486,8 +500,9 @@ def goldmine():
                                actual_income_sources_amount=actual_income_sources_amount,
                                income_over_time=income_over_time, expense_over_time=expense_over_time
                                )
-    else:
-        return redirect(url_for("login"))
+    except Exception as e:
+        app.logger.error(f"An error occurred in goldmine: {str(e)}")
+        abort(500)
 
 
 @app.route('/profile', methods=['GET', 'POST'])

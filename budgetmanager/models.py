@@ -34,11 +34,13 @@ class BudgetedIncome(db.Model):
     income_name = db.Column(db.String(50), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(USER_ID, ondelete="cascade"), nullable=False)
     month_name = db.Column(db.String(20), nullable=False)
+    year = db.Column(db.Integer, nullable=False)
     budget_amount = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
         # __repr__ method for BudgetedIncome class to return a string representation of the object
-        return f"BudgetedIncome('{self.income_name}', '{self.user_id}', '{self.month_name}', '{self.budget_amount}')"
+        return (f"BudgetedIncome('{self.income_name}', '{self.user_id}', '{self.month_name}', '{self.year}', "
+                f"'{self.budget_amount}')")
 
 
 class ActualIncome(db.Model):
@@ -51,7 +53,7 @@ class ActualIncome(db.Model):
 
     def __repr__(self):
         # __repr__ method for ActualIncome class to return a string representation of the object
-        return f"ActualIncome('{self.income_name}', '{self.user_id}', '{self.date}' '{self.actual_amount}')"
+        return f"ActualIncome('{self.income_name}', '{self.user_id}', '{self.date}', '{self.actual_amount}')"
 
 
 class BudgetedExpenses(db.Model):
@@ -60,11 +62,13 @@ class BudgetedExpenses(db.Model):
     category_name = db.Column(db.String(20), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(USER_ID, ondelete="cascade"), nullable=False)
     month_name = db.Column(db.String(20), nullable=False)
+    year = db.Column(db.Integer, nullable=False)
     budget_amount = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
         # __repr__ method for BudgetedExpenses class to return a string representation of the object
-        return f"BudgetedExpenses('{self.category_name}', '{self.user_id}', '{self.month_name}, '{self.budget_amount}')"
+        return (f"BudgetedExpenses('{self.category_name}', '{self.user_id}', '{self.month_name}, '{self.year}',"
+                f" '{self.budget_amount}')")
 
 
 class ActualExpenses(db.Model):

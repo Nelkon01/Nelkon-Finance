@@ -59,7 +59,7 @@
                                 {% if messages %}
                                     {% for message in messages %}
                                         <div class="alert alert-danger" role="alert">
-                                            {{ message[0] }}. Go to <a href="{{ url_for('login') }}" class="alert-link">Login</a>
+                                            Go to <a href="{{ url_for('login') }}" class="alert-link">Login</a>
                                         </div>
                                     {% endfor %}
                                 {% endif %}
