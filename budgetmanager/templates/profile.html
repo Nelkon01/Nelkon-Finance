@@ -24,17 +24,17 @@
                 <form action="{{ url_for('profile') }}" method="POST">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="username" name="username"
-                               placeholder="Please enter username" value="{{ user.username }}">
+                               placeholder="Please enter username" value="{{ user.username }}" required>
                         <label for="username">Username</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="firstname" name="firstname"
-                               placeholder="Please Enter First Name" value="{{ user.firstname }}">
+                               placeholder="Please Enter First Name" value="{{ user.firstname }}" required>
                         <label for="firstname">First Name</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="lastname" name="lastname"
-                               placeholder="Please enter Last Name" value="{{ user.lastname }}">
+                               placeholder="Please enter Last Name" value="{{ user.lastname }}" required>
                         <label for="lastname">Last Name</label>
                     </div>
                     <div class="form-floating mb-3">
@@ -44,7 +44,7 @@
                     </div>
                     <div class="form-floating mb-3">
                         <input type="email" class="form-control" id="email" name="email"
-                               placeholder="Please enter your email" value="{{ user.email }}">
+                               placeholder="Please enter your email" value="{{ user.email }}" required>
                         <label for="email">Email</label>
                     </div>
                     <div class="card-footer">

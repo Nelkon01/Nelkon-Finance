@@ -1,5 +1,3 @@
-import json
-import pdb
 from collections import defaultdict
 from datetime import datetime
 
@@ -46,10 +44,27 @@ def home():
         except Exception as e:
             flash("An error occurred while loading your budget data. Please try again later." "error")
             app.logger.error(f"Error loading user data: {str(e)}")
-            return redirect(url_for("login"))
+            return render_template('error.html', error_message=f"An Error occurred while loading your"
+                                                               f" plan data. Please try again later.")
     else:
         flash("You must be logged in to access this page.", "error")
         return redirect(url_for("login"))
+
+
+month_name_to_number = {
+    'January': '01',
+    'February': '02',
+    'March': '03',
+    'April': '04',
+    'May': '05',
+    'June': '06',
+    'July': '07',
+    'August': '08',
+    'September': '09',
+    'October': '10',
+    'November': '11',
+    'December': '12',
+}
 
 
 @app.route('/track')
@@ -57,13 +72,28 @@ def track():
     if "user_id" in session:
         user_id = session["user_id"]
         curr_user = Users.query.get(user_id)
+        try:
+            # query and filter the actual incomes and expenses
+            actual_incomes = ActualIncome.query.filter_by(user_id=user_id).order_by(ActualIncome.date).all()
+            actual_expenses = ActualExpenses.query.filter_by(user_id=user_id).order_by(ActualExpenses.date).all()
 
-        # query and filter the actual incomes and expenses
-        actual_incomes = ActualIncome.query.filter_by(user_id=user_id).order_by(ActualIncome.date).all()
-        actual_expenses = ActualExpenses.query.filter_by(user_id=user_id).order_by(ActualExpenses.date).all()
+            actual_incomes_by_month = defaultdict(list)
+            for actual_income in actual_incomes:
+                month_year = (actual_income.date.strftime("%B"), actual_income.date.year)
+                actual_incomes_by_month[month_year].append(actual_income)
 
-        return render_template('track.html', user=curr_user, actual_incomes=actual_incomes,
-                               actual_expenses=actual_expenses)
+            actual_expenses_by_month = defaultdict(list)
+            for actual_expense in actual_expenses:
+                month_year = (actual_expense.date.strftime("%B"), actual_expense.date.year)
+                actual_expenses_by_month[month_year].append(actual_expense)
+
+            return render_template('track.html', user=curr_user, actual_incomes=actual_incomes,
+                                   actual_expenses=actual_expenses, actual_incomes_by_month=actual_incomes_by_month,
+                                   actual_expenses_by_month=actual_expenses_by_month)
+        except Exception as e:
+            app.logger.error(f"An error occurred: {str(e)}")
+            return render_template('error.html', error_message=f"An Error occurred while loading your"
+                                                               f" tracking data. Please try again later.")
     else:
         return redirect(url_for("login"))
 
@@ -150,22 +180,6 @@ def add_budget_income():
     db.session.add(budgeted_income)
     db.session.commit()
     return redirect(url_for('home'))
-
-
-month_name_to_number = {
-    'January': '01',
-    'February': '02',
-    'March': '03',
-    'April': '04',
-    'May': '05',
-    'June': '06',
-    'July': '07',
-    'August': '08',
-    'September': '09',
-    'October': '10',
-    'November': '11',
-    'December': '12',
-}
 
 
 @app.route('/edit_budget_income/<int:income_id>', methods=['POST', 'GET'])
@@ -492,22 +506,35 @@ def goldmine():
                              .order_by('expense_month')
                              .all()
                              )
+        # Calculate budget income coverage
+        if total_actual_expense is None:
+            total_actual_expense = 0
+        if total_budget_expense is None:
+            total_budget_expense = 0
+        if total_actual_income is None:
+            total_actual_income = 0
+        if total_budget_income is None:
+            total_budget_income = 0
 
-        # to calculate the total budget income to expense ratio in percentage
-        if total_budget_income is None or total_budget_income == 0:
+        # Check if total_budget_income and total_budget_expense are not None and greater than or equal to zero
+        if (total_budget_income is not None and total_budget_expense is not None and total_budget_income >= 0 and
+                total_budget_expense >= 0):
+            if total_budget_income >= total_budget_expense:
+                budget_income_coverage = 100
+            else:
+                budget_income_coverage = round((total_budget_income / total_budget_expense) * 100, 2)
+        else:
             budget_income_coverage = 0
-        elif total_budget_income >= total_budget_expense:
-            budget_income_coverage = 100
-        else:
-            budget_income_coverage = round((total_budget_income / total_budget_expense) * 100, 2)
 
-        # to calculate the total actual income to expense ratio in percentage
-        if total_actual_expense is None or total_actual_expense == 0:
-            actual_income_coverage = 0
-        elif total_actual_income >= total_actual_expense:
-            actual_income_coverage = 100
+        # calculate actual income coverage
+        # Check if total_actual_income and total_actual_expense are not None and greater than or equal to zero
+        if total_actual_income is not None and total_actual_expense is not None and total_actual_income >= 0 and total_actual_expense >= 0:
+            if total_actual_income >= total_actual_expense:
+                actual_income_coverage = 100
+            else:
+                actual_income_coverage = round((total_actual_income / total_actual_expense) * 100, 2)
         else:
-            actual_income_coverage = round((total_actual_income / total_actual_expense) * 100, 2)
+            actual_income_coverage = 0
 
         return render_template('goldmine.html', user=curr_user, selected_month=selected_month,
                                years_in_db=years_in_db, total_budget_income=total_budget_income,

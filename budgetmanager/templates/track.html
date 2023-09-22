@@ -4,11 +4,24 @@
     <!--Jumbo-tron-->
     <div class="row">
         <div class="mt-4 p-5 rounded bg-success text-center">
-            <h1 class="text-light">Track Treasure {{ current_user.firstname }}</h1>
+            <h1 class="text-light">Lets Track {{ current_user.firstname }}'s Treasure</h1>
         </div>
     </div>
 
-    <!--Div to display figures -->
+    {#    Flash Message #}
+    <div class="container mt-2">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!--Main cards to add Actual Income and Expenses -->
     <div class="row my-5">
 
         <!--    Actual Income Card -->
@@ -24,8 +37,6 @@
                             data-bs-target="#actualIncomeModal">
                         Add Actual Income
                     </button>
-                </div>
-                <div class="card-footer text-muted">
                 </div>
             </div>
         </div>
@@ -47,20 +58,20 @@
                             <!--                     Date-->
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control datepicker" id="date" name="date"
-                                       placeholder="date">
+                                       placeholder="date" required>
                                 <label for="date">Date <span><i class="fa fa-calendar"></i></span></label>
                             </div>
 
                             <!--                    Income name input-->
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" name="income_name" id="income_name"
-                                       placeholder="Income Name">
+                                       placeholder="Income Name" required>
                                 <label for="income_name">Income Name</label>
                             </div>
                             <!--                    Amount -->
                             <div class="form-floating mb-3">
                                 <input type="number" class="form-control" id="actual_income_amount"
-                                       placeholder="Month" name="actual_amount">
+                                       placeholder="Month" name="actual_amount" step="0.01" required>
                                 <label for="actual_income_amount">Amount</label>
                             </div>
                             <div class="modal-footer">
@@ -91,8 +102,6 @@
                         Add Actual Expenses
                     </button>
                 </div>
-                <div class="card-footer text-muted">
-                </div>
             </div>
         </div>
     </div>
@@ -113,20 +122,20 @@
                         <!--                     Date-->
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control datepicker" id="date" name="date"
-                                   placeholder="date">
+                                   placeholder="date" required>
                             <label for="date">Date <span><i class="fa fa-calendar"></i></span></label>
                         </div>
                         <!--                    Expense name input-->
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" name="expense_name" id="expense_name"
-                                   placeholder="Expense Name">
+                                   placeholder="Expense Name" required>
                             <label for="expense_name">Expense Name</label>
                         </div>
 
                         <!--                    Categories -->
                         <div class="form-floating mb-3">
                             <label for="actual_exp_category_name"></label>
-                            <select name="category_name" id="actual_exp_category_name" class="form-control">
+                            <select name="category_name" id="actual_exp_category_name" class="form-control" required>
                                 <option value="" disabled selected>Select Spending Category</option>
                                 <option value="Shopping">Shopping</option>
                                 <option value="Groceries">Groceries</option>
@@ -141,7 +150,7 @@
                         <!--                    Amount -->
                         <div class="form-floating mb-3">
                             <input type="number" class="form-control" id="actual_exp_amount"
-                                   placeholder="Month" name="actual_amount">
+                                   placeholder="Month" name="actual_amount" step="0.01" required>
                             <label for="actual_exp_amount">Amount</label>
                         </div>
                         <div class="modal-footer">
@@ -162,157 +171,185 @@
         <div class="col-md-6">
             <div class="row">
                 {#    Edit  Actual Income #}
-                {% for actual_income in actual_incomes %}
+                {% for (month_name, year), actual_incomes in actual_incomes_by_month.items() %}
                     <div class="card border-light mb-3 mx-2 text-center" style="max-width: 18rem;">
-                        <div class="card-header">Actual Income Entry</div>
+                        <div class="card-header">Actual Income for {{ month_name }} {{ year }}</div>
                         <div class="card-body">
-                            <h5 class="card-title">{{ actual_income.date.strftime('%d-%m-%Y') }}</h5>
-                            <hr>
-                            <p class="card-text">Income Name: {{ actual_income.income_name }}</p>
-                            <p class="card-text">Actual Amount: £ {{ actual_income.actual_amount }}</p>
-                            <a href="#" data-bs-toggle="modal"
-                               data-bs-target="#editActualIncomeModal{{ actual_income.income_id }}"
-                               class="btn btn-outline-light">Edit</a>
-                            <a href="{{ url_for('delete_actual_income', income_id=actual_income.income_id) }}"
-                               class="btn btn-outline-danger">Delete</a>
-                        </div>
-                    </div>
-
-                    <!-- Modal for Edit Actual Income form -->
-                    <div class="modal fade" id="editActualIncomeModal{{ actual_income.income_id }}" tabindex="-1"
-                         aria-labelledby="editActualIncomeModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="editActualIncomeModalLabel">Edit Actual Income</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+                            {% for actual_income in actual_incomes %}
+                                <h5 class="card-title">{{ actual_income.income_name }}</h5>
+                                <hr>
+                                <h6 class="card-text">Date: {{ actual_income.date.strftime('%d-%m-%Y') }}</h6>
+                                <p class="card-text">Amount: £{{ actual_income.actual_amount }}</p>
+                                <div class="card-footer text-muted">
+                                    <a href="#" data-bs-toggle="modal"
+                                       data-bs-target="#editActualIncomeModal{{ actual_income.income_id }}"
+                                       class="btn btn-outline-light">Edit</a>
+                                    <a href="{{ url_for('delete_actual_income', income_id=actual_income.income_id) }}"
+                                       class="btn btn-outline-danger">Delete</a>
                                 </div>
-                                <div class="modal-body">
-                                    <!-- Edit budget form -->
-                                    <form action="{{ url_for('edit_actual_income', income_id=actual_income.income_id) }}"
-                                          method="POST">
+                                <hr>
 
-                                        <!--                     Date-->
-                                        <div class="form-floating mb-3">
-                                            <input type="text" class="form-control datepicker" id="date" name="date"
-                                                   placeholder="date" value="{{ actual_income.date.strftime('%d-%m-%Y') }}">
-                                            <label for="date">Date <span><i class="fa fa-calendar"></i></span></label>
-                                        </div>
+                                <!-- Modal for Edit Actual Income form -->
+                                <div class="modal fade" id="editActualIncomeModal{{ actual_income.income_id }}"
+                                     tabindex="-1"
+                                     aria-labelledby="editActualIncomeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="editActualIncomeModalLabel">Edit Actual
+                                                    Income</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Edit budget form -->
+                                                <form action="{{ url_for('edit_actual_income', income_id=actual_income.income_id) }}"
+                                                      method="POST">
 
-                                        <!--                    Income name input-->
-                                        <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" name="income_name" id="income_name"
-                                                   placeholder="Income Name" value="{{ actual_income.income_name }}">
-                                            <label for="income_name">Income Name</label>
+                                                    <!--                     Date-->
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control datepicker" id="date"
+                                                               name="date"
+                                                               placeholder="date"
+                                                               value="{{ actual_income.date.strftime('%d-%m-%Y') }}" required>
+                                                        <label for="date">Date <span><i
+                                                                class="fa fa-calendar"></i></span></label>
+                                                    </div>
+
+                                                    <!--                    Income name input-->
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" name="income_name"
+                                                               id="income_name"
+                                                               placeholder="Income Name"
+                                                               value="{{ actual_income.income_name }}" required>
+                                                        <label for="income_name">Income Name</label>
+                                                    </div>
+                                                    <!--                    Amount -->
+                                                    <div class="form-floating mb-3">
+                                                        <input type="number" class="form-control"
+                                                               id="actual_income_amount"
+                                                               placeholder="Month" name="actual_amount"
+                                                               value="{{ actual_income.actual_amount }}" step="0.01" required>
+                                                        <label for="actual_income_amount">Amount</label>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">
+                                                            Close
+                                                        </button>
+                                                        <button class="btn btn-primary" type="submit">
+                                                            Add Income
+                                                            <i class="fas fa-plus-square end"></i>
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
-                                        <!--                    Amount -->
-                                        <div class="form-floating mb-3">
-                                            <input type="number" class="form-control" id="actual_income_amount"
-                                                   placeholder="Month" name="actual_amount"
-                                                    value="{{ actual_income.actual_amount }}" >
-                                            <label for="actual_income_amount">Amount</label>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                Close
-                                            </button>
-                                            <button class="btn btn-primary" type="submit">
-                                                Add Income
-                                                <i class="fas fa-plus-square end"></i>
-                                            </button>
-                                        </div>
-                                    </form>
+                                    </div>
                                 </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 {% endfor %}
             </div>
         </div>
 
-        {#    Edit Budget Expense #}
+
+        {#    Edit Actual Expense #}
         <div class="col-md-6">
             <div class="row">
-                {% for actual_expense in actual_expenses %}
+                {% for (month_name, year), actual_expenses in actual_expenses_by_month.items() %}
                     <div class="card border-light mb-3 mx-2 text-center" style="max-width: 18rem;">
-                        <div class="card-header">Actual Expense Entry</div>
+                        <div class="card-header">Actual Expenses for {{ month_name }} {{ year }}</div>
                         <div class="card-body">
-                            <h5 class="card-title">{{ actual_expense.date.strftime('%d-%m-%Y') }}</h5>
-                            <hr>
-                            <p class="card-text">Expense Name: {{ actual_expense.expense_name }}</p>
-                            <p class="card-text">Expense Category: {{ actual_expense.category_name }}</p>
-                            <p class="card-text">Actual Amount: £ {{ actual_expense.actual_amount }}</p>
-                            <a href="#" data-bs-toggle="modal"
-                               data-bs-target="#editActualExpenseModal{{ actual_expense.expense_id }}"
-                               class="btn btn-outline-light">Edit</a>
-                            <a href="{{ url_for('delete_actual_expense', expense_id=actual_expense.expense_id) }}"
-                               class="btn btn-outline-danger">Delete</a>
-                        </div>
-                    </div>
-
-                    {#                                        Modal for Edit Budget Expense#}
-                    <div class="modal fade" id="editActualExpenseModal{{ actual_expense.expense_id }}" tabindex="-1"
-                         aria-labelledby="actualExpenseModal"
-                         aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="editActualExpenseModalLabel">Edit Actual
-                                        Expense</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+                            {% for actual_expense in actual_expenses %}
+                                <h5 class="card-title">{{ actual_expense.expense_name }}</h5>
+                                <hr>
+                                <h6 class="card-text">Date: {{ actual_expense.date.strftime('%d-%m-%Y') }}</h6>
+                                <h6 class="card-text">Category: {{ actual_expense.category_name }}</h6>
+                                <h6 class="card-text">Actual Amount: £{{ actual_expense.actual_amount }}</h6>
+                                <div class="card-footer text-muted">
+                                    <a href="#" data-bs-toggle="modal"
+                                       data-bs-target="#editActualExpenseModal{{ actual_expense.expense_id }}"
+                                       class="btn btn-outline-light">Edit</a>
+                                    <a href="{{ url_for('delete_actual_expense', expense_id=actual_expense.expense_id) }}"
+                                       class="btn btn-outline-danger">Delete</a>
                                 </div>
-                                <div class="modal-body">
-                                    <!--                    budget form-->
-                                    <form method="POST"
-                                          action="{{ url_for('edit_actual_expense', expense_id=actual_expense.expense_id) }}">
+                                <hr>
 
-                                        <!--                     Date-->
-                                        <div class="form-floating mb-3">
-                                            <input type="text" class="form-control datepicker" id="date" name="date"
-                                                   placeholder="date" value="{{ actual_expense.date.strftime('%d-%m-%Y') }}">
-                                            <label for="date">Date <span><i class="fa fa-calendar"></i></span></label>
-                                        </div>
-                                        <!--                    Expense name input-->
-                                        <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" name="expense_name"
-                                                   id="expense_name"
-                                                   placeholder="Expense Name" value="{{ actual_expense.expense_name }}">
-                                            <label for="expense_name">Expense Name</label>
-                                        </div>
+                                {#                                        Modal for Edit actual Expense#}
+                                <div class="modal fade" id="editActualExpenseModal{{ actual_expense.expense_id }}"
+                                     tabindex="-1"
+                                     aria-labelledby="actualExpenseModal"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="editActualExpenseModalLabel">Edit
+                                                    Actual
+                                                    Expense</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!--                    budget form-->
+                                                <form method="POST"
+                                                      action="{{ url_for('edit_actual_expense', expense_id=actual_expense.expense_id) }}">
 
-                                        <!--                    Categories -->
-                                        <div class="form-floating mb-3">
-                                            <label for="actual_exp_category_name"></label>
-                                            <select name="category_name" id="edit_category_name" class="form-control">
-                                                {% for category in ["Shopping", "Groceries", "Eating-Out", "Transport",
+                                                    <!--                     Date-->
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control datepicker" id="date"
+                                                               name="date"
+                                                               placeholder="date"
+                                                               value="{{ actual_expense.date.strftime('%d-%m-%Y') }}" required>
+                                                        <label for="date">Date <span><i
+                                                                class="fa fa-calendar"></i></span></label>
+                                                    </div>
+                                                    <!--                    Expense name input-->
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" name="expense_name"
+                                                               id="expense_name"
+                                                               placeholder="Expense Name"
+                                                               value="{{ actual_expense.expense_name }}" required>
+                                                        <label for="expense_name">Expense Name</label>
+                                                    </div>
+
+                                                    <!--                    Categories -->
+                                                    <div class="form-floating mb-3">
+                                                        <label for="edit_category_name"></label>
+                                                        <select name="category_name" id="edit_category_name"
+                                                                class="form-control" required>
+                                                            {% for category in ["Shopping", "Groceries", "Eating-Out", "Transport",
                                                  "Bills", "Entertainment", "Miscellaneous"] %}
-                                                    <option value="{{ category }}"
-                                                            {% if category == actual_expense.category_name %}selected{% endif %}>{{ category }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
+                                                                <option value="{{ category }}"
+                                                                        {% if category == actual_expense.category_name %}selected{% endif %}>{{ category }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
 
-                                        <!--                    Amount -->
-                                        <div class="form-floating mb-3">
-                                            <input type="number" class="form-control" id="actual_exp_amount"
-                                                   placeholder="Month" name="actual_amount"
-                                                   value="{{ actual_expense.actual_amount }}">
-                                            <label for="actual_exp_amount">Amount</label>
+                                                    <!--                    Amount -->
+                                                    <div class="form-floating mb-3">
+                                                        <input type="number" class="form-control" id="actual_exp_amount"
+                                                               placeholder="Month" name="actual_amount"
+                                                               value="{{ actual_expense.actual_amount }}" step="0.01" required>
+                                                        <label for="actual_exp_amount">Amount</label>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">
+                                                            Close
+                                                        </button>
+                                                        <button class="btn btn-primary" type="submit">
+                                                            Edit Expense
+                                                            <i class="fas fa-edit end"></i>
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                Close
-                                            </button>
-                                            <button class="btn btn-primary" type="submit">
-                                                Edit Expense
-                                                <i class="fas fa-edit end"></i>
-                                            </button>
-                                        </div>
-                                    </form>
+                                    </div>
                                 </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 {% endfor %}
