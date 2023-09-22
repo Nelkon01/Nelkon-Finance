@@ -108,6 +108,12 @@ def signup():
         password = request.form.get("password")
         email = request.form.get("email")
 
+        # Basic Form Validation
+        if not username or not firstname or not lastname or not password or not email:
+            flash('All fields are required', 'error')
+            return redirect(url_for('signup'))
+
+        # Check if username or email already exists
         user_check = Users.query.filter_by(username=username).first()
         email_check = Users.query.filter_by(email=email).first()
 
@@ -117,16 +123,32 @@ def signup():
         elif email_check:
             flash('Email already exists', 'error')
             return redirect(url_for('signup'))
-        else:
-            encrypted_password = generate_password_hash(password, method="sha256")
-            new_user = Users(username=username, firstname=firstname, lastname=lastname, password=encrypted_password,
-                             email=email)
+
+        # Hash Password
+        encrypted_password = generate_password_hash(password, method="sha256")
+
+        # Create new user
+        new_user = Users(
+                        username=username,
+                        firstname=firstname,
+                        lastname=lastname,
+                        password=encrypted_password,
+                        email=email
+        )
+
+        try:
             db.session.add(new_user)
             db.session.commit()
+
             flash('Account created successfully!', 'success')
             return redirect(url_for('login'))
-    else:
-        return redirect(url_for('login'))
+        except Exception as e:
+            db.session.rollback()
+            flash('An error occurred during the registration. Please try again later')
+            app.logger.error(f"Registration error: {str(e)}")
+            return redirect(url_for('signup'))
+    # If GET request, render the signup form
+    return redirect(url_for('signup'))
 
 
 # Login route
@@ -516,25 +538,21 @@ def goldmine():
         if total_budget_income is None:
             total_budget_income = 0
 
-        # Check if total_budget_income and total_budget_expense are not None and greater than or equal to zero
-        if (total_budget_income is not None and total_budget_expense is not None and total_budget_income >= 0 and
-                total_budget_expense >= 0):
-            if total_budget_income >= total_budget_expense:
-                budget_income_coverage = 100
-            else:
-                budget_income_coverage = round((total_budget_income / total_budget_expense) * 100, 2)
-        else:
+            # to calculate the total budget income to expense ratio in percentage
+        if total_budget_income is None or total_budget_income == 0:
             budget_income_coverage = 0
-
-        # calculate actual income coverage
-        # Check if total_actual_income and total_actual_expense are not None and greater than or equal to zero
-        if total_actual_income is not None and total_actual_expense is not None and total_actual_income >= 0 and total_actual_expense >= 0:
-            if total_actual_income >= total_actual_expense:
-                actual_income_coverage = 100
-            else:
-                actual_income_coverage = round((total_actual_income / total_actual_expense) * 100, 2)
+        elif total_budget_income >= total_budget_expense:
+            budget_income_coverage = 100
         else:
+            budget_income_coverage = round((total_budget_income / total_budget_expense) * 100, 2)
+
+        # to calculate the total actual income to expense ratio in percentage
+        if total_actual_expense is None or total_actual_expense == 0:
             actual_income_coverage = 0
+        elif total_actual_income >= total_actual_expense:
+            actual_income_coverage = 100
+        else:
+            actual_income_coverage = round((total_actual_income / total_actual_expense) * 100, 2)
 
         return render_template('goldmine.html', user=curr_user, selected_month=selected_month,
                                years_in_db=years_in_db, total_budget_income=total_budget_income,
