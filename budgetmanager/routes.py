@@ -1,8 +1,9 @@
 from collections import defaultdict
 from datetime import datetime
 
-from flask import render_template, request, redirect, url_for, session, flash, jsonify, abort
+from flask import render_template, request, redirect, url_for, session, flash, abort
 from flask_login import login_user, current_user, logout_user, login_required
+from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.security import check_password_hash, generate_password_hash
 from sqlalchemy import func, extract
 
@@ -119,10 +120,10 @@ def signup():
 
         if user_check:
             flash('Username already exists', 'error')
-            return redirect(url_for('signup'))
+            return redirect(url_for('login'))
         elif email_check:
             flash('Email already exists', 'error')
-            return redirect(url_for('signup'))
+            return redirect(url_for('login'))
 
         # Hash Password
         encrypted_password = generate_password_hash(password, method="sha256")
@@ -146,7 +147,7 @@ def signup():
             db.session.rollback()
             flash('An error occurred during the registration. Please try again later')
             app.logger.error(f"Registration error: {str(e)}")
-            return redirect(url_for('signup'))
+            return redirect(url_for('error.html'))
     # If GET request, render the signup form
     return redirect(url_for('signup'))
 
@@ -159,7 +160,7 @@ def login():
         password = request.form['password']
 
         if not identifier or not password:
-            flash('Please enter both username/email and password', 'error')
+            flash('Please enter both username or email and password', 'error')
             return redirect(url_for('login'))
 
         curr_user = Users.query.filter(
@@ -175,16 +176,14 @@ def login():
             flash('Invalid username/email or password', 'error')
 
     if current_user.is_authenticated:
+        flash('You are already logged in!', 'success')
         return redirect(url_for('home'))
-    flash('Please login to access your account', 'error')
     return render_template('login.html')
 
 
 @app.route('/add_budget_income', methods=['POST', 'GET'])
+@login_required
 def add_budget_income():
-    # Validate user
-    if not current_user.is_authenticated:
-        return redirect(url_for('login'))
 
     #     collect form data from add_budget_expense form
     month_name = request.form.get('month_name')
@@ -192,26 +191,43 @@ def add_budget_income():
     income_name = request.form.get('income_name')
     budget_amount = request.form.get('budget_amount')
 
-    budgeted_income = BudgetedIncome(
-        income_name=income_name,
-        user_id=session["user_id"],
-        month_name=month_name,
-        year=year,
-        budget_amount=budget_amount
-    )
-    db.session.add(budgeted_income)
-    db.session.commit()
+    # form validation
+    if not (month_name and year and income_name and budget_amount):
+        flash('All fields are required', 'error')
+        return redirect(url_for('home'))
+
+    try:
+        #     convert year and budget to their respective types
+        year = int(year)
+        budget_amount = float(budget_amount)
+
+        # New budget income record
+        budgeted_income = BudgetedIncome(
+            income_name=income_name,
+            user_id=session["user_id"],
+            month_name=month_name,
+            year=year,
+            budget_amount=budget_amount
+        )
+        db.session.add(budgeted_income)
+        db.session.commit()
+        flash('Budget Income added successfully!', 'success')
+    except ValueError:
+        flash('Invalid Data. Please enter a valid numbers for year and budget')
     return redirect(url_for('home'))
 
 
 @app.route('/edit_budget_income/<int:income_id>', methods=['POST', 'GET'])
+@login_required
 def edit_budget_income(income_id):
-    # Validate user
-    if not current_user.is_authenticated:
-        return redirect(url_for('login'))
 
     # Get the budget income record by income id
     budget_income = BudgetedIncome.query.get_or_404(income_id)
+
+    if budget_income.user_id != current_user.id:
+        flash("You don't have the permission to edit this budget income.", 'error')
+        return render_template('error.html', error_message='Permission Denied')
+
     if request.method == 'POST':
         #     collect form data from add_budget_expense form
         month_name = request.form.get('month_name')
@@ -225,20 +241,32 @@ def edit_budget_income(income_id):
 
         db.session.commit()
         flash("Budget Income updated Successfully", 'success')
+    else:
+        pass
+
     return redirect(url_for('home'))
 
 
 @app.route('/delete_budget_income/<int:income_id>', methods=['POST', 'GET'])
+@login_required
 def delete_budget_income(income_id):
-    #     Validate user
-    if not current_user.is_authenticated:
-        return redirect(url_for('login'))
-
     budget_income = BudgetedIncome.query.get_or_404(income_id)
-    db.session.delete(budget_income)
-    db.session.commit()
-    flash('Budget Income Deleted Successfully', 'success')
-    return redirect(url_for('home'))
+
+    # Check if the user trying to delete a budget income is the owner
+    if budget_income.user_id != current_user.id:
+        flash("You don't have permission to delete this budget income.", 'error')
+        return render_template('error.html', error_message='Permission Denied')
+
+    try:
+        db.session.delete(budget_income)
+        db.session.commit()
+        flash('Budget Income Deleted Successfully', 'success')
+        return redirect(url_for('home'))
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        flash("An error occurred while deleting the budget income. Please try again later")
+        app.logger.error(f"Error deleting budget income: {str(e)}")
+        return redirect(url_for(home))
 
 
 @app.route('/add_budget_expense', methods=['POST', 'GET'])
@@ -576,7 +604,6 @@ def goldmine():
 
 
 @app.route('/profile', methods=['GET', 'POST'])
-@login_required
 def profile():
     user_id = session["user_id"]
     curr_user = Users.query.get(user_id)
