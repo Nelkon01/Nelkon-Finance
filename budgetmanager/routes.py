@@ -780,6 +780,28 @@ def profile():
     return render_template('profile.html', user=curr_user)
 
 
+@app.route('/delete_profile', methods=['GET', 'POST'])
+@login_required
+def delete_profile():
+    if request.method == 'POST':
+        # User has confirmed the deletion
+        try:
+            db.session.delete(current_user)
+            db.session.commit()
+
+            # Logout the user and clear their session
+            logout_user()
+
+            flash('Your profile has been deleted.', 'success')
+            return redirect(url_for('login'))
+        except Exception as e:
+            db.session.rollback()
+            flash('An error occurred while deleting your profile. Please try again later.', 'error')
+            app.logger.error(f"Error deleting user profile: {str(e)}")
+
+    return redirect(url_for('delete_profile'))
+
+
 @app.route('/logout')
 @login_required
 def logout():
