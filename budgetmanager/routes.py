@@ -1,7 +1,7 @@
 from collections import defaultdict
 from datetime import datetime
 
-from flask import render_template, request, redirect, url_for, session, flash, abort
+from flask import render_template, request, redirect, url_for, session, flash
 from flask_login import login_user, current_user, logout_user, login_required
 from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -245,7 +245,7 @@ def edit_budget_income(income_id):
 
         try:
             year = int(year)
-            budget_income =  float(budget_amount)
+            budget_income = float(budget_amount)
 
             # update the budget income values of that id
             budget_income.month_name = month_name
@@ -286,7 +286,7 @@ def delete_budget_income(income_id):
         db.session.rollback()
         flash("An error occurred while deleting the budget income. Please try again later")
         app.logger.error(f"Error deleting budget income: {str(e)}")
-        return redirect(url_for(home))
+        return redirect(url_for('home'))
 
 
 @app.route('/add_budget_expense', methods=['POST', 'GET'])
@@ -448,10 +448,9 @@ def edit_actual_expense(expense_id):
         actual_amount = request.form.get('actual_amount')
 
         try:
-            # date = datetime.strptime(date_str, "%d/%m/%Y")
             actual_amount = float(actual_amount)
             #         update values
-            actual_expense.date = date
+            actual_expense.date = datetime.strptime(date, "%d/%m/%Y")
             actual_expense.expense_name = expense_name
             actual_expense.category_name = category_name
             actual_expense.actual_amount = actual_amount
@@ -541,7 +540,7 @@ def edit_actual_income(income_id):
 
         try:
             #         update values
-            actual_income.date = date
+            actual_income.date = datetime.strptime(date, "%d/%m/%Y")
             actual_income.income_name = income_name
             actual_income.actual_amount = actual_amount
 
