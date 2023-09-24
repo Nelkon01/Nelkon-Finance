@@ -69,6 +69,7 @@ month_name_to_number = {
 
 
 @app.route('/track')
+@login_required
 def track():
     if "user_id" in session:
         user_id = session["user_id"]
@@ -130,11 +131,11 @@ def signup():
 
         # Create new user
         new_user = Users(
-                        username=username,
-                        firstname=firstname,
-                        lastname=lastname,
-                        password=encrypted_password,
-                        email=email
+            username=username,
+            firstname=firstname,
+            lastname=lastname,
+            password=encrypted_password,
+            email=email
         )
 
         try:
@@ -171,20 +172,21 @@ def login():
             flash('Logged in successfully!', 'success')
             session.permanent = True
             session["user_id"] = curr_user.id
-            return redirect(url_for('home'))
+            next_page = request.args.get('next') or 'home'
+            return redirect(url_for(next_page))
         else:
             flash('Invalid username/email or password', 'error')
 
     if current_user.is_authenticated:
         flash('You are already logged in!', 'success')
         return redirect(url_for('home'))
+
     return render_template('login.html')
 
 
 @app.route('/add_budget_income', methods=['POST', 'GET'])
 @login_required
 def add_budget_income():
-
     #     collect form data from add_budget_expense form
     month_name = request.form.get('month_name')
     year = request.form.get('year')
@@ -201,26 +203,32 @@ def add_budget_income():
         year = int(year)
         budget_amount = float(budget_amount)
 
-        # New budget income record
-        budgeted_income = BudgetedIncome(
-            income_name=income_name,
-            user_id=session["user_id"],
-            month_name=month_name,
-            year=year,
-            budget_amount=budget_amount
-        )
-        db.session.add(budgeted_income)
-        db.session.commit()
-        flash('Budget Income added successfully!', 'success')
-    except ValueError:
-        flash('Invalid Data. Please enter a valid numbers for year and budget')
+        # Ensure user is the owner by checking their id
+        if current_user.id:
+            # New budget income record
+            budgeted_income = BudgetedIncome(
+                income_name=income_name,
+                user_id=current_user.id,
+                month_name=month_name,
+                year=year,
+                budget_amount=budget_amount
+            )
+            db.session.add(budgeted_income)
+            db.session.commit()
+
+            flash('Budget Income added successfully!', 'success')
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        flash('An error occurred while adding the budget income. Please try again later.' 'error')
+        app.logger.error(f"Error adding budget income: {str(e)}")
+        return render_template('error.html')
+
     return redirect(url_for('home'))
 
 
 @app.route('/edit_budget_income/<int:income_id>', methods=['POST', 'GET'])
 @login_required
 def edit_budget_income(income_id):
-
     # Get the budget income record by income id
     budget_income = BudgetedIncome.query.get_or_404(income_id)
 
@@ -231,18 +239,30 @@ def edit_budget_income(income_id):
     if request.method == 'POST':
         #     collect form data from add_budget_expense form
         month_name = request.form.get('month_name')
+        year = request.form.get('year')
         income_name = request.form.get('income_name')
         budget_amount = request.form.get('budget_amount')
 
-        # update the budget income values of that id
-        budget_income.month_name = month_name
-        budget_income.income_name = income_name
-        budget_income.budget_amount = budget_amount
+        try:
+            year = int(year)
+            budget_income =  float(budget_amount)
 
-        db.session.commit()
-        flash("Budget Income updated Successfully", 'success')
-    else:
-        pass
+            # update the budget income values of that id
+            budget_income.month_name = month_name
+            budget_income.year = year
+            budget_income.income_name = income_name
+            budget_income.budget_amount = budget_amount
+
+            db.session.commit()
+            flash("Budget Income updated Successfully", 'success')
+
+        except ValueError as e:
+            flash("Invalid datat types provided. Please check your input", 'error')
+
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            flash("An error occurred while updating the budget income. Please try again later.", 'error')
+            app.logger.error(f"Error updating budget expense: {str(e)}")
 
     return redirect(url_for('home'))
 
@@ -270,95 +290,156 @@ def delete_budget_income(income_id):
 
 
 @app.route('/add_budget_expense', methods=['POST', 'GET'])
+@login_required
 def add_budget_expense():
-    if not current_user.is_authenticated:
-        return redirect(url_for('login'))
-
     #     collect form data from add_budget_expense form
     month_name = request.form.get('month_name')
     year = request.form.get('year')
     category_name = request.form.get('category_name')
     budget_amount = request.form.get('budget_amount')
 
-    budgeted_expense = BudgetedExpenses(
-        category_name=category_name,
-        user_id=session["user_id"],
-        month_name=month_name,
-        year=year,
-        budget_amount=budget_amount
-    )
-    db.session.add(budgeted_expense)
-    db.session.commit()
+    # form validation
+    if not (month_name and year and category_name and budget_amount):
+        flash('All fields are required', 'error')
+        return redirect(url_for('home'))
+
+    try:
+        #     convert year and budget to their respective types
+        year = int(year)
+        budget_amount = float(budget_amount)
+
+        # Ensure user is the owner by checking their ID
+        if current_user.id:
+            budgeted_expense = BudgetedExpenses(
+                category_name=category_name,
+                user_id=current_user.id,
+                month_name=month_name,
+                year=year,
+                budget_amount=budget_amount
+            )
+            db.session.add(budgeted_expense)
+            db.session.commit()
+
+            flash('Budget Expense added successfully!', 'success')
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        flash('An error occurred while adding the budget expense. Please try again later.', 'error')
+        app.logger.error(f"Error adding budget expense: {str(e)}")
+        return render_template('error.html')
+
     return redirect(url_for('home'))
 
 
 @app.route('/edit_budget_expense/<int:expense_id>', methods=['POST', 'GET'])
+@login_required
 def edit_budget_expense(expense_id):
-    # Validate User
-    if not current_user.is_authenticated:
-        return redirect(url_for('login'))
-
     #     Get budget expenses by id
     budget_expenses = BudgetedExpenses.query.get_or_404(expense_id)
+
+    if budget_expenses.user_id != current_user.id:
+        flash("You don't have the permission to edit this budget expense.", 'error')
+        return render_template('error.html', error_message='Permission Denied')
+
     if request.method == 'POST':
         #   Collect form data from form
         month_name = request.form.get('month_name')
+        year = request.form.get('year')
         category_name = request.form.get('category_name')
         budget_amount = request.form.get('budget_amount')
 
-        #   update the budget expense values
-        budget_expenses.month_name = month_name
-        budget_expenses.category_name = category_name
-        budget_expenses.budget_amount = budget_amount
+        try:
+            # Validate data types and perform updates
+            year = int(year)
+            budget_amount = float(budget_amount)
 
-        db.session.commit()
-        flash("Budget Expense updated Successfully", 'success')
+            #   update the budget expense values
+            budget_expenses.month_name = month_name
+            budget_expenses.year = year
+            budget_expenses.category_name = category_name
+            budget_expenses.budget_amount = budget_amount
+
+            db.session.commit()
+            flash("Budget Expense updated Successfully", 'success')
+        except ValueError as e:
+            flash("Invalid datat types provided. Please check your input", 'error')
+
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            flash("An error occurred while updating the budget expense. Please try again later.", 'error')
+            app.logger.error(f"Error updating budget expense: {str(e)}")
+            return render_template('error.html', error_message='An error occurred')
+
     return redirect(url_for('home'))
 
 
 @app.route('/delete_budget_expense/<int:expense_id>', methods=['POST', 'GET'])
+@login_required
 def delete_budget_expense(expense_id):
-    #    user validation
-    if not current_user.is_authenticated:
-        return redirect(url_for('login'))
-
     budget_expense = BudgetedExpenses.query.get_or_404(expense_id)
-    db.session.delete(budget_expense)
-    db.session.commit()
-    flash('Budget Expense Deleted Successfully', 'success')
-    return redirect(url_for('home'))
+
+    # Check if the user trying to delete a budget income is the owner
+    if budget_expense.user_id != current_user.id:
+        flash("You don't have permission to delete this budget expense.", 'error')
+        return render_template('error.html', error_message='Permission Denied')
+
+    try:
+        db.session.delete(budget_expense)
+        db.session.commit()
+        flash('Budget Expense Deleted Successfully', 'success')
+        return redirect(url_for('home'))
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        flash("An error occurred while deleting the budget income. Please try again later")
+        app.logger.error(f"Error deleting budget expense: {str(e)}")
+        return redirect(url_for('home'))
 
 
 @app.route('/add_actual_expense', methods=['POST', 'GET'])
+@login_required
 def add_actual_expense():
-    if not current_user.is_authenticated:
-        return redirect(url_for('login'))
     #     collect form data from add_actual_expense form
     date_str = request.form.get('date')
     expense_name = request.form.get('expense_name')
     category_name = request.form.get('category_name')
     actual_amount = request.form.get('actual_amount')
 
-    date = datetime.strptime(date_str, "%d/%m/%Y")
-    actual_expense = ActualExpenses(
-        category_name=category_name,
-        user_id=session["user_id"],
-        date=date,
-        actual_amount=actual_amount,
-        expense_name=expense_name
-    )
-    db.session.add(actual_expense)
-    db.session.commit()
+    # form validation
+    if not (date_str and expense_name and category_name and actual_amount):
+        flash('All fields are required', 'error')
+        return redirect(url_for('home'))
+    try:
+        date = datetime.strptime(date_str, "%d/%m/%Y")
+        if current_user.id:
+            actual_expense = ActualExpenses(
+                category_name=category_name,
+                user_id=current_user.id,
+                date=date,
+                actual_amount=actual_amount,
+                expense_name=expense_name
+            )
+            db.session.add(actual_expense)
+            db.session.commit()
+
+            flash('Actual Expense added successfully!', 'success')
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        flash('An error occurred while adding your actual expense. Please try again later.', 'error')
+        app.logger.error(f"Error adding actual expense: {str(e)}")
+        return render_template('error.html', error_message=f'An error occurred while adding your '
+                                                           f'actual expense. Please try again later')
     return redirect(url_for('track'))
 
 
 @app.route('/edit_actual_expense/<int:expense_id>', methods=['POST', 'GET'])
+@login_required
 def edit_actual_expense(expense_id):
-    if not current_user.is_authenticated:
-        return redirect(url_for('login'))
-
     #   Get Actual Expenses by ID
     actual_expense = ActualExpenses.query.get_or_404(expense_id)
+
+    if actual_expense.user_id != current_user.id:
+        flash("You don't have the permission to edit this actual expense.", 'error')
+        return render_template('error.html', error_message='Permission Denied')
+
     if request.method == 'POST':
         #   collect data from form
         date = request.form.get('date')
@@ -366,89 +447,141 @@ def edit_actual_expense(expense_id):
         category_name = request.form.get('category_name')
         actual_amount = request.form.get('actual_amount')
 
-        #         update values
-        actual_expense.date = date
-        actual_expense.expense_name = expense_name
-        actual_expense.category_name = category_name
-        actual_expense.actual_amount = actual_amount
+        try:
+            # date = datetime.strptime(date_str, "%d/%m/%Y")
+            actual_amount = float(actual_amount)
+            #         update values
+            actual_expense.date = date
+            actual_expense.expense_name = expense_name
+            actual_expense.category_name = category_name
+            actual_expense.actual_amount = actual_amount
 
-        db.session.commit()
-        flash('Actual Expense Updated Successfully', 'success')
+            db.session.commit()
+            flash('Actual Expense Updated Successfully', 'success')
+        except ValueError as e:
+            flash("Invalid data types provided. Please check your input", 'error')
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            flash("An error occurred while updating the budget expense. Please try again later.", 'error')
+            app.logger.error(f"Error updating budget expense: {str(e)}")
+            return render_template('error.html', error_message='An error occurred')
+
     return redirect(url_for('track'))
 
 
 @app.route('/delete_actual_expense/<int:expense_id>', methods=['POST', 'GET'])
+@login_required
 def delete_actual_expense(expense_id):
-    if not current_user.is_authenticated:
-        redirect(url_for('login'))
-
     actual_expense = ActualExpenses.query.get_or_404(expense_id)
-    db.session.delete(actual_expense)
-    db.session.commit()
-    flash('Actual Expense Deleted Successfully', 'success')
-    return redirect(url_for('track'))
+
+    # Check if the user trying to delete a budget income is the owner
+    if actual_expense.user_id != current_user.id:
+        flash("You don't have permission to delete this data.", 'error')
+        return render_template('error.html', error_message='Permission Denied')
+
+    try:
+        db.session.delete(actual_expense)
+        db.session.commit()
+        flash('Actual Expense Deleted Successfully', 'success')
+        return redirect(url_for('track'))
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        flash("An error occurred while deleting the actual expense. Please try again later.", 'error')
+        app.logger.error(f"Error deleting the actual expense: {str(e)}")
+        return redirect(url_for('track'))
 
 
 # Add Actual Income route
 @app.route('/add_actual_income', methods=['POST', 'GET'])
+@login_required
 def add_actual_income():
-    if not current_user.is_authenticated:
-        return redirect(url_for('login'))
     #     collect form data from add_actual_expense form
     date_str = request.form.get('date')
     income_name = request.form.get('income_name')
     actual_amount = request.form.get('actual_amount')
 
-    date = datetime.strptime(date_str, "%d/%m/%Y")
-    month_string = date.strftime('%B')
-    actual_income = ActualIncome(
-        income_name=income_name,
-        user_id=session["user_id"],
-        date=date,
-        actual_amount=actual_amount,
-    )
-    db.session.add(actual_income)
-    db.session.commit()
+    if not (date_str and income_name and actual_amount):
+        flash('All fields are required', 'error')
+        return redirect(url_for('home'))
+    try:
+        date = datetime.strptime(date_str, "%d/%m/%Y")
+        actual_income = ActualIncome(
+            income_name=income_name,
+            user_id=current_user.id,
+            date=date,
+            actual_amount=actual_amount,
+        )
+        db.session.add(actual_income)
+        db.session.commit()
+        flash('Actual Expense added successfully!', 'success')
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        flash('An error occurred while adding your actual income. Please try again later.', 'error')
+        app.logger.error(f"Error adding actual expense: {str(e)}")
+        return render_template('error.html', error_message=f'An error occurred while adding your '
+                                                           f'actual income. Please try again later')
     return redirect(url_for('track'))
 
 
 @app.route('/edit_actual_income/<int:income_id>', methods=['POST', 'GET'])
+@login_required
 def edit_actual_income(income_id):
-    if not current_user.is_authenticated:
-        return redirect(url_for('login'))
-
     #   Get Actual Income by ID
     actual_income = ActualIncome.query.get_or_404(income_id)
+
+    if actual_income.user_id != current_user.id:
+        flash("You don't have the permission to edit this actual expense.", 'error')
+        return render_template('error.html', error_message='Permission Denied')
+
     if request.method == 'POST':
         #   collect data from form
         date = request.form.get('date')
         income_name = request.form.get('income_name')
         actual_amount = request.form.get('actual_amount')
 
-        #         update values
-        actual_income.date = date
-        actual_income.income_name = income_name
-        actual_income.actual_amount = actual_amount
+        try:
+            #         update values
+            actual_income.date = date
+            actual_income.income_name = income_name
+            actual_income.actual_amount = actual_amount
 
-        db.session.commit()
-        flash('Actual Expense Updated Successfully', 'success')
+            db.session.commit()
+            flash('Actual Expense Updated Successfully', 'success')
+        except ValueError as e:
+            flash("Invalid data types provided. Please check your input", 'error')
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            flash("An error occurred while updating the actual expense. Please try again later.", 'error')
+            app.logger.error(f"Error updating budget expense: {str(e)}")
+            return render_template('error.html', error_message='An error occurred')
+
     return redirect(url_for('track'))
 
 
 @app.route('/delete_actual_income/<int:income_id>', methods=['POST', 'GET'])
+@login_required
 def delete_actual_income(income_id):
-    if not current_user.is_authenticated:
-        redirect(url_for('login'))
-
     actual_income = ActualIncome.query.get_or_404(income_id)
-    db.session.delete(actual_income)
-    db.session.commit()
-    flash('Actual Income Deleted Successfully', 'success')
-    return redirect(url_for('track'))
+
+    # Check if the user trying to delete a budget income is the owner
+    if actual_income.user_id != current_user.id:
+        flash("You don't have permission to delete this data.", 'error')
+        return render_template('error.html', error_message='Permission Denied')
+    try:
+        db.session.delete(actual_income)
+        db.session.commit()
+        flash('Actual Income Deleted Successfully', 'success')
+        return redirect(url_for('track'))
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        flash("Failed to delete the actual income. Please try again later.", 'error')
+        app.logger.error(f"Error deleting actual income: {str(e)}")
+        return redirect(url_for('track'))
 
 
 # Goldmine route
 @app.route('/goldmine', methods=['GET', 'POST'])
+@login_required
 def goldmine():
     if "user_id" not in session:
         return redirect(url_for('login'))
@@ -600,10 +733,10 @@ def goldmine():
                                )
     except Exception as e:
         app.logger.error(f"An error occurred in goldmine: {str(e)}")
-        abort(500)
 
 
 @app.route('/profile', methods=['GET', 'POST'])
+@login_required
 def profile():
     user_id = session["user_id"]
     curr_user = Users.query.get(user_id)
@@ -623,19 +756,26 @@ def profile():
             flash('Username already exists', 'error')
         elif email_check:
             flash('Email already exists', 'error')
-
         else:
-            if password:
-                encrypted_password = generate_password_hash(password, method="sha256")
-                curr_user.password = encrypted_password
+            # Update user information
             curr_user.username = username
             curr_user.firstname = firstname
             curr_user.lastname = lastname
             curr_user.email = email
 
-        db.session.commit()
-        flash("User Information Updated Successfully", 'success')
-        return redirect(url_for('home'))
+            # Update password if provided
+            if password:
+                encrypted_password = generate_password_hash(password, method="sha256")
+                curr_user.password = encrypted_password
+
+            try:
+                db.session.commit()
+                flash("User Information Updated Successfully", 'success')
+                return redirect(url_for('home'))
+            except Exception as e:
+                db.session.rollback()
+                flash("An error occurred while updating user information. Please try again later.", 'error')
+                app.logger.error(f"Error updating user information: {str(e)}")
 
     return render_template('profile.html', user=curr_user)
 
