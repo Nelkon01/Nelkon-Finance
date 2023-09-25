@@ -773,7 +773,7 @@ def goldmine():
                                )
     except Exception as e:
         app.logger.error(f"An error occurred in goldmine: {str(e)}")
-        render_template('error.html', error_message=f'{str(e)}')
+        return render_template('error.html', error_message=f'{str(e)}')
 
 
 @app.route('/profile', methods=['GET', 'POST'])
