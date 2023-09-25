@@ -11,9 +11,15 @@ from budgetmanager import app, db
 from budgetmanager.models import Users, BudgetedIncome, ActualIncome, BudgetedExpenses, ActualExpenses
 
 
-# Home route
 @app.route('/')
 def home():
+    return render_template('home.html')
+
+
+# Plan route
+@app.route('/plan')
+@login_required
+def plan():
     # check if user is logged in
     if "user_id" in session:
         try:
@@ -179,7 +185,7 @@ def login():
 
     if current_user.is_authenticated:
         flash('You are already logged in!', 'success')
-        return redirect(url_for('home'))
+        return redirect(url_for('plan'))
 
     return render_template('login.html')
 
@@ -196,7 +202,7 @@ def add_budget_income():
     # form validation
     if not (month_name and year and income_name and budget_amount):
         flash('All fields are required', 'error')
-        return redirect(url_for('home'))
+        return redirect(url_for('plan'))
 
     try:
         #     convert year and budget to their respective types
@@ -223,7 +229,7 @@ def add_budget_income():
         app.logger.error(f"Error adding budget income: {str(e)}")
         return render_template('error.html')
 
-    return redirect(url_for('home'))
+    return redirect(url_for('plan'))
 
 
 @app.route('/edit_budget_income/<int:income_id>', methods=['POST', 'GET'])
@@ -257,14 +263,14 @@ def edit_budget_income(income_id):
             flash("Budget Income updated Successfully", 'success')
 
         except ValueError as e:
-            flash("Invalid datat types provided. Please check your input", 'error')
+            flash("Invalid data types provided. Please check your input", 'error')
 
         except SQLAlchemyError as e:
             db.session.rollback()
             flash("An error occurred while updating the budget income. Please try again later.", 'error')
             app.logger.error(f"Error updating budget expense: {str(e)}")
 
-    return redirect(url_for('home'))
+    return redirect(url_for('plan'))
 
 
 @app.route('/delete_budget_income/<int:income_id>', methods=['POST', 'GET'])
@@ -281,12 +287,12 @@ def delete_budget_income(income_id):
         db.session.delete(budget_income)
         db.session.commit()
         flash('Budget Income Deleted Successfully', 'success')
-        return redirect(url_for('home'))
+        return redirect(url_for('plan'))
     except SQLAlchemyError as e:
         db.session.rollback()
         flash("An error occurred while deleting the budget income. Please try again later")
         app.logger.error(f"Error deleting budget income: {str(e)}")
-        return redirect(url_for('home'))
+        return redirect(url_for('plan'))
 
 
 @app.route('/add_budget_expense', methods=['POST', 'GET'])
@@ -301,7 +307,7 @@ def add_budget_expense():
     # form validation
     if not (month_name and year and category_name and budget_amount):
         flash('All fields are required', 'error')
-        return redirect(url_for('home'))
+        return redirect(url_for('plan'))
 
     try:
         #     convert year and budget to their respective types
@@ -327,7 +333,7 @@ def add_budget_expense():
         app.logger.error(f"Error adding budget expense: {str(e)}")
         return render_template('error.html')
 
-    return redirect(url_for('home'))
+    return redirect(url_for('plan'))
 
 
 @app.route('/edit_budget_expense/<int:expense_id>', methods=['POST', 'GET'])
@@ -369,7 +375,7 @@ def edit_budget_expense(expense_id):
             app.logger.error(f"Error updating budget expense: {str(e)}")
             return render_template('error.html', error_message='An error occurred')
 
-    return redirect(url_for('home'))
+    return redirect(url_for('plan'))
 
 
 @app.route('/delete_budget_expense/<int:expense_id>', methods=['POST', 'GET'])
@@ -386,12 +392,12 @@ def delete_budget_expense(expense_id):
         db.session.delete(budget_expense)
         db.session.commit()
         flash('Budget Expense Deleted Successfully', 'success')
-        return redirect(url_for('home'))
+        return redirect(url_for('plan'))
     except SQLAlchemyError as e:
         db.session.rollback()
         flash("An error occurred while deleting the budget income. Please try again later")
         app.logger.error(f"Error deleting budget expense: {str(e)}")
-        return redirect(url_for('home'))
+        return redirect(url_for('plan'))
 
 
 @app.route('/add_actual_expense', methods=['POST', 'GET'])
@@ -406,7 +412,7 @@ def add_actual_expense():
     # form validation
     if not (date_str and expense_name and category_name and actual_amount):
         flash('All fields are required', 'error')
-        return redirect(url_for('home'))
+        return redirect(url_for('track'))
     try:
         date = datetime.strptime(date_str, "%d/%m/%Y")
         if current_user.id:
@@ -501,7 +507,7 @@ def add_actual_income():
 
     if not (date_str and income_name and actual_amount):
         flash('All fields are required', 'error')
-        return redirect(url_for('home'))
+        return redirect(url_for('track'))
     try:
         date = datetime.strptime(date_str, "%d/%m/%Y")
         actual_income = ActualIncome(
@@ -770,7 +776,7 @@ def profile():
             try:
                 db.session.commit()
                 flash("User Information Updated Successfully", 'success')
-                return redirect(url_for('home'))
+                return redirect(url_for('plan'))
             except Exception as e:
                 db.session.rollback()
                 flash("An error occurred while updating user information. Please try again later.", 'error')
