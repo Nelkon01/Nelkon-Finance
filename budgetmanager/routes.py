@@ -605,8 +605,33 @@ def goldmine():
     curr_user = Users.query.get(user_id)
 
     try:
-        years_in_db = (db.session.query(extract('year', ActualIncome.date).distinct())
-                       .filter_by(user_id=user_id).all())
+        # Query to get distinct years from BudgetedExpenses table
+        budget_expenses_years = (
+            db.session.query(BudgetedExpenses.year.distinct())
+            .filter_by(user_id=user_id)
+        )
+
+        # Query to get distinct years from ActualIncome table
+        actual_income_years = (
+            db.session.query(extract('year', ActualIncome.date).distinct())
+            .filter_by(user_id=user_id)
+        )
+
+        # Query to get distinct years from ActualExpenses table
+        actual_expenses_years = (
+            db.session.query(extract('year', ActualExpenses.date).distinct())
+            .filter_by(user_id=user_id)
+        )
+
+        # Combine the results from all four queries using UNION
+        years_in_db = (
+            db.session.query(BudgetedIncome.year.distinct())
+            .filter_by(user_id=user_id)
+            .union(budget_expenses_years)
+            .union(actual_income_years)
+            .union(actual_expenses_years)
+            .all()
+        )
 
         # get the month request from form
         selected_month = request.args.get('month')
@@ -748,6 +773,7 @@ def goldmine():
                                )
     except Exception as e:
         app.logger.error(f"An error occurred in goldmine: {str(e)}")
+        render_template('error.html', error_message=f'{str(e)}')
 
 
 @app.route('/profile', methods=['GET', 'POST'])
