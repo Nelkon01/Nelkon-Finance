@@ -6,10 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="a975cf4b-401b-4198-be0e-d9ecc04d5416" name="Changes" comment="Add signup modal to login page to enable ease of signup">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/budgetmanager/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/budgetmanager/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/budgetmanager/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/budgetmanager/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/budgetmanager/static/js/goldmine.js" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/static/js/goldmine.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/budgetmanager/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/budgetmanager/templates/goldmine.html" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/templates/goldmine.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/budgetmanager/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/templates/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/budgetmanager/templates/plan.html" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/templates/plan.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/budgetmanager/templates/track.html" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/templates/track.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +59,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/nelkon/Desktop/Projects /nelkon_finance/budgetmanager/static/js&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/nelkon/Desktop/Projects /nelkon_finance/budgetmanager/static/images&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -71,8 +75,10 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/budgetmanager/static/js" />
+      <recent name="$PROJECT_DIR$/budgetmanager/static/images" />
       <recent name="$PROJECT_DIR$/budgetmanager/templates" />
+      <recent name="$PROJECT_DIR$/budgetmanager/static" />
+      <recent name="$PROJECT_DIR$/budgetmanager/static/js" />
       <recent name="$PROJECT_DIR$/budgetmanager" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -154,6 +160,8 @@
       <workItem from="1694556623176" duration="70000" />
       <workItem from="1694556710312" duration="51954000" />
       <workItem from="1695167117617" duration="29211000" />
+      <workItem from="1695276171633" duration="112334000" />
+      <workItem from="1695614990170" duration="16964000" />
     </task>
     <task id="LOCAL-00001" summary="Add signup modal to login page to enable ease of signup">
       <option name="closed" value="true" />
@@ -185,7 +193,7 @@
     <option name="LAST_COMMIT_MESSAGE" value="Add signup modal to login page to enable ease of signup" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/nelkon_finance$run.coverage" NAME="run Coverage Results" MODIFIED="1695167237341" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/nelkon_finance$run.coverage" NAME="run Coverage Results" MODIFIED="1695615895643" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/nelkon_finance$nelkon_finance.coverage" NAME="nelkon_finance Coverage Results" MODIFIED="1694455090172" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

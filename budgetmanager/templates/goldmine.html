@@ -324,12 +324,15 @@
             }
         })
         {# Line Chart#}
-{#        Income over time #}
+        {#        Income over time #}
         const incomeLineChart = document.getElementById('incomeLineChart').getContext('2d');
+
         new Chart(incomeLineChart, {
             type: 'line',
             data: {
-                labels: [{% for row in income_over_time %} "{{ row.income_month }}", {% endfor %}],
+                labels: [
+                    {% for row in income_over_time %} "{{ row.income_month }}", {% endfor %}
+                ],
                 datasets: [
                     {
                         label: "Monthly Income Trend for {{ selected_year }}",

@@ -2,453 +2,468 @@
 {% block content %}
 
     <!--Jumbo-tron-->
-    <div class="row">
-        <div class="mt-4 p-5 rounded bg-success text-center">
-            <h1 class="text-light">Welcome to your Budget App {{ current_user.firstname }}</h1>
-        </div>
-    </div>
-{#   Flash Message #}
-    <div class="container mt-2">
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-success">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-    </div>
-
-    <!-- Main cards to add budget Income and Expenses -->
-    <div class="row my-5">
-        <!--Budget Income-->
-        <div class="col-md-6 mb-4">
-            <div class="card text-center">
-                <div class="card-header">
-                    Budget Income
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Budget Monthly Income</h5>
-                    <p class="card-text">Share insights and information about your income budget for the month.</p>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#budgetIncomeModal">
-                        Add Budget Income
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!--    Modal for Add Budget Income form-->
-        <div class="modal fade" id="budgetIncomeModal" tabindex="-1" aria-labelledby="budgetIncomeModal"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="budgetIncomeModalLabel">Add Budget Income</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!--                    budget form-->
-                        <form action="{{ url_for('add_budget_income') }}" method="POST">
-
-                            <!--                        Select Month -->
-                            <div class="form-floating mb-3">
-                                <label for="budget_income_month"></label>
-                                <select name="month_name" id="budget_income_month" class="form-control" required>
-                                    <option value="" disabled selected>Select Month</option>
-                                    <option value="January">January</option>
-                                    <option value="February">February</option>
-                                    <option value="March">March</option>
-                                    <option value="April">April</option>
-                                    <option value="May">May</option>
-                                    <option value="June">June</option>
-                                    <option value="July">July</option>
-                                    <option value="August">August</option>
-                                    <option value="September">September</option>
-                                    <option value="October">October</option>
-                                    <option value="November">November</option>
-                                    <option value="December">December</option>
-                                </select>
-                            </div>
-                            <!--                        Year-->
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="year" id="year"
-                                       placeholder="Select Year" minlength="4" maxlength="4" required>
-                                <label for="year">Year</label>
-                            </div>
-                            <!--                        Income Name-->
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="income_name" id="budget_income_name"
-                                       placeholder="Income Name" minlength="2" maxlength="50" required>
-                                <label for="budget_income_name">Income Name</label>
-                            </div>
-                            <!--                        Amount-->
-                            <div class="form-floating mb-3">
-                                <input type="number" class="form-control" id="budget_income_amount"
-                                       placeholder="Month" name="budget_amount" step="0.01" required>
-                                <label for="budget_income_amount">Amount</label>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">
-                                    Add Income
-                                    <i class="fas fa-plus-square end"></i>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="mt-4 p-5 rounded bg-success text-center">
+                <h1 class="text-light">Welcome to your Budget App {{ current_user.firstname }}</h1>
             </div>
         </div>
 
 
-        <!--    Budget Expense Card-->
-        <div class="col-md-6 mb-4">
-            <div class="card text-center">
-                <div class="card-header">
-                    Budget Expense
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Budget Monthly Expense</h5>
-                    <p class="card-text">Share insights and information about your budget Expenses for the month.</p>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#budgetExpenseModal">
-                        Add Budget Expenses
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!--    Modal for Budget Expense form-->
-        <div class="modal fade" id="budgetExpenseModal" tabindex="-1" aria-labelledby="budgetExpenseModal"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="budgetExpenseModalLabel">Add Budget Expense</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!--                    budget form-->
-                        <form method="POST" action="{{ url_for('add_budget_expense') }}">
-
-                            <!--                        Select Month -->
-                            <div class="form-floating mb-3">
-                                <label for="month_name"></label>
-                                <select name="month_name" id="month_name" class="form-control" required>
-                                    <option value="" disabled selected>Select Month</option>
-                                    <option value="January">January</option>
-                                    <option value="February">February</option>
-                                    <option value="March">March</option>
-                                    <option value="April">April</option>
-                                    <option value="May">May</option>
-                                    <option value="June">June</option>
-                                    <option value="July">July</option>
-                                    <option value="August">August</option>
-                                    <option value="September">September</option>
-                                    <option value="October">October</option>
-                                    <option value="November">November</option>
-                                    <option value="December">December</option>
-                                </select>
-                            </div>
-                            <!--                       Year -->
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="year" id="year"
-                                       placeholder="Select Year" minlength="4" maxlength="4" required>
-                                <label for="year">Year</label>
-                            </div>
-                            <!--                        Select Category-->
-                            <div class="form-floating mb-3">
-                                <label for="category_name"></label>
-                                <select name="category_name" id="category_name" class="form-control" required>
-                                    <option value="" disabled selected>Select Spending Category</option>
-                                    <option value="Shopping">Shopping</option>
-                                    <option value="Groceries">Groceries</option>
-                                    <option value="Eating-Out">Eating Out</option>
-                                    <option value="Transport">Transport</option>
-                                    <option value="Bills">Bills</option>
-                                    <option value="Entertainment">Entertainment</option>
-                                    <option value="Miscellaneous">Miscellaneous</option>
-                                </select>
-                            </div>
-                            <!--                        Amount-->
-                            <div class="form-floating mb-3">
-                                <input type="number" class="form-control" id="budget_amount"
-                                       placeholder="Month" name="budget_amount" step="0.01" required>
-                                <label for="budget_amount">Amount</label>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button class="btn btn-primary" type="submit">
-                                    Add Expense
-                                    <i class="fas fa-plus-square end"></i>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+        {#   Flash Message #}
+        <div class="container mt-2">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
         </div>
     </div>
 
+    <div class="container">
+        <!-- Main cards to add budget Income and Expenses -->
+        <div class="row my-5">
+            <!--Budget Income-->
+            <div class="col-md-6 mb-4">
+                <div class="card text-center">
+                    <div class="card-header">
+                        Budget Income
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Budget Monthly Income</h5>
+                        <p class="card-text">Share insights and information about your income budget for the month.</p>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#budgetIncomeModal">
+                            Add Budget Income
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!--    Modal for Add Budget Income form-->
+            <div class="modal fade" id="budgetIncomeModal" tabindex="-1" aria-labelledby="budgetIncomeModal"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="budgetIncomeModalLabel">Add Budget Income</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!--                    budget form-->
+                            <form action="{{ url_for('add_budget_income') }}" method="POST">
+
+                                <!--                        Select Month -->
+                                <div class="form-floating mb-3">
+                                    <label for="budget_income_month"></label>
+                                    <select name="month_name" id="budget_income_month" class="form-control" required>
+                                        <option value="" disabled selected>Select Month</option>
+                                        <option value="January">January</option>
+                                        <option value="February">February</option>
+                                        <option value="March">March</option>
+                                        <option value="April">April</option>
+                                        <option value="May">May</option>
+                                        <option value="June">June</option>
+                                        <option value="July">July</option>
+                                        <option value="August">August</option>
+                                        <option value="September">September</option>
+                                        <option value="October">October</option>
+                                        <option value="November">November</option>
+                                        <option value="December">December</option>
+                                    </select>
+                                </div>
+                                <!--                        Year-->
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="year" id="year"
+                                           placeholder="Select Year" minlength="4" maxlength="4" required>
+                                    <label for="year">Year</label>
+                                </div>
+                                <!--                        Income Name-->
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="income_name" id="budget_income_name"
+                                           placeholder="Income Name" minlength="2" maxlength="50" required>
+                                    <label for="budget_income_name">Income Name</label>
+                                </div>
+                                <!--                        Amount-->
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="budget_income_amount"
+                                           placeholder="Month" name="budget_amount" step="0.01" required>
+                                    <label for="budget_income_amount">Amount</label>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        Add Income
+                                        <i class="fas fa-plus-square end"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--    Budget Expense Card-->
+            <div class="col-md-6 mb-4">
+                <div class="card text-center">
+                    <div class="card-header">
+                        Budget Expense
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Budget Monthly Expense</h5>
+                        <p class="card-text">Share insights and information about your budget Expenses for the
+                            month.</p>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#budgetExpenseModal">
+                            Add Budget Expenses
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!--    Modal for Budget Expense form-->
+            <div class="modal fade" id="budgetExpenseModal" tabindex="-1" aria-labelledby="budgetExpenseModal"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="budgetExpenseModalLabel">Add Budget Expense</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!--                    budget form-->
+                            <form method="POST" action="{{ url_for('add_budget_expense') }}">
+
+                                <!--                        Select Month -->
+                                <div class="form-floating mb-3">
+                                    <label for="month_name"></label>
+                                    <select name="month_name" id="month_name" class="form-control" required>
+                                        <option value="" disabled selected>Select Month</option>
+                                        <option value="January">January</option>
+                                        <option value="February">February</option>
+                                        <option value="March">March</option>
+                                        <option value="April">April</option>
+                                        <option value="May">May</option>
+                                        <option value="June">June</option>
+                                        <option value="July">July</option>
+                                        <option value="August">August</option>
+                                        <option value="September">September</option>
+                                        <option value="October">October</option>
+                                        <option value="November">November</option>
+                                        <option value="December">December</option>
+                                    </select>
+                                </div>
+                                <!--                       Year -->
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="year" id="year"
+                                           placeholder="Select Year" minlength="4" maxlength="4" required>
+                                    <label for="year">Year</label>
+                                </div>
+                                <!--                        Select Category-->
+                                <div class="form-floating mb-3">
+                                    <label for="category_name"></label>
+                                    <select name="category_name" id="category_name" class="form-control" required>
+                                        <option value="" disabled selected>Select Spending Category</option>
+                                        <option value="Shopping">Shopping</option>
+                                        <option value="Groceries">Groceries</option>
+                                        <option value="Eating-Out">Eating Out</option>
+                                        <option value="Transport">Transport</option>
+                                        <option value="Bills">Bills</option>
+                                        <option value="Entertainment">Entertainment</option>
+                                        <option value="Miscellaneous">Miscellaneous</option>
+                                    </select>
+                                </div>
+                                <!--                        Amount-->
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="budget_amount"
+                                           placeholder="Month" name="budget_amount" step="0.01" required>
+                                    <label for="budget_amount">Amount</label>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    </button>
+                                    <button class="btn btn-primary" type="submit">
+                                        Add Expense
+                                        <i class="fas fa-plus-square end"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     {#    View, Edit and Delete Entries #}
-    <div class="row">
-        <div class="col-md-6">
-            <div class="row">
-                <!-- View Budget Incomes by Month and Year -->
-                {% for (month_name, year), budget_incomes in budget_incomes_by_month.items() %}
-                    <div class="card border-light mb-3 mx-2 text-center" style="max-width: 18rem;">
-                        <div class="card-header">Budget Incomes for {{ month_name }} {{ year }}</div>
-                        <div class="card-body">
-                            {% for budget_income in budget_incomes %}
-                                <h5 class="card-title">{{ budget_income.income_name }}</h5>
-                                <hr>
-                                <h6 class="card-text">£{{ budget_income.budget_amount }}</h6>
-                                <div class="card-footer text-muted">
-                                    <a href="#" data-bs-toggle="modal"#}
-                                       data-bs-target="#editBudgetIncomeModal{{ budget_income.income_id }}"
-                                       class="btn btn-outline-light">Edit</a>
-                                    <a href="#" data-bs-toggle="modal"
-                                       data-bs-target="#deleteBudgetIncomeModal{{ budget_income.income_id }}"
-                                       class="btn btn-outline-danger">Delete</a>
-                                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 px-2">
+                <div class="row justify-content-center">
+                    <!-- View Budget Incomes by Month and Year -->
+                <h3 class="text-center">Income</h3>
+                    {% for (month_name, year), budget_incomes in budget_incomes_by_month.items() %}
+                        <div class="card border-light mb-3 mx-2 text-center" style="max-width: 18rem;">
+                            <div class="card-header">Budget Incomes for {{ month_name }} {{ year }}</div>
+                            <div class="card-body">
+                                {% for budget_income in budget_incomes %}
+                                    <h5 class="card-title">{{ budget_income.income_name }}</h5>
+                                    <hr>
+                                    <h6 class="card-text">£{{ budget_income.budget_amount }}</h6>
+                                    <div class="card-footer text-muted">
+                                        <a href="#" data-bs-toggle="modal"#}
+                                           data-bs-target="#editBudgetIncomeModal{{ budget_income.income_id }}"
+                                           class="btn btn-outline-light">Edit</a>
+                                        <a href="#" data-bs-toggle="modal"
+                                           data-bs-target="#deleteBudgetIncomeModal{{ budget_income.income_id }}"
+                                           class="btn btn-outline-danger">Delete</a>
+                                    </div>
 
-                                <hr>
-                                <!-- Modal for Edit Budget Income form -->
-                                <div class="modal fade" id="editBudgetIncomeModal{{ budget_income.income_id }}"
-                                     tabindex="-1"
-                                     aria-labelledby="editBudgetIncomeModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="editBudgetIncomeModalLabel">
-                                                    Edit Budget Income</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <!-- Edit budget form -->
-                                                <form action="{{ url_for('edit_budget_income', income_id=budget_income.income_id) }}"
-                                                      method="POST">
+                                    <hr>
+                                    <!-- Modal for Edit Budget Income form -->
+                                    <div class="modal fade" id="editBudgetIncomeModal{{ budget_income.income_id }}"
+                                         tabindex="-1"
+                                         aria-labelledby="editBudgetIncomeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="editBudgetIncomeModalLabel">
+                                                        Edit Budget Income</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <!-- Edit budget form -->
+                                                    <form action="{{ url_for('edit_budget_income', income_id=budget_income.income_id) }}"
+                                                          method="POST">
 
-                                                    <!-- Select Month -->
-                                                    <div class="form-floating mb-3">
-                                                        <label for="edit_budget_income_month"></label>
-                                                        <select name="month_name" id="budget_income_month"
-                                                                class="form-control">
-                                                            {% for month_option in ["January", "February", "March", "April",
+                                                        <!-- Select Month -->
+                                                        <div class="form-floating mb-3">
+                                                            <label for="edit_budget_income_month"></label>
+                                                            <select name="month_name" id="budget_income_month"
+                                                                    class="form-control">
+                                                                {% for month_option in ["January", "February", "March", "April",
                                                             "May", "June", "July", "August", "September", "October", "November",
                                                             "December"] %}
-                                                                <option value="{{ month_option }}"
-                                                                        {% if month_option == budget_income.month_name %}selected{% endif %}>{{ month_option }}</option>
-                                                            {% endfor %}
-                                                        </select>
-                                                    </div>
+                                                                    <option value="{{ month_option }}"
+                                                                            {% if month_option == budget_income.month_name %}selected{% endif %}>{{ month_option }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
 
-                                                    <!-- Year -->
-                                                    <div class="form-floating mb-3">
-                                                        <input type="text" class="form-control" name="year"
-                                                               id="year"
-                                                               placeholder="Select Year" minlength="4"
-                                                               maxlength="4"
-                                                               value="{{ budget_income.year }}" required>
-                                                        <label for="year">Year</label>
-                                                    </div>
+                                                        <!-- Year -->
+                                                        <div class="form-floating mb-3">
+                                                            <input type="text" class="form-control" name="year"
+                                                                   id="year"
+                                                                   placeholder="Select Year" minlength="4"
+                                                                   maxlength="4"
+                                                                   value="{{ budget_income.year }}" required>
+                                                            <label for="year">Year</label>
+                                                        </div>
 
-                                                    <!-- Income Name -->
-                                                    <div class="form-floating mb-3">
-                                                        <input type="text" class="form-control"
-                                                               name="income_name"
-                                                               id="budget_income_name" placeholder="Income Name"
-                                                               value="{{ budget_income.income_name }}">
-                                                        <label for="budget_income_name">Income Name</label>
-                                                    </div>
-                                                    <!-- Amount -->
-                                                    <div class="form-floating mb-3">
-                                                        <input type="number" class="form-control"
-                                                               id="budget_income_amount"
-                                                               placeholder="Month" name="budget_amount"
-                                                               value="{{ budget_income.budget_amount }}" step="0.01">
-                                                        <label for="budget_income_amount">Amount</label>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">
-                                                            Close
-                                                        </button>
-                                                        <button type="submit" class="btn btn-primary">
-                                                            Edit Income
-                                                            <i class="fas fa-edit end"></i>
-                                                        </button>
-                                                    </div>
-                                                </form>
+                                                        <!-- Income Name -->
+                                                        <div class="form-floating mb-3">
+                                                            <input type="text" class="form-control"
+                                                                   name="income_name"
+                                                                   id="budget_income_name" placeholder="Income Name"
+                                                                   value="{{ budget_income.income_name }}">
+                                                            <label for="budget_income_name">Income Name</label>
+                                                        </div>
+                                                        <!-- Amount -->
+                                                        <div class="form-floating mb-3">
+                                                            <input type="number" class="form-control"
+                                                                   id="budget_income_amount"
+                                                                   placeholder="Month" name="budget_amount"
+                                                                   value="{{ budget_income.budget_amount }}"
+                                                                   step="0.01">
+                                                            <label for="budget_income_amount">Amount</label>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">
+                                                                Close
+                                                            </button>
+                                                            <button type="submit" class="btn btn-primary">
+                                                                Edit Income
+                                                                <i class="fas fa-edit end"></i>
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!--  Modal to confirm deletion -->
-                                <div class="modal fade" id="deleteBudgetIncomeModal{{ budget_income.income_id }}"
-                                     tabindex="-1"
-                                     aria-labelledby="deleteBudgetIncomeModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteBudgetModalLabel">Confirm
-                                                    Deletion</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Are you sure you want to delete this entry? This action cannot be
-                                                undone.
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                                    Cancel
-                                                </button>
-                                                <a href="{{ url_for('delete_budget_income', income_id=budget_income.income_id) }}"
-                                                   class="btn btn-outline-danger">Delete</a>
+                                    <!--  Modal to confirm deletion -->
+                                    <div class="modal fade" id="deleteBudgetIncomeModal{{ budget_income.income_id }}"
+                                         tabindex="-1"
+                                         aria-labelledby="deleteBudgetIncomeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteBudgetModalLabel">Confirm
+                                                        Deletion</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to delete this entry? This action cannot be
+                                                    undone.
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                            data-bs-dismiss="modal">
+                                                        Cancel
+                                                    </button>
+                                                    <a href="{{ url_for('delete_budget_income', income_id=budget_income.income_id) }}"
+                                                       class="btn btn-outline-danger">Delete</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
-        </div>
 
-        <div class="col-md-6">
-            <div class="row">
-                <!-- View Budget Expenses by Month and Year -->
-                {% for (month_name, year), budget_expenses in budget_expenses_by_month.items() %}
-                    <div class="card border-light mb-3 mx-2 text-center" style="max-width: 18rem;">
-                        <div class="card-header">Budget Expenses {{ month_name }} {{ year }}</div>
-                        <div class="card-body">
-                            {% for budget_expense in budget_expenses %}
-                                <h5 class="card-title">{{ budget_expense.category_name }}</h5>
-                                <hr>
-                                <h6 class="card-text">£{{ budget_expense.budget_amount }}</h6>
-                                <div class="card-footer text-muted">
-                                    <a href="#" data-bs-toggle="modal"#}
-                                       data-bs-target="#editBudgetExpenseModal{{ budget_expense.expense_id }}"
-                                       class="btn btn-outline-light">Edit</a>
-                                    <a href="#" data-bs-toggle="modal"
-                                       data-bs-target="#deleteBudgetExpenseModal{{ budget_expense.expense_id }}"
-                                       class="btn btn-outline-danger">Delete</a>
-                                </div>
+            <div class="col-md-6">
+                <div class="row justify-content-center">
+                    <!-- View Budget Expenses by Month and Year -->
+                <h3 class="text-center">Expenses</h3>
+                    {% for (month_name, year), budget_expenses in budget_expenses_by_month.items() %}
+                        <div class="card border-light mb-3 mx-2 text-center" style="max-width: 18rem;">
+                            <div class="card-header">Budget Expenses {{ month_name }} {{ year }}</div>
+                            <div class="card-body">
+                                {% for budget_expense in budget_expenses %}
+                                    <h5 class="card-title">{{ budget_expense.category_name }}</h5>
+                                    <hr>
+                                    <h6 class="card-text">£{{ budget_expense.budget_amount }}</h6>
+                                    <div class="card-footer text-muted">
+                                        <a href="#" data-bs-toggle="modal"#}
+                                           data-bs-target="#editBudgetExpenseModal{{ budget_expense.expense_id }}"
+                                           class="btn btn-outline-light">Edit</a>
+                                        <a href="#" data-bs-toggle="modal"
+                                           data-bs-target="#deleteBudgetExpenseModal{{ budget_expense.expense_id }}"
+                                           class="btn btn-outline-danger">Delete</a>
+                                    </div>
 
-                                <hr>
-                                <!-- Modal for Edit Budget Income form -->
-                                <div class="modal fade" id="editBudgetExpenseModal{{ budget_expense.expense_id }}"
-                                     tabindex="-1"
-                                     aria-labelledby="editBudgetExpensesModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="editBudgetExpensesModalLabel">
-                                                    Edit Budget Expense</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <!-- Edit budget form -->
-                                                <form action="{{ url_for('edit_budget_expense', expense_id=budget_expense.expense_id) }}"
-                                                      method="POST">
+                                    <hr>
+                                    <!-- Modal for Edit Budget Income form -->
+                                    <div class="modal fade" id="editBudgetExpenseModal{{ budget_expense.expense_id }}"
+                                         tabindex="-1"
+                                         aria-labelledby="editBudgetExpensesModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="editBudgetExpensesModalLabel">
+                                                        Edit Budget Expense</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <!-- Edit budget form -->
+                                                    <form action="{{ url_for('edit_budget_expense', expense_id=budget_expense.expense_id) }}"
+                                                          method="POST">
 
-                                                    <!-- Select Month -->
-                                                    <div class="form-floating mb-3">
-                                                        <label for="edit_budget_expense_month"></label>
-                                                        <select name="month_name" id="edit_budget_expense_month"
-                                                                class="form-control">
-                                                            {% for month_option in ["January", "February", "March", "April",
+                                                        <!-- Select Month -->
+                                                        <div class="form-floating mb-3">
+                                                            <label for="edit_budget_expense_month"></label>
+                                                            <select name="month_name" id="edit_budget_expense_month"
+                                                                    class="form-control">
+                                                                {% for month_option in ["January", "February", "March", "April",
                                                             "May", "June", "July", "August", "September", "October", "November",
                                                             "December"] %}
-                                                                <option value="{{ month_option }}"
-                                                                        {% if month_option == budget_expense.month_name %}selected{% endif %}>{{ month_option }}</option>
-                                                            {% endfor %}
-                                                        </select>
-                                                    </div>
+                                                                    <option value="{{ month_option }}"
+                                                                            {% if month_option == budget_expense.month_name %}selected{% endif %}>{{ month_option }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
 
-                                                    <!-- Year -->
-                                                    <div class="form-floating mb-3">
-                                                        <input type="text" class="form-control" name="year"
-                                                               id="year"
-                                                               placeholder="Select Year" minlength="4"
-                                                               maxlength="4"
-                                                               value="{{ budget_expense.year }}" required>
-                                                        <label for="year">Year</label>
-                                                    </div>
+                                                        <!-- Year -->
+                                                        <div class="form-floating mb-3">
+                                                            <input type="text" class="form-control" name="year"
+                                                                   id="year"
+                                                                   placeholder="Select Year" minlength="4"
+                                                                   maxlength="4"
+                                                                   value="{{ budget_expense.year }}" required>
+                                                            <label for="year">Year</label>
+                                                        </div>
 
-                                                    <!--                        Select Category-->
-                                                    <div class="form-floating mb-3">
-                                                        <label for="edit_category_name"></label>
-                                                        <select name="category_name" id="edit_category_name"
-                                                                class="form-control">
-                                                            {% for category in ["Shopping", "Groceries", "Eating-Out", "Transport",
+                                                        <!--                        Select Category-->
+                                                        <div class="form-floating mb-3">
+                                                            <label for="edit_category_name"></label>
+                                                            <select name="category_name" id="edit_category_name"
+                                                                    class="form-control">
+                                                                {% for category in ["Shopping", "Groceries", "Eating-Out", "Transport",
                                                          "Bills", "Entertainment", "Miscellaneous"] %}
-                                                                <option value="{{ category }}"
-                                                                        {% if category == budget_expense.category_name %}selected{% endif %}>{{ category }}</option>
-                                                            {% endfor %}
-                                                        </select>
-                                                    </div>
-                                                    <!-- Amount -->
-                                                    <div class="form-floating mb-3">
-                                                        <input type="number" class="form-control"
-                                                               id="budget_expense_amount"
-                                                               placeholder="Month" name="budget_amount"
-                                                               value="{{ budget_expense.budget_amount }}" step="0.01">
-                                                        <label for="budget_expense_amount">Amount</label>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">
-                                                            Close
-                                                        </button>
-                                                        <button type="submit" class="btn btn-primary">
-                                                            Edit Income
-                                                            <i class="fas fa-edit end"></i>
-                                                        </button>
-                                                    </div>
-                                                </form>
+                                                                    <option value="{{ category }}"
+                                                                            {% if category == budget_expense.category_name %}selected{% endif %}>{{ category }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                        <!-- Amount -->
+                                                        <div class="form-floating mb-3">
+                                                            <input type="number" class="form-control"
+                                                                   id="budget_expense_amount"
+                                                                   placeholder="Month" name="budget_amount"
+                                                                   value="{{ budget_expense.budget_amount }}"
+                                                                   step="0.01">
+                                                            <label for="budget_expense_amount">Amount</label>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">
+                                                                Close
+                                                            </button>
+                                                            <button type="submit" class="btn btn-primary">
+                                                                Edit Income
+                                                                <i class="fas fa-edit end"></i>
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!--  Modal to confirm deletion -->
-                                <div class="modal fade" id="deleteBudgetExpenseModal{{ budget_expense.expense_id }}"
-                                     tabindex="-1"
-                                     aria-labelledby="deleteBudgetExpenseModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteBudgetExpenseModalLabel">Confirm
-                                                    Deletion</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Are you sure you want to delete this entry? This action cannot be
-                                                undone.
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                                    Cancel
-                                                </button>
-                                                <a href="{{ url_for('delete_budget_expense', expense_id=budget_expense.expense_id) }}"
-                                                   class="btn btn-outline-danger">Delete</a>
+                                    <!--  Modal to confirm deletion -->
+                                    <div class="modal fade" id="deleteBudgetExpenseModal{{ budget_expense.expense_id }}"
+                                         tabindex="-1"
+                                         aria-labelledby="deleteBudgetExpenseModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteBudgetExpenseModalLabel">Confirm
+                                                        Deletion</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to delete this entry? This action cannot be
+                                                    undone.
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                            data-bs-dismiss="modal">
+                                                        Cancel
+                                                    </button>
+                                                    <a href="{{ url_for('delete_budget_expense', expense_id=budget_expense.expense_id) }}"
+                                                       class="btn btn-outline-danger">Delete</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
-
 
 {% endblock %}

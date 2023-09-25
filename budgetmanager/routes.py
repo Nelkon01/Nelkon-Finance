@@ -13,6 +13,8 @@ from budgetmanager.models import Users, BudgetedIncome, ActualIncome, BudgetedEx
 
 @app.route('/')
 def home():
+    if "user_id" in session:
+        return redirect(url_for('plan'))
     return render_template('home.html')
 
 
@@ -251,7 +253,7 @@ def edit_budget_income(income_id):
 
         try:
             year = int(year)
-            budget_income = float(budget_amount)
+            budget_amount = float(budget_amount)
 
             # update the budget income values of that id
             budget_income.month_name = month_name
@@ -264,11 +266,19 @@ def edit_budget_income(income_id):
 
         except ValueError as e:
             flash("Invalid data types provided. Please check your input", 'error')
+            app.logger.error(f"Error updating budget expense: {str(e)}")
+            return render_template('error.html', error_message=f'{str(e)}')
+
+        except AttributeError as e:
+            flash('An error occurred, please try again later')
+            app.logger.error(f"Error updating budget expense: {str(e)}")
+            return render_template('error.html', error_message=f'{str(e)}')
 
         except SQLAlchemyError as e:
             db.session.rollback()
             flash("An error occurred while updating the budget income. Please try again later.", 'error')
             app.logger.error(f"Error updating budget expense: {str(e)}")
+            return render_template("error.html", error_message=f"{str(e)}")
 
     return redirect(url_for('plan'))
 
