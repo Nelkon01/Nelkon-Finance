@@ -18,6 +18,22 @@ def home():
     return render_template('home.html')
 
 
+month_name_to_number = {
+    'January': '01',
+    'February': '02',
+    'March': '03',
+    'April': '04',
+    'May': '05',
+    'June': '06',
+    'July': '07',
+    'August': '08',
+    'September': '09',
+    'October': '10',
+    'November': '11',
+    'December': '12',
+}
+
+
 # Plan route
 @app.route('/plan')
 @login_required
@@ -30,11 +46,15 @@ def plan():
             # get the current user
             curr_user = Users.query.get(user_id)
 
-            # Query the budget incomes and expenses for the user, ordered by month
+            # Query the budget incomes and expenses for the user
             budget_incomes = BudgetedIncome.query.filter_by(user_id=user_id).order_by(
-                BudgetedIncome.year, BudgetedIncome.month_name).all()
+                BudgetedIncome.year).all()
             budget_expenses = BudgetedExpenses.query.filter_by(user_id=user_id).order_by(
-                BudgetedExpenses.year, BudgetedExpenses.month_name).all()
+                BudgetedExpenses.year).all()
+
+            # sort budget income and expenses by month using month_name_to_number
+            budget_incomes.sort(key=lambda x: month_name_to_number.get(x.month_name))
+            budget_expenses.sort(key=lambda x: month_name_to_number.get(x.month_name))
 
             # Group budget incomes and expenses by month and year into a dict
             budget_incomes_by_month = defaultdict(list)
@@ -51,7 +71,7 @@ def plan():
                                    budget_expenses=budget_expenses, budget_incomes_by_month=budget_incomes_by_month,
                                    budget_expenses_by_month=budget_expenses_by_month)
         except Exception as e:
-            flash("An error occurred while loading your budget data. Please try again later." "error")
+            flash("An error occurred while loading your budget data. Please try again later.", "error")
             app.logger.error(f"Error loading user data: {str(e)}")
             return render_template('error.html', error_message=f"An Error occurred while loading your"
                                                                f" plan data. Please try again later.")
@@ -60,20 +80,6 @@ def plan():
         return redirect(url_for("login"))
 
 
-month_name_to_number = {
-    'January': '01',
-    'February': '02',
-    'March': '03',
-    'April': '04',
-    'May': '05',
-    'June': '06',
-    'July': '07',
-    'August': '08',
-    'September': '09',
-    'October': '10',
-    'November': '11',
-    'December': '12',
-}
 
 
 @app.route('/track')
