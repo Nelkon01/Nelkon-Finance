@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="hero">
-        <div class="hero-content">
-            <h1>Nelkon Finance</h1>
-            <p>Take Control of Your Monthly Finances with Ease</p>
-            <a href="{{ url_for('login') }}" class="cta-button btn btn-outline-light ">Get Started</a>
+        <div class="hero-container">
+            <div class="container opaque-overlay">
+                <h1>Nelkon Finance</h1>
+                <p>Take Control of Your Monthly Finances with Ease</p>
+                <a href="{{ url_for('login') }}" class="cta-button btn btn-outline-light ">Get Started</a>
+            </div>
         </div>
-        <img src="hero-image.jpg" alt="App in Action">
     </div>
     <div id="features" class="features">
         <div class="d-none d-md-block">
@@ -24,18 +25,18 @@
                     <div class="carousel-item active">
                         <img src="{{ url_for('static', filename='images/budget-image.jpg') }}" class="d-block w-100"
                              alt="carousel_image 1">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>Budget Management</h5>
-                            <p>Create and manage budget income and expenses to achieve your financial goals</p>
+                        <div class="carousel-caption opaque-overlay d-none d-md-block">
+                            <h5 class="text-light">Budget Management</h5>
+                            <p class="text-light">Create and manage budget income and expenses to achieve your financial goals</p>
                         </div>
                     </div>
                     <div class="carousel-item">
                         <img src="{{ url_for('static', filename='images/tracking-image.jpg') }}"
                              class="d-block w-100"
                              alt="carousel_image 2" height="800">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>Actual Finances Tracking</h5>
-                            <p>Effortlessly track your actual income and expenses, to gain insights into your
+                        <div class="carousel-caption opaque-overlay d-none d-md-block">
+                            <h5 class="text-light">Actual Finances Tracking</h5>
+                            <p class="text-light">Effortlessly track your actual income and expenses, to gain insights into your
                                 spending
                                 habits.</p>
                         </div>
@@ -44,9 +45,9 @@
                         <img src="{{ url_for('static', filename='images/analysis-image.jpg') }}"
                              class="d-block w-100"
                              alt="carousel_image 3">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>Income and Expense Analysis</h5>
-                            <p>Analyze your income sources and expense areas to plan for a secure financial future
+                        <div class="carousel-caption opaque-overlay d-none d-md-block">
+                            <h5 class="text-light">Income and Expense Analysis</h5>
+                            <p class="text-light">Analyze your income sources and expense areas to plan for a secure financial future
                                 by
                                 viewing interactive charts</p>
                         </div>

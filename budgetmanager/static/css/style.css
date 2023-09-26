@@ -1,9 +1,20 @@
-
 /* Hero Section */
-.hero {
-    background-color: black;
-    color: #fff;
+/*.hero {*/
+/*    background-color: black;*/
+/*    color: #fff;*/
+/*    text-align: center;*/
+/*    padding: 100px 0;*/
+/*}*/
+
+.hero-container {
+    max-width: 100%;
+    height: 50vh;
+    background-image: url("../images/app-in-action.png");
+    background-size: cover;
     text-align: center;
+    align-items: center;
+    justify-content: center;
+    position: relative;
     padding: 100px 0;
 }
 
@@ -25,6 +36,11 @@
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
+.opaque-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+}
+
 /*Features Section*/
 .features img {
     width: auto;

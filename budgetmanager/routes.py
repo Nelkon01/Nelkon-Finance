@@ -13,8 +13,7 @@ from budgetmanager.models import Users, BudgetedIncome, ActualIncome, BudgetedEx
 
 @app.route('/')
 def home():
-    if "user_id" in session:
-        return redirect(url_for('plan'))
+    user_id = current_user.id
     return render_template('home.html')
 
 
@@ -78,8 +77,6 @@ def plan():
     else:
         flash("You must be logged in to access this page.", "error")
         return redirect(url_for("login"))
-
-
 
 
 @app.route('/track')
@@ -231,6 +228,9 @@ def add_budget_income():
             db.session.commit()
 
             flash('Budget Income added successfully!', 'success')
+        else:
+            db.session.rollback()
+            flash('You do not have permission create entries for this user')
     except SQLAlchemyError as e:
         db.session.rollback()
         flash('An error occurred while adding the budget income. Please try again later.' 'error')
@@ -343,6 +343,9 @@ def add_budget_expense():
             db.session.commit()
 
             flash('Budget Expense added successfully!', 'success')
+        else:
+            db.session.rollback()
+            flash('You do not have permission create entries for this user')
     except SQLAlchemyError as e:
         db.session.rollback()
         flash('An error occurred while adding the budget expense. Please try again later.', 'error')
@@ -443,6 +446,9 @@ def add_actual_expense():
             db.session.commit()
 
             flash('Actual Expense added successfully!', 'success')
+        else:
+            db.session.rollback()
+            flash('You do not have permission create entries for this user')
     except SQLAlchemyError as e:
         db.session.rollback()
         flash('An error occurred while adding your actual expense. Please try again later.', 'error')
@@ -526,15 +532,19 @@ def add_actual_income():
         return redirect(url_for('track'))
     try:
         date = datetime.strptime(date_str, "%d/%m/%Y")
-        actual_income = ActualIncome(
-            income_name=income_name,
-            user_id=current_user.id,
-            date=date,
-            actual_amount=actual_amount,
-        )
-        db.session.add(actual_income)
-        db.session.commit()
-        flash('Actual Expense added successfully!', 'success')
+        if current_user.id:
+            actual_income = ActualIncome(
+                income_name=income_name,
+                user_id=current_user.id,
+                date=date,
+                actual_amount=actual_amount,
+            )
+            db.session.add(actual_income)
+            db.session.commit()
+            flash('Actual Expense added successfully!', 'success')
+        else:
+            db.session.rollback()
+            flash('You do not have permission create entries for this user')
     except SQLAlchemyError as e:
         db.session.rollback()
         flash('An error occurred while adding your actual income. Please try again later.', 'error')

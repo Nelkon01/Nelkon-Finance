@@ -10,7 +10,7 @@
 
         {# Option to select Month and Year#}
         <div class="row justify-content-center">
-        <h6 class="text-center">Please select Month and Year values below to view charts</h6>
+            <h6 class="text-center">Please select Month and Year values below to view charts</h6>
             <div class="col-md-6">
                 <div class="card shadow mb-4">
                     <div class="card-body">
@@ -161,6 +161,25 @@
                     </div>
                 </div>
 
+
+                <!-- Donut Chart -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary text-center">{{ selected_month or "" }} Expenses by
+                            Category</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="chart-doughnut">
+                            <h6 class="text-center">Budget</h6>
+                            <canvas id="budgetDoughnutChart"></canvas>
+                            <hr>
+                            <h6 class="text-center">Actual</h6>
+                            <canvas id="actualDoughnutChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Line Chart -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
@@ -180,29 +199,10 @@
 
             </div>
 
-            <!-- Donut Chart -->
-            <div class="col-xl-4 col-lg-5">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary text-center">{{ selected_month or "" }} Expenses by
-                            Category</h6>
-                    </div>
-                    <!-- Card Body -->
-                    <div class="card-body">
-                        <div class="chart-doughnut">
-                            <h6 class="text-center">Budget</h6>
-                            <canvas id="budgetDoughnutChart"></canvas>
-                            <hr>
-                            <h6 class="text-center">Actual</h6>
-                            <canvas id="actualDoughnutChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="{{ url_for('static', filename='js/goldmine.js') }}"></script>
     <script>
         {#    Bar Chart #}
         {#        Budget Bar Chart #}
