@@ -13,7 +13,6 @@ from budgetmanager.models import Users, BudgetedIncome, ActualIncome, BudgetedEx
 
 @app.route('/')
 def home():
-    user_id = current_user.id
     return render_template('home.html')
 
 
