@@ -13,7 +13,13 @@ from budgetmanager.models import Users, BudgetedIncome, ActualIncome, BudgetedEx
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    user_id = session.get("user_id")
+    curr_user = None
+
+    if user_id:
+        curr_user = Users.query.get(user_id)
+
+    return render_template('home.html', user=curr_user)
 
 
 month_name_to_number = {
@@ -36,46 +42,41 @@ month_name_to_number = {
 @app.route('/plan')
 @login_required
 def plan():
-    # check if user is logged in
-    if "user_id" in session:
-        try:
-            user_id = session["user_id"]
+    try:
+        user_id = session["user_id"]
 
-            # get the current user
-            curr_user = Users.query.get(user_id)
+        # get the current user
+        curr_user = Users.query.get(user_id)
 
-            # Query the budget incomes and expenses for the user
-            budget_incomes = BudgetedIncome.query.filter_by(user_id=user_id).order_by(
-                BudgetedIncome.year).all()
-            budget_expenses = BudgetedExpenses.query.filter_by(user_id=user_id).order_by(
-                BudgetedExpenses.year).all()
+        # Query the budget incomes and expenses for the user
+        budget_incomes = BudgetedIncome.query.filter_by(user_id=user_id).order_by(
+            BudgetedIncome.year).all()
+        budget_expenses = BudgetedExpenses.query.filter_by(user_id=user_id).order_by(
+            BudgetedExpenses.year).all()
 
-            # sort budget income and expenses by month using month_name_to_number
-            budget_incomes.sort(key=lambda x: month_name_to_number.get(x.month_name))
-            budget_expenses.sort(key=lambda x: month_name_to_number.get(x.month_name))
+        # sort budget income and expenses by month using month_name_to_number
+        budget_incomes.sort(key=lambda x: month_name_to_number.get(x.month_name))
+        budget_expenses.sort(key=lambda x: month_name_to_number.get(x.month_name))
 
-            # Group budget incomes and expenses by month and year into a dict
-            budget_incomes_by_month = defaultdict(list)
-            for budget_income in budget_incomes:
-                month_year = (budget_income.month_name, budget_income.year)
-                budget_incomes_by_month[month_year].append(budget_income)
+        # Group budget incomes and expenses by month and year into a dict
+        budget_incomes_by_month = defaultdict(list)
+        for budget_income in budget_incomes:
+            month_year = (budget_income.month_name, budget_income.year)
+            budget_incomes_by_month[month_year].append(budget_income)
 
-            budget_expenses_by_month = defaultdict(list)
-            for budget_expense in budget_expenses:
-                month_year = (budget_expense.month_name, budget_expense.year)
-                budget_expenses_by_month[month_year].append(budget_expense)
+        budget_expenses_by_month = defaultdict(list)
+        for budget_expense in budget_expenses:
+            month_year = (budget_expense.month_name, budget_expense.year)
+            budget_expenses_by_month[month_year].append(budget_expense)
 
-            return render_template('plan.html', user=curr_user, budget_incomes=budget_incomes,
-                                   budget_expenses=budget_expenses, budget_incomes_by_month=budget_incomes_by_month,
-                                   budget_expenses_by_month=budget_expenses_by_month)
-        except Exception as e:
-            flash("An error occurred while loading your budget data. Please try again later.", "error")
-            app.logger.error(f"Error loading user data: {str(e)}")
-            return render_template('error.html', error_message=f"An Error occurred while loading your"
-                                                               f" plan data. Please try again later.")
-    else:
-        flash("You must be logged in to access this page.", "error")
-        return redirect(url_for("login"))
+        return render_template('plan.html', user=curr_user, budget_incomes=budget_incomes,
+                               budget_expenses=budget_expenses, budget_incomes_by_month=budget_incomes_by_month,
+                               budget_expenses_by_month=budget_expenses_by_month)
+    except Exception as e:
+        flash("An error occurred while loading your budget data. Please try again later.", "error")
+        app.logger.error(f"Error loading user data: {str(e)}")
+        return render_template('error.html', error_message=f"An Error occurred while loading your"
+                                                           f" plan data. Please try again later.")
 
 
 @app.route('/track')
