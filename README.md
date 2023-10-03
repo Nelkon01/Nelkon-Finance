@@ -4,7 +4,7 @@
 ## Project Overview
 <img width="1318" alt="Screenshot 2023-10-03 at 11 52 32" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/3456fe0e-feea-473f-8732-0af0f284687e">
 
-[Nelkon FInance](https://nelkon-finance-671b974bbd16.herokuapp.com) is a web-based finance management application that helps users take control of their financial lives by providing tools for budgeting, expense tracking, income analysis, and more.
+[Nelkon FInance](https://nelkon-finance-671b974bbd16.herokuapp.com/) is a web-based finance management application that helps users take control of their financial lives by providing tools for budgeting, expense tracking, income analysis, and more.
 
 ## Key Features
 
