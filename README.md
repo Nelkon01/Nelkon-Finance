@@ -1,18 +1,134 @@
-# Nelkon Finance
+# **Nelkon Finance**
+![nelkon_finance_logo](https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/4f0c7288-df4f-4c0f-911a-574a9aa41948)
 
-Nelkon Finance is a web-based finance management application that helps users take control of their financial lives by providing tools for budgeting, expense tracking, income analysis, and more.
+## Project Overview
+<img width="1318" alt="Screenshot 2023-10-03 at 11 52 32" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/3456fe0e-feea-473f-8732-0af0f284687e">
+
+[![Nelkon FInance](https://nelkon-finance-671b974bbd16.herokuapp.com) is a web-based finance management application that helps users take control of their financial lives by providing tools for budgeting, expense tracking, income analysis, and more.
+
+## Key Features
+
+- **Monthly Financial Planning:** Nelkon Finance enables users to plan their income and expenses on a monthly basis. It provides an intuitive interface to set budgets and financial goals for each month.
+
+- **Real-time Data Entry:** Users can input their actual income and expenses for the respective months as soon as the transactions occur. This real-time data entry ensures accurate financial tracking.
+
+- **Interactive Dashboard:** The application boasts a dynamic and user-friendly dashboard that transforms raw financial data into insightful visualizations. Users can analyze their income and spending habits through interactive charts that update in real-time.
+
+## How It Works
+
+1. **Monthly Planning:** Users start by setting up budgets and financial plans for each month, outlining their income sources and expected expenses.
+
+2. **Real-time Tracking:** As financial transactions occur, users can instantly log their actual income and expenses within the app, maintaining an up-to-date financial record.
+
+3. **Data Analysis:** Nelkon Finance provides an interactive dashboard consisting of charts and graphs. Users can select specific months to view, and the charts will update to reflect the chosen data, facilitating a deeper understanding of their financial trends.
+
+## Why Choose Nelkon Finance
+
+- **Empowerment:** Users gain control over their finances by setting clear budgets and tracking income and expenses as they happen.
+
+- **Insightful Analysis:** Users can make informed financial decisions with access to interactive charts and trends that help identify areas for improvement.
+
+- **User-Friendly:** Nelkon Finance offers an intuitive and user-friendly interface, making financial management accessible to everyone.
+
+- **Real-time Updates:** The application ensures that users' financial data is always up-to-date, providing a real-time snapshot of your financial health.
+
 
 ## Table of Contents
+<details>
+<summary>Click to Expand</summary>
 
-- [About](#about)
+- [UX](#ux)
+  * [Strategy](#strategy)
+  * [Scope](#scope)
+  * [Goals](#goals)
+    + [Customer Goals](#customer-goals)
+    + [Place Owner Goals](#place-owner-goals)
+    + [WebSite Goals](#website-goals)
+- [Data Structure](#data-structure)
+  * [Database Choice](#database-choice)
+  * [Data Models](#data-models)
+  * [Collections Data Structure](#collections-data-structure)
+    + [Activities](#activities)
+    + [Addresses](#addresses)
+    + [Countries](#countries)
+    + [Events](#events)
+    + [Metrics Clicks](#metrics-clicks)
+    + [Metrics Page](#metrics-page)
+    + [Places](#places)
+    + [Reviews](#reviews)
+    + [Users](#users)
+  * [CRUD Flow Diagrams](#crud-flow-diagrams)
+- [Design Choices](#design-choices)
+  * [Wireframes](#wireframes)
+    + [Content Considerations](#content-considerations)
+  * [Surface:](#surface)
+    + [Color Choice](#color-choice)
+    + [Typography](#typography)
+    + [Image Choice](#image-choice)
+      - [Home Page](#home-page)
+      - [Activity Icons](#activity-icons)
+      - [Input Icons](#input-icons)
+      - [Header Image](#header-image)
+      - [Modals and Errors](#modals-and-errors)
+      - [Loading Giff](#loading-giff)
+    + [Design Elements](#design-elements)
+    + [Animations & Transitions](#animations--transitions)
+- [User Stories:](#user-stories)
+  * [For kids looking for something free to do today in their neighborhood:](#for-kids-looking-for-something-free-to-do-today-in-their-neighborhood)
+  * [For places and organizations involved in building the community](#for-places-and-organizations-involved-in-building-the-community)
+  * [For site owners hosting a website to store community information](#for-site-owners-hosting-a-website-to-store-community-information)
 - [Features](#features)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
+  * [Implemented Features](#implemented-features)
+    + [Structural](#structural)
+    + [Common Elements](#common-elements)
+    + [Forms](#forms)
+    + [Database Operations](#database-operations)
+    + [API Integration](#api-integration)
+    + [Metrics](#metrics)
+  * [Features Left to Implement](#features-left-to-implement)
+    + [Features Deferred from original plan](#features-deferred-from-original-plan)
+    + [User Roles & Permissions](#user-roles--permissions)
+    + [Place Administrator Dashboard](#place-administrator-dashboard)
+    + [External User Adult Dashboard](#external-user-adult-dashboard)
+    + [External User Minor Dashboard](#external-user-minor-dashboard)
+    + [Content Admin Dashboard](#content-admin-dashboard)
+    + [Site Admin Dashboard](#site-admin-dashboard)
+    + [More Sophisticated Attendance Tracking](#more-sophisticated-attendance-tracking)
+    + [API Integrations](#api-integrations)
+    + [Switch to Relational Database](#switch-to-relational-database)
+    + [Ease of Use Enhancements](#ease-of-use-enhancements)
+  * [Project Tracking](#project-tracking)
+- [Technologies Used](#technologies-used)
+  * [Programming languages](#programming-languages)
+  * [Framework & Extensions](#framework--extensions)
+  * [Fonts](#fonts)
+  * [Tools](#tools)
+  * [APIs](#apis)
+- [Defensive Programming](#defensive-programming)
+  * [Form Validation:](#form-validation)
+  * [Cross Site Forgery Protection](#cross-site-forgery-protection)
+  * [XSS Protection](#xss-protection)
+  * [Restricted Deletion](#restricted-deletion)
+- [Testing](#testing)
+  * [Validation Testing](#validation-testing)
+  * [Unit Testing](#unit-testing)
+  * [Cross Browser/ Cross Device Verification](#cross-browser-cross-device-verification)
+  * [Cross Site Scripting and Forgery](#cross-site-scripting-and-forgery)
+  * [Accessibility Testing](#accessibility-testing)
+  * [Regression Testing](#regression-testing)
+  * [Automated Testing](#automated-testing)
+  * [Defect Tracking](#defect-tracking)
+    + [Noteworthy Bugs](#noteworthy-bugs)
+    + [Outstanding Defects](#outstanding-defects)
+- [Deployment](#deployment)
+  * [GitHub](#github)
+  * [Requires](#requires)
+  * [Development (Running Locally)](#development-running-locally)
+  * [Live (Heroku)](#live-heroku)
+- [Credits](#credits)
+  * [Content](#content)
+  * [Media](#media)
+  * [Acknowledgements](#acknowledgements)
 
 ## About
 
