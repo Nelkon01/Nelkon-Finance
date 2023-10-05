@@ -140,59 +140,68 @@
                 </div>
             </div>
         </div>
+
         <div class="row justify-content-center">
             <div class="col-xl-8 col-lg-7">
-
                 {#  Charts #}
-                <!-- Bar Chart -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary text-center">{{ selected_month or "" }} Income
-                            Sources</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="chart-bar">
-                            <h6 class="text-center">Budget</h6>
-                            <canvas id="budgetBarChart"></canvas>
-                            <hr>
-                            <h6 class="text-center">Actual</h6>
-                            <canvas id="actualBarChart"></canvas>
+                <div class="row">
+                    <!-- Bar Chart -->
+                    <div class="col-md-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary text-center">{{ selected_month or "" }}
+                                    Income
+                                    Sources</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-bar">
+                                    <h6 class="text-center">Budget</h6>
+                                    <canvas id="budgetBarChart"></canvas>
+                                    <hr>
+                                    <h6 class="text-center">Actual</h6>
+                                    <canvas id="actualBarChart"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-
-                <!-- Donut Chart -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary text-center">{{ selected_month or "" }} Expenses by
-                            Category</h6>
-                    </div>
-                    <!-- Card Body -->
-                    <div class="card-body">
-                        <div class="chart-doughnut">
-                            <h6 class="text-center">Budget</h6>
-                            <canvas id="budgetDoughnutChart"></canvas>
-                            <hr>
-                            <h6 class="text-center">Actual</h6>
-                            <canvas id="actualDoughnutChart"></canvas>
+                    <!-- Line Chart -->
+                    <div class="col-md-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary text-center">Actual Income and Expense over
+                                    Time</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-line">
+                                    <h6 class="text-center">Income</h6>
+                                    <canvas id="incomeLineChart"></canvas>
+                                    <hr>
+                                    <h6 class="text-center">Expenses</h6>
+                                    <canvas id="expenseLineChart"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Line Chart -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary text-center">Actual Income and Expense over
-                            Time</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="chart-line">
-                            <h6 class="text-center">Income</h6>
-                            <canvas id="incomeLineChart"></canvas>
-                            <hr>
-                            <h6 class="text-center">Expenses</h6>
-                            <canvas id="expenseLineChart"></canvas>
+                    <!-- Donut Chart -->
+                    <div class="">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary text-center">{{ selected_month or "" }}
+                                    Expenses by
+                                    Category</h6>
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="chart-doughnut">
+                                    <h6 class="text-center">Budget</h6>
+                                    <canvas id="budgetDoughnutChart"></canvas>
+                                    <hr>
+                                    <h6 class="text-center">Actual</h6>
+                                    <canvas id="actualDoughnutChart"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
