@@ -404,7 +404,17 @@ Entries can also be deleted. A modal that asks the user to confirm deletion is r
 This page is very similar to the Plan Fortune page. It is basically for the Actual Income and expenses but for a users actual finances.
 <img width="1119" alt="Screenshot 2023-10-05 at 19 22 00" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/71cdfe5a-7339-4676-9c44-17a016b00352">
 
+### See Goldmine Page
+This page is where users view an interactive dashboard that displays charts according to the financial information provided. Below is a screenshot example of the goldmine page.
 
+<img width="1178" alt="Screenshot 2023-10-05 at 21 39 03" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/efafacd0-343e-4a26-989f-e2115a4742a1">
+
+### Profile Page
+Once Users click the account dropdown, there is a link to the profile page, which takes the users to a page where they can update their information, change passwords, and delete their accounts.
+<img width="1194" alt="Screenshot 2023-10-05 at 21 57 21" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/913efdde-8a7e-4d25-a3e0-5ad32d85f73f">
+ Users can see their existing information and change it if they want. However, the current password is not displayed to the user, so it is not exposed to prying eyes. But the current password can be changed and updated on this page. 
+ When users want to delete their accounts, a modal appears to check with the user if they want to delete the account. 
+ <img width="989" alt="Screenshot 2023-10-05 at 22 09 30" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/c8fc08b6-dc20-405b-b313-6925e1bbb93c">
 
 
 ## User Stories
@@ -444,13 +454,6 @@ analysts and mobile users.
 By focusing on UX strategy and carefully scoping the features, The aim is to deliver a valuable and user-centric
 financial management tool.
 
-## About
-
-Nelkon Finance is designed to simplify personal finance management. With this application, users can:
-
-- **Plan Fortune:** Create and manage budgets for income and expenses to achieve financial goals.
-- **Track Treasure:** Effortlessly track actual income and expenses to gain insights into spending habits.
-- **See Goldmine:** Analyze income sources and expense areas with interactive charts for financial planning.
 
 ## Features
 
