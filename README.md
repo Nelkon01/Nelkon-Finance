@@ -218,11 +218,10 @@ access their financial data.
   on the signup page.
 - [x] Read - The user table is read when a potential user attempts to signup to the app, to determine if the email or
   or username supplied into the form already exists to avoid duplicates.The user table is also read when a user logs in
-  to the app, navigates to the profile page.
+  to the app, and navigates to the profile page.
 - [x] Update - Users can also update their information whenever they navigate to the profile page to carry out this
   action
-- [x] Delete - The delete functionality is also active on this table as user information can be successfully deleted by
-  authorised users.
+- [x] Delete - The delete functionality is also active on this table, as authorised users can successfully delete user information.
 
 ### Budgeted Income Table
 
@@ -315,6 +314,51 @@ Having a rough data structure in hand, I knew what data fields I could present u
 actual income and expenses, and to view a dashboard.
 Please note, the mock-ups are guidelines not a hard design requirements. Some aspects changed during development to make
 the site more user-friendly, simple and intuitive to use.
+
+**Home Page**
+<img width="450" alt="Screenshot 2023-10-05 at 11 31 25" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/ac3bfd7a-8df1-453b-95d3-46796f5c5e5f">
+
+**Plan Fortune Page**
+<img width="450" alt="Screenshot 2023-10-05 at 11 32 20" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/b24670b6-0670-4dca-b9ba-d7f4708e6555">
+
+**Track Treasure Page**
+<img width="451" alt="Screenshot 2023-10-05 at 11 34 14" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/36d46fdf-3ac1-492f-96f5-7336d73e502a">
+
+**See Goldmine Page**
+<img width="452" alt="Screenshot 2023-10-05 at 11 35 05" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/a1a51c93-5bc1-4bc4-97a9-072613e80ddb">
+
+
+### Colour Scheme
+I chose to stick with a simple dark vibe colour scheme for the project
+  ![nelkon_finance colorscheme](https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/a2dd5761-1eb7-475f-aa0b-cc2f76944908)
+
+        
+### Typography
+Since this project was developed using the Bootstrap library. The font used was the default bootstrap fonts which has very good compatibility with a lot of browsers.
+
+### Imagery
+Imagery is important to accompany messages to end-users. The main images used was in the home page to explain to new user the essence of the app
+**Header Image**
+<img width="1076" alt="app-in-action" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/4a2d935e-efa4-42f3-b657-367d529bf8d2">
+**Budget Image**
+![budget-image](https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/bc1a6503-00ae-45b6-8dc6-64232a2639a2)
+**Tracking Image** 
+![tracking-image](https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/6a8309c5-aa98-4aa8-b3bd-710ea56f0fd5)
+**Analysis Image**
+![analysis-image](https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/cd41ad8c-0515-4d73-91ff-321755803300)
+
+I also had icons in the "How to" section, which gives new users a quick walkthrough of using the app.
+**Sign Up Icon**
+![signup-icon](https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/6523737e-d85d-4c66-9005-8898a7016377)
+**Plan Icon**
+![plan-icon](https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/94de0a56-9b24-4f4a-858d-fb02e202512e)
+**Track Icon**
+![track-icon](https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/5f6c3dba-90ae-4a06-b2c7-aa562eaba0a9)
+**Dashboard Icon**
+![dashboard-icon](https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/007584c8-fd7d-4f4c-b334-94a3b46a0e48)
+
+
+
 
 ### User Stories
 
