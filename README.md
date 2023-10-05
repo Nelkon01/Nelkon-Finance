@@ -334,10 +334,10 @@ I chose to stick with a simple dark vibe colour scheme for the project
 
         
 ### Typography
-Since this project was developed using the Bootstrap library. The font used was the default bootstrap fonts which has very good compatibility with a lot of browsers.
+Since this project was developed using the Bootstrap library. The font used was the default bootstrap font, which has very good compatibility with a lot of browsers.
 
 ### Imagery
-Imagery is important to accompany messages to end-users. The main images used was in the home page to explain to new user the essence of the app
+Imagery is important to accompany messages to end-users. The main images used was on the home page to explain to new user the essence of the app
 **Header Image**
 <img width="1076" alt="app-in-action" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/4a2d935e-efa4-42f3-b657-367d529bf8d2">
 **Budget Image**
@@ -358,38 +358,85 @@ I also had icons in the "How to" section, which gives new users a quick walkthro
 ![dashboard-icon](https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/007584c8-fd7d-4f4c-b334-94a3b46a0e48)
 
 
+### Home Page
+**Nav Bar**
+The nav bar is shown across all screens
+<img width="1243" alt="Screenshot 2023-10-05 at 14 58 27" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/66146b85-f159-4f92-a832-fc933829ba1f">
+For smaller to mobile screen users:
+<img width="611" alt="Screenshot 2023-10-05 at 17 53 22" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/5a181d61-dd0a-4408-a19d-86edf3685e9b">
+<img width="614" alt="Screenshot 2023-10-05 at 17 54 03" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/ca67659a-f45c-4467-9887-09d12d05ed2b">
 
 
-### User Stories
+**Hero Section**
+<img width="1243" alt="Screenshot 2023-10-05 at 15 01 52" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/a729d195-981d-4675-ad33-2ff8a4debd10">
+
+**Information Section**
+This section exists to give new users a little more information about the capabilities of the app. which are mainly **Budget Management**, **Actual Finances Tracking** and **Income and Expense Analysis**
+For Larger medium to large screen sizes, this section will be shown as a carousel, as shown in the screenshots below. 
+<img width="1246" alt="Screenshot 2023-10-05 at 15 03 33" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/0de72a77-f640-4f11-a05a-ee86db22ecfc">
+<img width="1246" alt="Screenshot 2023-10-05 at 15 03 58" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/ce1344d6-a55a-41d8-8174-65ae07886bb7">
+<img width="1247" alt="Screenshot 2023-10-05 at 15 04 29" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/46e2b618-4892-4b07-8b6e-c298d44a2068">
+However, this section will be shown as normally as a stack for smaller screen sizes and mobiles.
+<img width="617" alt="Screenshot 2023-10-05 at 17 43 47" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/97c3592c-e487-4083-8eee-e0a9e5c3eed4">
+
+**How It Works Section**
+This section is there to give a new user a walkthrough on how to navigate using the web app. 
+The screenshot below shows what this section looks like.
+<img width="617" alt="Screenshot 2023-10-05 at 17 47 19" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/c2802802-54a9-4494-9ad3-d9c1d61a1d54">
+
+**Footer Section**
+<img width="1162" alt="Screenshot 2023-10-05 at 18 06 58" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/bb4ed1d8-b2ab-4696-9d40-08e4d4b3784d">
+
+### Plan Fortune Page
+This page is where users can add their budget income and expenses for respective months. Users can view their previous entries on this page and edit and delete them.
+The screenshot below shows an example of what the plan fortune page can look like. 
+<img width="1166" alt="Screenshot 2023-10-05 at 18 13 38" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/ccf14938-f1a7-422f-b9c6-f90eaa2bda19">
+Once a user wants to add a new budget income or entry, they need to click on one of the "Add budget income/expense" buttons on the screen. This triggers a modal that displays a form for the user to fill in to create that data entry successfully. An example is shown in the screenshot below if a user wants to create a budget expense entry.
+<img width="934" alt="Screenshot 2023-10-05 at 18 20 39" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/4c590d86-29c2-4d0d-a428-791cd6ddc862">
+Some fields in the form contain options that users may select from instead of manually typing all the input required for the  form filling. This was included to help with a positive user experience. An example of this is the Month field. 
+<img width="499" alt="Screenshot 2023-10-05 at 18 25 04" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/660539cb-cc97-4bf6-bd3c-43960ba82c06">
+User entries can be edited as well. And this triggers a modal to render an already prefilled form for users to update that information. 
+<img width="609" alt="Screenshot 2023-10-05 at 18 34 30" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/60cc1b5f-44d2-4e8d-935a-e8e8eaada593">
+Entries can also be deleted. A modal that asks the user to confirm deletion is rendered to the user. This is a way to ensure that users do not accidentally delete an entry that was not intended and help improve user experience. 
+<img width="618" alt="Screenshot 2023-10-05 at 18 57 30" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/11b809c9-d5a9-4360-a7b5-0da4b7281b29">
+
+### Track Treasure Page
+This page is very similar to the Plan Fortune page. It is basically for the Actual Income and expenses but for a users actual finances.
+<img width="1119" alt="Screenshot 2023-10-05 at 19 22 00" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/71cdfe5a-7339-4676-9c44-17a016b00352">
+
+
+
+
+## User Stories
 
 Here are a few user stories that demonstrate how **Nelkon Finance** meets the needs of its users:
 
 #### **User Persona: Alex, the First-Time User:**
 
-    - As a first-time user, I want a simple and straightforward onboarding process.
-    - I want clear guidance on how to set up my monthly budget, input income sources, and define expense categories.
-    - The app should provide tooltips or an easy-to-access tutorial to help me get started.
-    - Seeing my financial data presented visually on the dashboard should be intuitive, even for someone using it for
-      the first time.
-    - The app should leave me feeling confident and empowered to manage my finances effectively.
+- As a first-time user, I want a simple and straightforward onboarding process.
+- I want clear guidance on how to set up my monthly budget, input income sources, and define expense categories.
+- The app should provide tooltips or an easy-to-access tutorial to help me get started.
+- Seeing my financial data presented visually on the dashboard should be intuitive, even for someone using it for
+  the first time.
+- The app should leave me feeling confident and empowered to manage my finances effectively.
 
 #### **User Persona: Sarah, the Budgeter**
 
-    - As a monthly budgeter, I want to set specific spending limits for various expense categories.
-    - I want to log my actual expenses as I make them, so I can see how well I'm sticking to my budget.
-    - The interactive dashboard helps me quickly identify which categories I need to adjust to stay on track.
+- As a monthly budgeter, I want to set specific spending limits for various expense categories.
+- I want to log my actual expenses as I make them, so I can see how well I'm sticking to my budget.
+- The interactive dashboard helps me quickly identify which categories I need to adjust to stay on track.
 
 #### **User Persona: Mark, the Financial Analyst**
 
-    - I'm a data-driven user who wants to analyze my yearly income trends. 
-    - I can easily select specific months or years to view on the dashboard and watch the charts update in real-time. 
-    - This feature helps me make informed financial decisions.
+- I'm a data-driven user who wants to analyze my yearly income trends. 
+- I can easily select specific months or years to view on the dashboard and watch the charts update in real-time. 
+- This feature helps me make informed financial decisions.
 
 #### **User Persona: Lisa, the Mobile User**
 
-    - I'm always on the go, and I want to access my financial data from my smartphone.
-    - I appreciate that the app is responsive and works seamlessly on my mobile device.
-    - Logging transactions and viewing charts are equally convenient on my phone.
+- I'm always on the go, and I want to access my financial data from my smartphone.
+- I appreciate that the app is responsive and works seamlessly on my mobile device.
+- Logging transactions and viewing charts are equally convenient on my phone.
 
 The user stories illustrate how Nelkon Finance caters to the diverse needs of its users, from budgeters to financial
 analysts and mobile users.
