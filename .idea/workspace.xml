@@ -5,10 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a975cf4b-401b-4198-be0e-d9ecc04d5416" name="Changes" comment="Add signup modal to login page to enable ease of signup">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/fc18af8d-c2ab-478f-a3b7-6a0ec09a0390.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/fc18af8d-c2ab-478f-a3b7-6a0ec09a0390.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/nelkon_finance.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/nelkon_finance.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
@@ -161,7 +157,7 @@
       <workItem from="1695276171633" duration="112334000" />
       <workItem from="1695614990170" duration="38242000" />
       <workItem from="1696287446621" duration="590000" />
-      <workItem from="1696323472589" duration="8237000" />
+      <workItem from="1696323472589" duration="23855000" />
     </task>
     <task id="LOCAL-00001" summary="Add signup modal to login page to enable ease of signup">
       <option name="closed" value="true" />

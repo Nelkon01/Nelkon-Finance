@@ -59,16 +59,12 @@ and more.
 - [Data Structure](#data-structure)
     * [Database Choice](#database-choice)
     * [Data Models](#data-models)
-    * [Collections Data Structure](#collections-data-structure)
-        + [Activities](#activities)
-        + [Addresses](#addresses)
-        + [Countries](#countries)
-        + [Events](#events)
-        + [Metrics Clicks](#metrics-clicks)
-        + [Metrics Page](#metrics-page)
-        + [Places](#places)
-        + [Reviews](#reviews)
-        + [Users](#users)
+    * [Nelkon Finance Data Structure](#nelkon-finance-data-structure)
+        + [User Table](#user-table)
+        + [Budgeted Income Table](#budgeted-income-table)
+        + [Budgeted Expenses Table](#budgeted-expenses-table)
+        + [Actual Income Table](#actual-income-table)
+        + [Actual Expenses Table](#actual-expenses-table)
     * [CRUD Flow Diagrams](#crud-flow-diagrams)
 - [Design Choices](#design-choices)
     * [Wireframes](#wireframes)
@@ -90,9 +86,6 @@ and more.
     * [User Persona: Sarah, the Budgeter](#user-persona-sarah-the-budgeter)
     * [User Persona: Mark, the Financial Analyst](#user-persona-mark-the-financial-analyst)
     * [User Persona: Lisa, the Mobile User](#user-persona-lisa-the-mobile-user)
-
-
-
 - [Features](#features)
     * [Implemented Features](#implemented-features)
         + [Structural](#structural)
@@ -199,15 +192,136 @@ financial management, which includes:
 
 ### Data Structure
 
+#### Database Choice:
 
-### Design Choices
+Nelkon Finance uses PostgreSQL as its database management system. PostgreSQL was selected due to
+its robustness, support for complex queries, and scalability. It provides a reliable foundation for handling financial
+data efficiently.
 
+## Data Models
+
+### User Table
+
+| Field     | Type    | Description              |
+|-----------|---------|--------------------------|
+| id        | Integer | Unique user identifier   |
+| username  | String  | User's username          |
+| firstname | String  | User's first name        |
+| lastname  | String  | User's last name         |
+| password  | String  | Securely hashed password |
+| email     | String  | User's email address     |
+
+The nature of this app makes it a requirement for users be signed up to the app and their unique identifier be used to
+access their financial data.
+
+- [x] Create - A user is potentially created when a user successfully signs up to the app services by filling the form
+  on the signup page.
+- [x] Read - The user table is read when a potential user attempts to signup to the app, to determine if the email or
+  or username supplied into the form already exists to avoid duplicates.The user table is also read when a user logs in
+  to the app, navigates to the profile page.
+- [x] Update - Users can also update their information whenever they navigate to the profile page to carry out this
+  action
+- [x] Delete - The delete functionality is also active on this table as user information can be successfully deleted by
+  authorised users.
+
+### Budgeted Income Table
+
+| Field         | Type    | Description                                  |
+|---------------|---------|----------------------------------------------|
+| income_id     | Integer | Unique income identifier                     |
+| user_id       | Integer | Foreign key to link income to a user         |
+| income_name   | String  | Name/description of the income source        |
+| budget_amount | Float   | Planned budgeted income for a specific month |
+| month_name    | String  | Name of the month (e.g., "January")          |
+| year          | Integer | Year associated with the income              |
+
+- [x] Create - A budget income is potentially created when an authorised user successfully create a budget income entry.
+- [x] Read - The budget income table is read when an authorised user navigates to the page that displays budget income
+  entries
+  and navigates to the page that should render a dashboard view for that user financial information
+- [x] Update - Budget income entries can be updated should an authorised user decide to do so.
+- [x] Delete - The delete functionality is also active on this table as authorised user have the ability to delete
+  budget income entries
+
+### Budgeted Expenses Table
+
+| Field         | Type    | Description                                       |
+|---------------|---------|---------------------------------------------------|
+| expense_id    | Integer | Unique expense identifier                         |
+| user_id       | Integer | Foreign key to link expense to a user             |
+| category_name | String  | Expense category (e.g., "Utilities," "Groceries") |
+| expense_name  | String  | Name/description of the expense                   |
+| budget_amount | Float   | Planned budgeted expense for a specific month     |
+| month_name    | String  | Name of the month (e.g., "January")               |
+| year          | Integer | Year associated with the expense                  |
+
+- [x] Create - A budget expense is potentially created when an authorised user successfully create a budget expense
+  entry.
+- [x] Read - The budget expense table is read when an authorised user navigates to the page that displays budget expense
+  entries
+  and navigates to the page that should render a dashboard view for that user financial information.
+- [x] Update - Budget expense entries can be updated should an authorised user decide to do so.
+- [x] Delete - The delete functionality is also active on this table as authorised user have the ability to delete
+  budget expense entries
+
+### Actual Income Table
+
+| Field         | Type    | Description                                       |
+|---------------|---------|---------------------------------------------------|
+| income_id     | Integer | Unique expense identifier                         |
+| user_id       | Integer | Foreign key to link expense to a user             |
+| income_name   | String  | Expense category (e.g., "Utilities," "Groceries") |
+| date          | Date    | Date associated with the income                   |
+| actual_amount | Float   | Actual Amount that was received                   |
+
+- [x] Create - An actual income object is potentially created when an authorised user successfully create an actual
+  income entry.
+- [x] Read - The actual income table is read when an authorised user navigates to the page that displays actual income
+  entries
+  and navigates to the page that should render a dashboard view for that user financial information
+- [x] Update - Actual income entries can be updated should an authorised user decide to do so.
+- [x] Delete - The delete functionality is also active on this table as authorised user have the ability to delete
+  actual income entries
+
+### Actual Expenses Table
+
+| Field         | Type    | Description                                       |
+|---------------|---------|---------------------------------------------------|
+| expense_id    | Integer | Unique expense identifier                         |
+| user_id       | Integer | Foreign key to link expense to a user             |
+| category_name | String  | Expense category (e.g., "Utilities," "Groceries") |
+| expense_name  | String  | Name/description of the expense                   |
+| actual_amount | Float   | Planned budgeted expense for a specific month     |
+| date          | Date    | Date associated with the expense                  |
+
+- [x] Create - An actual expense object is potentially created when an authorised user successfully create an actual
+  expense entry.
+- [x] Read - The actual expense table is read when an authorised user navigates to the page that displays actual expense
+  entries
+  and navigates to the page that should render a dashboard view for that user financial information
+- [x] Update - Actual expense entries can be updated should an authorised user decide to do so.
+- [x] Delete - The delete functionality is also active on this table as an authorised user have the ability to delete
+  actual expense entries
+
+### CRUD Flow Diagrams
+
+## Design Choices
+
+The intent is to provide a clean, simple intuitive design to users.
+
+### Wireframes
+
+Having a rough data structure in hand, I knew what data fields I could present users managing the budget income and expenses,
+actual income and expenses, and to view a dashboard.
+Please note, the mock-ups are guidelines not a hard design requirements. Some aspects changed during development to make
+the site more user-friendly, simple and intuitive to use.
 
 ### User Stories
 
 Here are a few user stories that demonstrate how **Nelkon Finance** meets the needs of its users:
 
 #### **User Persona: Alex, the First-Time User:**
+
     - As a first-time user, I want a simple and straightforward onboarding process.
     - I want clear guidance on how to set up my monthly budget, input income sources, and define expense categories.
     - The app should provide tooltips or an easy-to-access tutorial to help me get started.
@@ -216,16 +330,19 @@ Here are a few user stories that demonstrate how **Nelkon Finance** meets the ne
     - The app should leave me feeling confident and empowered to manage my finances effectively.
 
 #### **User Persona: Sarah, the Budgeter**
+
     - As a monthly budgeter, I want to set specific spending limits for various expense categories.
     - I want to log my actual expenses as I make them, so I can see how well I'm sticking to my budget.
     - The interactive dashboard helps me quickly identify which categories I need to adjust to stay on track.
 
 #### **User Persona: Mark, the Financial Analyst**
+
     - I'm a data-driven user who wants to analyze my yearly income trends. 
     - I can easily select specific months or years to view on the dashboard and watch the charts update in real-time. 
     - This feature helps me make informed financial decisions.
 
 #### **User Persona: Lisa, the Mobile User**
+
     - I'm always on the go, and I want to access my financial data from my smartphone.
     - I appreciate that the app is responsive and works seamlessly on my mobile device.
     - Logging transactions and viewing charts are equally convenient on my phone.
