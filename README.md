@@ -702,7 +702,8 @@ of error handling include:
 
 ### Authentication and Authorization
 
-- User authentication and authorization are central to security. Passwords are securely hashed and stored using strong cryptographic algorithms.
+- User authentication and authorization are central to security. Passwords are securely hashed and stored using strong
+  cryptographic algorithms.
 
 ### Session Management
 
@@ -710,12 +711,118 @@ of error handling include:
   inactivity.
 
 - ## Restricted Deletion
-- Before any edit or delete action is taken, there is a check to  ensure that the user trying to carry out the action is the user 
-that owns access and is authorised to carry out the action
+- Before any edit or delete action is taken, there is a check to ensure that the user trying to carry out the action is
+  the user
+  that owns access and is authorised to carry out the action
 
 By following these defensive programming practices,the app prioritizes the security and reliability of potential users
 financial data. While no system is entirely immune to threats, these measures significantly reduce risks and contribute
 to a safer user experience.
+
+## Testing
+
+Constant integration testing was preformed to ensure no console/javascript errors were present. Beyond that, unit
+testing, validation testing, cross browser testing, accessibility testing, and regression testing were manually
+performed. I also explored automated testing of custom filters that I created. Ideally mocked up database functionality
+tests would be automated as well, but I have not yet found the time to learn how to mock database data.
+
+### Validation Testing
+
+I used the following validation websites to test the code:
+
+- [CSS Validator](https://jigsaw.w3.org/css-validator/) Note, any error associated with root: color variables were
+  ignored. Vendor extension warnings were also ignored. Bulma extension CSS errors concerning SVG and text area
+  visibility were ignored too.
+- [HTML Validator](https://validator.w3.org/)  - validation of HTML with FLASK is pretty useless as all {{}} bracketed
+  values raise errors. I ran only a few files through the validator and instead relyed heavily upon pycharm's IDE to
+  identify mismatched tags and closing Flask directives.
+- [JSON Validator](https://jsonlint.com/) Used to validate roughed in json-ld for future google calendar integration. It
+  is part of the user send invite email currently, but does not seem to be picked up by gmail. Note: warnings were
+  ignored.
+- [JavaScript Validator](http://beautifytools.com/javascript-validator.php) Note any errors for let, variables set in
+  other .js files, and constants were ignored. I also used a
+  more [ES6 friendly checker](https://www.piliapp.com/syntax-check/es6/) and there were no errors for main.js
+- [CSP validation](https://csp-evaluator.withgoogle.com/) - used to determine that syntax of Context Security Policy is
+  strong and valid
+
+### Unit Testing
+
+To ensure core functionality and features were delivered and working I created a series of manual tests in
+a [google doc](https://docs.google.com/spreadsheets/d/1p1aoEQsVZUAZN50AQLZbaerS9UVVQkHG--XoiNccaC0/edit?usp=sharing) on
+the unit testing tab.
+These manual unit test cases focus on testing the core functionality in a desktop browser and iphone 6s emulator and
+examining the console for errors. Ideally the core functionality would be verified using mocked database inputs to the
+controller functions for specific views.
+
+[![unit tests](documentation/images/software_cycle/unit_test.png "unit tests")](https://docs.google.com/spreadsheets/d/1p1aoEQsVZUAZN50AQLZbaerS9UVVQkHG--XoiNccaC0/edit?usp=sharing)
+
+### Cross Browser/ Cross Device Verification
+
+To verify that the application is functional and looks pleasant across various operating systems and device sizes I
+devised another suite of manual tests in the cross browser tab of
+my [testing workheet](https://docs.google.com/spreadsheets/d/1p1aoEQsVZUAZN50AQLZbaerS9UVVQkHG--XoiNccaC0/edit?usp=sharing)
+on the cross browser tab.
+
+Please note: Since flex grid is the basis of CSS IE 11 and ios lower than 11 will not render the app nicely.
+
+These tests are lighter on the functionality with more attention being paid to the layout and console logs:
+
+[![cross browser tests](documentation/images/software_cycle/cross_browser_test.png "cross browser tests")](https://docs.google.com/spreadsheets/d/1p1aoEQsVZUAZN50AQLZbaerS9UVVQkHG--XoiNccaC0/edit?usp=sharing)
+
+Another part of my cross browser testing was hitting each page in each view port with the chrome emulator for a smaller
+phone and copying the following javascript into the developer's tools console screen.
+
+```javascript
+var docWidth = document.documentElement.offsetWidth;
+[].forEach.call(document.querySelectorAll('*'), function (el) {
+    if (el.offsetWidth > docWidth) {
+        console.log(el);
+    }
+});
+```
+
+This snippet grabs all elements in the DOM and outputs offending elements that exceed the width of the screen to the
+console. If the output is "undefined", then I can be 99% certain that users will not experience any odd horizontal
+scrolls on their devices. Running this helped me identify and fix margin issues on small devices for the modals and the
+icon picker for the update event flow.
+
+### Cross Site Scripting and Forgery
+
+During my unit testing I encountered the CSRF errors many times myself when I left the CSRF token off pages or update my
+routes to use blueprint and mistyped paths. This got me wondering what I can do to try to test my application
+proactively so I read [veracodes' XSS article](https://www.veracode.com/security/xss) article to figure out ways to
+manually test for XSS and CSRF.
+Based on my findings I added a Security worksheet to
+my [testing doc](https://docs.google.com/spreadsheets/d/1p1aoEQsVZUAZN50AQLZbaerS9UVVQkHG--XoiNccaC0/edit?usp=sharing)
+And documented routes where url parameters are allowed as well as pages with text or text area entries and templating
+variables. I then attempted to inject scripting and forgeries into my website.
+
+[![security tests](documentation/images/software_cycle/security_test.png "secruity tests")](https://docs.google.com/spreadsheets/d/1p1aoEQsVZUAZN50AQLZbaerS9UVVQkHG--XoiNccaC0/edit?usp=sharing)
+
+### Accessibility Testing
+
+I know a few people with physical handicaps which makes using a mouse nearly impossible as well as a couple severely
+visually impaired people. I try to ensure I build websites that can be used by them. I make use
+of [axe](https://chrome.google.com/webstore/detail/axe-web-accessibility-tes/lhdoppojpmngadmnindnejefpokejbdd?hl=en-US)
+and [google's lighthouse audit](https://developers.google.com/web/tools/lighthouse) tools to help ensure that the
+application meets accessibility standards.
+
+I tracked the results on the Accessibility Tab of
+my [testing doc](https://docs.google.com/spreadsheets/d/1p1aoEQsVZUAZN50AQLZbaerS9UVVQkHG--XoiNccaC0/edit?usp=sharing).
+
+[![accessibility tests](documentation/images/software_cycle/accessibility_test.png "accessibility tests")](https://docs.google.com/spreadsheets/d/1p1aoEQsVZUAZN50AQLZbaerS9UVVQkHG--XoiNccaC0/edit?usp=sharing)
+
+### Regression Testing
+
+No one wants to keep running a large suite of unit tests and cross browser tests again and again. Due to my ineptitude
+at writing interactive tests with a database, (I tried but learning how to mock data was not something I had planned on
+doing), I reduced the unit testing and cross site browsing testing to a smaller suite once the core development was 70%
+done. These tests are on the Regression Tests Tab of
+my [testing doc](https://docs.google.com/spreadsheets/d/1p1aoEQsVZUAZN50AQLZbaerS9UVVQkHG--XoiNccaC0/edit?usp=sharing).
+While I really want to mock some database interaction, I do not have the bandwidth to take on that additional learning
+at this time.
+
+[![regression tests](documentation/images/software_cycle/regression_tests.png "regression tests")](https://docs.go
 
 ## Getting Started
 
