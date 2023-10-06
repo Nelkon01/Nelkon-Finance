@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="container-fluid pt-5">
-        {# Page Header #}
+        <!-- Page Header -->
         <div class="row justify-content-center align-items-center">
             <div class="col-12 text-center mb-4">
                 <h3 class="mb-0 text-gray-800">Welcome to your Goldmine Dashboard {{ user.firstname }}</h3>
@@ -9,10 +9,10 @@
         </div>
 
 
-        {# Option to select Month and Year#}
+        <!-- Option to select Month and Year -->
         <div class="row justify-content-center">
             {% if years_in_db|length == 0 %}
-{#                Displays a message if there are no years in the database #}
+<!--             Displays a message if there are no years in the database -->
                 <div class="col-md-6">
                     <div class="alert alert-info">
                         You do not have any data in the database. Please <a href="{{ url_for('plan') }}" class="alert-link">
@@ -58,9 +58,9 @@
             {% endif %}
         </div>
 
-        {# Cards #}
+        <!-- Cards -->
         <div class="row justify-content-center">
-            {#Total Earnings fot the month card#}
+            <!-- Total Earnings fot the month card -->
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body">
@@ -83,7 +83,7 @@
                 </div>
             </div>
 
-            {#     Total Expenses for the month card #}
+            <!--    Total Expenses for the month card -->
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-success shadow h-100 py-2">
                     <div class="card-body">
@@ -106,7 +106,7 @@
                 </div>
             </div>
 
-            {#            Income Coverage card #}
+            <!--           Income Coverage card -->
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-info shadow h-100 py-2">
                     <div class="card-body">
@@ -156,7 +156,7 @@
 
         <div class="row justify-content-center">
             <div class="col-xl-8 col-lg-7">
-                {#  Charts #}
+                <!--  Charts -->
                 <div class="row">
                     <!-- Bar Chart -->
                     <div class="col-md-6">
@@ -226,8 +226,8 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        {#    Bar Chart #}
-        {#        Budget Bar Chart #}
+        //   Bar Chart
+        //        Budget Bar Chart function
         const budgetBarChart = document.getElementById('budgetBarChart');
 
         new Chart(budgetBarChart, {
@@ -256,7 +256,7 @@
                 }
             }
         });
-        {#        Actual Bar Chart #}
+        //      Actual Bar Chart function
         const actualBarChart = document.getElementById('actualBarChart');
 
         new Chart(actualBarChart, {
@@ -286,8 +286,8 @@
             }
         });
 
-        {# Doughnut Chart #}
-        {#      Budget Expenses by Category Doughnut Chart#}
+        // Doughnut Chart
+        //     Budget Expenses by Category Doughnut Chart function
         const budgetDoughnutChart = document.getElementById('budgetDoughnutChart').getContext('2d');
         const budgetDoughnut = new Chart(budgetDoughnutChart, {
             type: 'doughnut',
@@ -308,7 +308,7 @@
                 }]
             }
         })
-        {#      Actual Expenses by Category Doughnut Chart#}
+        //     Actual Expenses by Category Doughnut Chart function
         const actualDoughnutChart = document.getElementById('actualDoughnutChart').getContext('2d');
         const actualDoughnut = new Chart(actualDoughnutChart, {
             type: 'doughnut',
@@ -329,8 +329,8 @@
                 }]
             }
         })
-        {# Line Chart#}
-        {#        Income over time #}
+        // Line Chart
+        //      Income over time  chart function
         const incomeLineChart = document.getElementById('incomeLineChart').getContext('2d');
 
         new Chart(incomeLineChart, {
@@ -359,7 +359,7 @@
                 }
             }
         });
-        {#        Expense over time #}
+        //       Expense over time chart function
         const expenseLineChart = document.getElementById('expenseLineChart').getContext('2d');
         new Chart(expenseLineChart, {
             type: 'line',

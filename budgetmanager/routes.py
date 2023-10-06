@@ -10,7 +10,7 @@ from sqlalchemy import func, extract
 from budgetmanager import app, db
 from budgetmanager.models import Users, BudgetedIncome, ActualIncome, BudgetedExpenses, ActualExpenses
 
-
+# the home view function
 @app.route('/')
 def home():
     user_id = session.get("user_id")
@@ -22,6 +22,7 @@ def home():
     return render_template('home.html', user=curr_user)
 
 
+# to convert month name to number
 month_name_to_number = {
     'January': '01',
     'February': '02',
@@ -79,6 +80,7 @@ def plan():
                                                            f" plan data. Please try again later.")
 
 
+# function for the track page
 @app.route('/track')
 @login_required
 def track():
@@ -195,6 +197,7 @@ def login():
     return render_template('login.html')
 
 
+# function to add a budget income
 @app.route('/add_budget_income', methods=['POST', 'GET'])
 @login_required
 def add_budget_income():
@@ -240,6 +243,7 @@ def add_budget_income():
     return redirect(url_for('plan'))
 
 
+# function to edit budget incomes
 @app.route('/edit_budget_income/<int:income_id>', methods=['POST', 'GET'])
 @login_required
 def edit_budget_income(income_id):
@@ -289,6 +293,7 @@ def edit_budget_income(income_id):
     return redirect(url_for('plan'))
 
 
+# function to delete a budget income
 @app.route('/delete_budget_income/<int:income_id>', methods=['POST', 'GET'])
 @login_required
 def delete_budget_income(income_id):
@@ -311,6 +316,7 @@ def delete_budget_income(income_id):
         return redirect(url_for('plan'))
 
 
+# function to edit budget expense
 @app.route('/add_budget_expense', methods=['POST', 'GET'])
 @login_required
 def add_budget_expense():
@@ -355,6 +361,7 @@ def add_budget_expense():
     return redirect(url_for('plan'))
 
 
+# function to edit budget expenses
 @app.route('/edit_budget_expense/<int:expense_id>', methods=['POST', 'GET'])
 @login_required
 def edit_budget_expense(expense_id):
@@ -397,6 +404,7 @@ def edit_budget_expense(expense_id):
     return redirect(url_for('plan'))
 
 
+# function to delete budget expenses
 @app.route('/delete_budget_expense/<int:expense_id>', methods=['POST', 'GET'])
 @login_required
 def delete_budget_expense(expense_id):
@@ -419,6 +427,7 @@ def delete_budget_expense(expense_id):
         return redirect(url_for('plan'))
 
 
+# function to add actual expense
 @app.route('/add_actual_expense', methods=['POST', 'GET'])
 @login_required
 def add_actual_expense():
@@ -458,6 +467,7 @@ def add_actual_expense():
     return redirect(url_for('track'))
 
 
+# function to edit actual expense
 @app.route('/edit_actual_expense/<int:expense_id>', methods=['POST', 'GET'])
 @login_required
 def edit_actual_expense(expense_id):
@@ -496,6 +506,7 @@ def edit_actual_expense(expense_id):
     return redirect(url_for('track'))
 
 
+# function to delete actual expense
 @app.route('/delete_actual_expense/<int:expense_id>', methods=['POST', 'GET'])
 @login_required
 def delete_actual_expense(expense_id):
@@ -554,6 +565,7 @@ def add_actual_income():
     return redirect(url_for('track'))
 
 
+# function to edit actual income
 @app.route('/edit_actual_income/<int:income_id>', methods=['POST', 'GET'])
 @login_required
 def edit_actual_income(income_id):
@@ -589,6 +601,7 @@ def edit_actual_income(income_id):
     return redirect(url_for('track'))
 
 
+# function to delete actual income
 @app.route('/delete_actual_income/<int:income_id>', methods=['POST', 'GET'])
 @login_required
 def delete_actual_income(income_id):
@@ -792,6 +805,7 @@ def goldmine():
         return render_template('error.html', error_message=f'{str(e)}')
 
 
+# function to render the profile page
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
@@ -837,6 +851,7 @@ def profile():
     return render_template('profile.html', user=curr_user)
 
 
+# function to delete a users profile
 @app.route('/delete_profile', methods=['GET', 'POST'])
 @login_required
 def delete_profile():
@@ -859,6 +874,7 @@ def delete_profile():
     return redirect(url_for('delete_profile'))
 
 
+# function that handles logout
 @app.route('/logout')
 @login_required
 def logout():
