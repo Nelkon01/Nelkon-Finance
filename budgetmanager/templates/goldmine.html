@@ -66,7 +66,7 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1"> {{ selected_month or "" }}
+                                <div class="text-xs font-weight-bold text-light text-uppercase mb-1"> {{ selected_month or "" }}
                                     Earnings
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
@@ -89,7 +89,7 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">{{ selected_month or "" }}
+                                <div class="text-xs font-weight-bold text-light text-uppercase mb-1">{{ selected_month or "" }}
                                     Expenses
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
@@ -122,6 +122,7 @@
                                     <div class="col progress-container">
                                         <div class="progress progress-sm mr-2">
                                             <div class="progress-bar bg-info" role="progressbar"
+                                                 aria-label="{{ budget_income_coverage }} percent coverage of budget income"
                                                  style="width: {{ budget_income_coverage }}%">
                                                 {{ budget_income_coverage }}%
                                             </div>
@@ -136,6 +137,7 @@
                                     <div class="col progress-container">
                                         <div class="progress progress-sm mr-2">
                                             <div class="progress-bar bg-info" role="progressbar"
+                                                 aria-label="{{ actual_income_coverage }} percent coverage of actual income"
                                                  style="width: {{ actual_income_coverage }}%">
                                                 {{ actual_income_coverage }}%
                                             </div>
@@ -160,7 +162,7 @@
                     <div class="col-md-6">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary text-center">{{ selected_month or "" }}
+                                <h6 class="m-0 font-weight-bold text-light text-center">{{ selected_month or "" }}
                                     Income
                                     Sources</h6>
                             </div>
@@ -180,7 +182,7 @@
                     <div class="col-md-6">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary text-center">Actual Income and Expense over
+                                <h6 class="m-0 font-weight-bold text-light text-center">Actual Income and Expense over
                                     Time</h6>
                             </div>
                             <div class="card-body">
@@ -199,7 +201,7 @@
                     <div class="">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary text-center">{{ selected_month or "" }}
+                                <h6 class="m-0 font-weight-bold text-light text-center">{{ selected_month or "" }}
                                     Expenses by
                                     Category</h6>
                             </div>
