@@ -721,112 +721,199 @@ to a safer user experience.
 
 ## Testing
 
-Constant integration testing was preformed to ensure no console/javascript errors were present. Beyond that, unit
-testing, validation testing, cross browser testing, accessibility testing, and regression testing were manually
-performed. I also explored automated testing of custom filters that I created. Ideally mocked up database functionality
-tests would be automated as well, but I have not yet found the time to learn how to mock database data.
-
-### Validation Testing
-
-I used the following validation websites to test the code:
-
-- [CSS Validator](https://jigsaw.w3.org/css-validator/) Note, any error associated with root: color variables were
-  ignored. Vendor extension warnings were also ignored. Bulma extension CSS errors concerning SVG and text area
-  visibility were ignored too.
-- [HTML Validator](https://validator.w3.org/)  - validation of HTML with FLASK is pretty useless as all {{}} bracketed
-  values raise errors. I ran only a few files through the validator and instead relyed heavily upon pycharm's IDE to
-  identify mismatched tags and closing Flask directives.
-- [JSON Validator](https://jsonlint.com/) Used to validate roughed in json-ld for future google calendar integration. It
-  is part of the user send invite email currently, but does not seem to be picked up by gmail. Note: warnings were
-  ignored.
-- [JavaScript Validator](http://beautifytools.com/javascript-validator.php) Note any errors for let, variables set in
-  other .js files, and constants were ignored. I also used a
-  more [ES6 friendly checker](https://www.piliapp.com/syntax-check/es6/) and there were no errors for main.js
-- [CSP validation](https://csp-evaluator.withgoogle.com/) - used to determine that syntax of Context Security Policy is
-  strong and valid
+Testing is a crucial aspect of the app's development process. It ensures that the application functions correctly, meets user expectations, and remains reliable. Below are the key testing strategies and practices employed:
 
 ### Unit Testing
 
-To ensure core functionality and features were delivered and working I created a series of manual tests in
-a [google doc](https://docs.google.com/spreadsheets/d/1p1aoEQsVZUAZN50AQLZbaerS9UVVQkHG--XoiNccaC0/edit?usp=sharing) on
-the unit testing tab.
-These manual unit test cases focus on testing the core functionality in a desktop browser and iphone 6s emulator and
-examining the console for errors. Ideally the core functionality would be verified using mocked database inputs to the
-controller functions for specific views.
+Unit testing involves testing individual components (functions, methods, classes) of the application in isolation. In Nelkon Finance, unit tests are implemented using popular testing frameworks like `pytest`. Key aspects of unit testing include:
 
-[![unit tests](documentation/images/software_cycle/unit_test.png "unit tests")](https://docs.google.com/spreadsheets/d/1p1aoEQsVZUAZN50AQLZbaerS9UVVQkHG--XoiNccaC0/edit?usp=sharing)
+- Testing functions and methods to verify that they produce the expected output for various inputs.
+- Ensuring that error conditions are handled appropriately.
+- Testing edge cases to check for robustness.
 
-### Cross Browser/ Cross Device Verification
 
-To verify that the application is functional and looks pleasant across various operating systems and device sizes I
-devised another suite of manual tests in the cross browser tab of
-my [testing workheet](https://docs.google.com/spreadsheets/d/1p1aoEQsVZUAZN50AQLZbaerS9UVVQkHG--XoiNccaC0/edit?usp=sharing)
-on the cross browser tab.
+### Functional Testing
 
-Please note: Since flex grid is the basis of CSS IE 11 and ios lower than 11 will not render the app nicely.
+Functional testing assesses the application's functionality from the user's perspective. Nelkon Finance's functional testing includes:
 
-These tests are lighter on the functionality with more attention being paid to the layout and console logs:
+- Testing user interfaces (UI) to ensure they are intuitive and responsive.
+- Evaluating user workflows, such as registering, logging in, creating budgets, and generating reports.
+- Validating that features meet user stories and requirements.
 
-[![cross browser tests](documentation/images/software_cycle/cross_browser_test.png "cross browser tests")](https://docs.google.com/spreadsheets/d/1p1aoEQsVZUAZN50AQLZbaerS9UVVQkHG--XoiNccaC0/edit?usp=sharing)
+### End-to-End (E2E) Testing
 
-Another part of my cross browser testing was hitting each page in each view port with the chrome emulator for a smaller
-phone and copying the following javascript into the developer's tools console screen.
+End-to-end testing assesses the application's functionality as a whole, simulating real user scenarios. In this case, E2E tests:
 
-```javascript
-var docWidth = document.documentElement.offsetWidth;
-[].forEach.call(document.querySelectorAll('*'), function (el) {
-    if (el.offsetWidth > docWidth) {
-        console.log(el);
-    }
-});
-```
+- Test critical user journeys, from registration to generating financial reports.
+- Ensure that the application functions correctly across different browsers and devices.
 
-This snippet grabs all elements in the DOM and outputs offending elements that exceed the width of the screen to the
-console. If the output is "undefined", then I can be 99% certain that users will not experience any odd horizontal
-scrolls on their devices. Running this helped me identify and fix margin issues on small devices for the modals and the
-icon picker for the update event flow.
+### User Acceptance Testing (UAT)
 
-### Cross Site Scripting and Forgery
+User acceptance testing involves real users testing the application in a production-like environment. I collected user feedback during UAT to identify usability issues, gather insights, and make improvements based on user suggestions.
 
-During my unit testing I encountered the CSRF errors many times myself when I left the CSRF token off pages or update my
-routes to use blueprint and mistyped paths. This got me wondering what I can do to try to test my application
-proactively so I read [veracodes' XSS article](https://www.veracode.com/security/xss) article to figure out ways to
-manually test for XSS and CSRF.
-Based on my findings I added a Security worksheet to
-my [testing doc](https://docs.google.com/spreadsheets/d/1p1aoEQsVZUAZN50AQLZbaerS9UVVQkHG--XoiNccaC0/edit?usp=sharing)
-And documented routes where url parameters are allowed as well as pages with text or text area entries and templating
-variables. I then attempted to inject scripting and forgeries into my website.
+### Bug Tracking
 
-[![security tests](documentation/images/software_cycle/security_test.png "secruity tests")](https://docs.google.com/spreadsheets/d/1p1aoEQsVZUAZN50AQLZbaerS9UVVQkHG--XoiNccaC0/edit?usp=sharing)
-
-### Accessibility Testing
-
-I know a few people with physical handicaps which makes using a mouse nearly impossible as well as a couple severely
-visually impaired people. I try to ensure I build websites that can be used by them. I make use
-of [axe](https://chrome.google.com/webstore/detail/axe-web-accessibility-tes/lhdoppojpmngadmnindnejefpokejbdd?hl=en-US)
-and [google's lighthouse audit](https://developers.google.com/web/tools/lighthouse) tools to help ensure that the
-application meets accessibility standards.
-
-I tracked the results on the Accessibility Tab of
-my [testing doc](https://docs.google.com/spreadsheets/d/1p1aoEQsVZUAZN50AQLZbaerS9UVVQkHG--XoiNccaC0/edit?usp=sharing).
-
-[![accessibility tests](documentation/images/software_cycle/accessibility_test.png "accessibility tests")](https://docs.google.com/spreadsheets/d/1p1aoEQsVZUAZN50AQLZbaerS9UVVQkHG--XoiNccaC0/edit?usp=sharing)
+A bug tracking system is used to record, prioritize, and manage issues identified during testing and by users. I addressed every reported problem promptly by my tests subjects.
 
 ### Regression Testing
 
-No one wants to keep running a large suite of unit tests and cross browser tests again and again. Due to my ineptitude
-at writing interactive tests with a database, (I tried but learning how to mock data was not something I had planned on
-doing), I reduced the unit testing and cross site browsing testing to a smaller suite once the core development was 70%
-done. These tests are on the Regression Tests Tab of
-my [testing doc](https://docs.google.com/spreadsheets/d/1p1aoEQsVZUAZN50AQLZbaerS9UVVQkHG--XoiNccaC0/edit?usp=sharing).
-While I really want to mock some database interaction, I do not have the bandwidth to take on that additional learning
-at this time.
+Regression testing is performed after code changes to verify that new features or bug fixes do not introduce new issues or break existing functionality. Manual regression tests are an integral part of Nelkon Finance's development process.
 
-[![regression tests](documentation/images/software_cycle/regression_tests.png "regression tests")](https://docs.go
+
+### Validation Testing
+**Home Page**
+- Validator tests
+  <img width="1092" alt="Screenshot 2023-10-06 at 08 20 01" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/4f2eb167-d500-4ed7-97f2-63ed0f258db5">
+- Lighthouse Audit
+<img width="443" alt="Screenshot 2023-10-06 at 08 18 32" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/49644229-1109-4dc6-8245-da3291d2301b">
+**Plan Page**
+- Validator
+<img width="1019" alt="Screenshot 2023-10-06 at 08 27 07" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/52b1733c-61a5-42af-9792-ccedc02d3411">
+
+- Lighthouse Audit
+<img width="436" alt="Screenshot 2023-10-06 at 08 26 24" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/196473e6-8d45-409d-9ca9-978471fb5dc9">
+**Track Page**
+- Validator
+<img width="1019" alt="Screenshot 2023-10-06 at 08 27 07" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/f977d85f-3a61-49e5-8c62-a03026d993f6">
+
+- Lighthouse Audit
+  <img width="447" alt="Screenshot 2023-10-06 at 08 31 56" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/5701b249-4380-4f43-a7db-47fca796bad4">
+**Goldmine page**
+- Validator
+<img width="877" alt="Screenshot 2023-10-06 at 08 35 23" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/18a21c89-4858-4440-abf7-a83c20bb81d2">
+- Lighthouse Audit
+<img width="437" alt="Screenshot 2023-10-06 at 08 34 35" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/db49e8ff-36f1-4e94-b353-f3487af20955">
+**Profile Page**
+- Validator
+<img width="877" alt="Screenshot 2023-10-06 at 08 35 23" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/a9aca31c-a572-46d4-92e3-4ed2322fc76b">
+- Lighthouse Audit
+<img width="430" alt="Screenshot 2023-10-06 at 08 41 28" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/788889e3-174f-48cb-a6bf-e402466b5006">
+**Login Page**
+- Validator
+<img width="1108" alt="Screenshot 2023-10-06 at 08 42 52" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/38c81e9b-f17f-4576-b38c-c89f32bc9a47">
+
+- Lighthouse Audit
+  <img width="445" alt="Screenshot 2023-10-06 at 08 43 14" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/37ea643d-6b39-416b-905f-6d866967b54b">
+
+
+**CSS Validation**
+<img width="1099" alt="Screenshot 2023-10-06 at 08 46 08" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/3dd62686-bb70-432f-b117-40dbcad0be68">
+
+**JavaScript Validation**
+Js Validation showed no errors
+<img width="530" alt="Screenshot 2023-10-06 at 08 49 51" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/824bc899-f024-482a-ab61-418502091f7d">
+
+
+
+## Manual Testing
+
+Manual testing is a crucial part of ensuring the reliability and user-friendliness of this app, and manual tests that were carried out by my friends and I have confirmed that the application performs exceptionally well in various scenarios. Here's an overview of the successful manual tests:
+
+### Blank/Empty Inputs
+
+1. **Registration**: During user registration, we've verified that all required fields (e.g., name, email, password) must be filled out. Our tests included submitting the registration form with missing information, and the application responded with appropriate error messages.
+
+2. **Budget and Expense Creation**: When users create budgets or expenses, Nelkon Finance ensures that essential fields (e.g., budget name, expense amount) are not left blank. Validation successfully prevents incomplete submissions.
+
+### Invalid Inputs
+
+1. **Validation**: We tested by inputting invalid data in forms, such as providing a non-email format for the email field or entering text in a numeric field. The application consistently responded with clear error messages guiding users on the correct input format.
+
+2. **Boundary Testing**: Nelkon Finance gracefully handles extreme values, such as very large or very small numbers. Our tests confirmed that the application behaves correctly without crashing or displaying unexpected behavior.
+
+### Ownership Verification
+
+1. **Edit and Delete Actions**: Nelkon Finance strictly enforces that users can only edit or delete the budgets and expenses they own. Attempts to modify items owned by other users consistently result in appropriate access denied messages.
+
+### New User vs. Established User
+
+1. **New User Scenarios**: We've tested with both brand new users and established users. For new users, the onboarding process is seamless, allowing them to create their first budgets and expenses with ease.
+
+### Mobile vs. Desktop Differences
+
+1. **Responsive Design**: Nelkon Finance's responsive design elements adapt seamlessly to various devices, including mobile phones, tablets, and desktop computers.
+
+### Navigation Changes
+
+1. **User State Differences**: Nelkon Finance's navigation menus and links appropriately adjust based on the user's authentication state, ensuring a consistent and user-friendly experience.
+
+### Duplicate Emails and Usernames
+
+1. **Uniqueness Check**: Nelkon Finance successfully enforces unique email addresses and usernames for each user. Attempts to register with the same email or username that is already in use are consistently prevented.
+
+By conducting thorough manual testing that covers these scenarios, Nelkon Finance ensures a seamless and error-free experience for all users. Our tests have confirmed that the application is reliable and user-friendly, providing you with a high-quality financial management tool.
+
+## Noteworthy Bugs/Defects
+
+This section highlights notable bugs or defects that have been identified and require attention. Each item includes a clear description of the issue, steps to reproduce it, and its current status (e.g., open, in progress, resolved).
+
+### Charts not updating correctly
+
+**Description:**
+
+The goldmine charts were not displaying any charts even after users had all information included
+
+**Steps to Reproduce:**
+
+1. Input Bugdet income and actual income into the database
+2. Input actual income and actual expense into the database
+3. Navigate to the goldmine page and click on update charts after selecting month and year information
+4. The Charts just showing a blank screen
+
+**Current Status:**
+
+- [ ] Open: The bug has been reported but has not yet been assigned for resolution.
+- [ ] In Progress: The issue is actively being worked on by a developer.
+- [x] Resolved: The bug has been fixed and verified.
+
+**Additional Information:**
+
+I initially wanted to use plotly dash to achieve the interactive dashboard functionality of the app, however, i wasnt able to make it work. I therefore decided to use chart.js for this functionality, which resloved that issue for me
+
+### Budget and Actual Income Coverage Showing wrong figures
+
+**Description:**
+The Idea behind the budget and actual income coverage and actual income coverage is to check if the income for that month covers the expense for the month. And this metric was in percentage. However, i have an issue whereby i was having values above 100% which is practically impossible.
+
+**Steps to Reproduce:**
+
+11. Input Bugdet income and actual income into the database
+2. Input actual income and actual expense into the database
+3. Navigate to the goldmine page and click on update charts after selecting month and year information
+
+
+**Current Status:**
+
+- [ ] Open: The bug has been reported but has not yet been assigned for resolution.
+- [ ] In Progress: The issue is actively being worked on by a developer.
+- [x] Resolved: The bug has been fixed and verified.
+      
+**Additional Information:**
+I realised there was a problem with my logic in the way i was making the calculation in my function, and it has been fixed
+
+**Description:**
+The line charts in the goldmine page is showing the numerical values for months instead of the text name of the respective months. which may not be good user experience
+
+**Steps to Reproduce:**
+
+11. Input Bugdet income and actual income into the database
+2. Input actual income and actual expense into the database
+3. Navigate to the goldmine page and click on update charts after selecting month and year information
+
+
+**Current Status:**
+
+- [x] Open: The bug has been reported but has not yet been assigned for resolution.
+- [ ] In Progress: The issue is actively being worked on by a developer.
+- [ ] Resolved: The bug has been fixed and verified.
+      
+**Additional Information:**
+I have not come around to fixing this, however, i reckon the fix could be in me assigning a label for each number in the charts javascript code
+
+- There is also a slight froblem with the way heroku is handling my favicon which is returning a error. I have not come around to fixing this yet.
+
 
 ## Getting Started
-
-Follow these instructions to set up and run Nelkon Finance on your local machine.
 
 ### Prerequisites
 
