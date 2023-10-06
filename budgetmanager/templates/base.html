@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
           integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
@@ -42,18 +41,18 @@
                 <li class="nav-item"><a href="{{ url_for('goldmine') }}" class="nav-link">See Goldmine</a></li>
             </ul>
             <div class="dropdown">
-            <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
-               aria-expanded="false">
-                Account
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end text-small bg-dark">
-                <li><a class="dropdown-item link-light" href="{{ url_for('profile') }}">Profile</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item link-light" href="{{ url_for('logout') }}">Sign out</a></li>
-            </ul>
-        </div>
+                <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                    Account
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end text-small bg-dark">
+                    <li><a class="dropdown-item link-light" href="{{ url_for('profile') }}">Profile</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item link-light" href="{{ url_for('logout') }}">Sign out</a></li>
+                </ul>
+            </div>
         </div>
 
     </div>

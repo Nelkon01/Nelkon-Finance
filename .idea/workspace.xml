@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a975cf4b-401b-4198-be0e-d9ecc04d5416" name="Changes" comment="Add signup modal to login page to enable ease of signup" />
+    <list default="true" id="a975cf4b-401b-4198-be0e-d9ecc04d5416" name="Changes" comment="Add signup modal to login page to enable ease of signup">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/budgetmanager/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/budgetmanager/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/budgetmanager/templates/base.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -154,7 +159,7 @@
       <workItem from="1695276171633" duration="112334000" />
       <workItem from="1695614990170" duration="38242000" />
       <workItem from="1696287446621" duration="590000" />
-      <workItem from="1696323472589" duration="52420000" />
+      <workItem from="1696323472589" duration="53687000" />
     </task>
     <task id="LOCAL-00001" summary="Add signup modal to login page to enable ease of signup">
       <option name="closed" value="true" />
