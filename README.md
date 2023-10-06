@@ -474,7 +474,7 @@ financial management tool.
 
 ## Features
 
-Below, we detail the key features, including implemented elements, forms, and database operations.
+Below, I have detailed the key features, including implemented elements, forms, and database operations.
 
 ## Implemented Elements
 
@@ -600,7 +600,122 @@ features planned for future development:
   especially beneficial for international users.
 
 These future enhancements are designed to make Nelkon Finance an even more powerful and versatile financial management
-platform. We are committed to continuously improving the application to meet the evolving needs of our users.
+platform. I am committed to continuously improving the application to meet the evolving needs of potential users.
+
+## Technologies Used
+
+Nelkon Finance leverages a combination of modern technologies and frameworks to provide users with a secure and
+feature-rich financial management experience. Here are the key technologies and tools used in the development of this
+application:
+
+### Front-End Technologies
+
+- **HTML5**: The application's front-end is built using HTML5 for structuring web pages and rendering content.
+
+- **CSS3**: Cascading Style Sheets (CSS3) are used to style and format the application's user interface, ensuring a
+  visually appealing and responsive design.
+
+- **JavaScript**: JavaScript is used for client-side scripting, enabling dynamic and interactive features such as form
+  validation and chart rendering.
+
+- **Bootstrap**: The Bootstrap framework is employed for front-end development to ensure a responsive and
+  mobile-friendly layout. It also provides pre-designed UI components for faster development which i substantially
+  relied
+  on for this project.
+
+- **Chart.js**: Chart.js is utilized to create visually engaging and interactive charts and graphs for data
+  visualization in the application.
+
+### Back-End Technologies
+
+- **Python**: The back-end logic of Nelkon Finance is written in Python, a versatile and high-level programming language
+  known for its readability and robustness.
+
+- **Flask**: Flask, a lightweight Python web framework, is used to build the application's server-side components,
+  including routing, request handling, and rendering templates.
+
+- **Flask-SQLAlchemy**: Flask-SQLAlchemy is an extension for Flask that simplifies database interactions. It's used to
+  define and manipulate database models.
+
+- **PostgreSQL**: PostgreSQL, a powerful open-source relational database management system, is the database of choice
+  for Nelkon Finance. It stores and manages user data securely.
+
+- **Flask-Login**: Flask-Login is employed for user authentication and session management, ensuring secure user access
+  and data protection.
+
+- **WTForms**: WTForms is used for form creation and validation, enhancing the user experience and maintaining data
+  integrity.
+
+- **Gunicorn**: Gunicorn serves as the production-ready web server for deploying the Flask application.
+
+### Deployment and Hosting
+
+- **Heroku**: Nelkon Finance is hosted on Heroku, a cloud platform that simplifies deployment and ensures high
+  availability. Heroku also provides automatic scaling to handle varying user loads.
+- **ElephantSql**: The live app uses elephant sql for the for its database hosting
+
+### Version Control and Collaboration
+
+- **Git and GitHub**: Git is used for version control, allowing multiple developers to collaborate efficiently on the
+  project. GitHub hosts the Git repository and facilitates code sharing and issue tracking.
+
+### Tools
+
+- [balsamiq](https://balsamiq.com/) - used to create professional looking wire frames.
+- [icon generator](https://favicon.io/favicon-generator/) - free site to help in website icon generation
+- [lighthouse audit](https://developers.google.com/web/tools/lighthouse) Google's open source tool to help improve the
+  quality of your website. Specifically paid attention to Accessibility and SEO aiming for scores above 80.
+- [freepik](https://freepik.com) This website was instrumental in getting the images and icons i needed for the homepage
+  currently is freeware and installed as a chrome extension.
+
+## Development Environment
+
+- **PyCharm**: JetBrains PyCharm serves as the primary integrated development environment (IDE)
+  for writing, debugging, and testing code.
+
+These technologies collectively enable Nelkon Finance to offer a secure, performant, and user-friendly financial
+management solution to potential users.
+
+## Defensive Programming
+
+Defensive programming is a crucial aspect of the app's development strategy. It focuses on writing code that
+anticipates and guards against potential errors, vulnerabilities, and edge cases. This approach enhances the
+application's reliability, security, and robustness. Below are the key defensive programming practices implemented in
+this project
+
+### Input Validation
+
+All user inputs, are rigorously validated. Input validation checks include:
+
+- Ensuring that required fields are not empty.
+- Validating data types and formats, such as email addresses and dates.
+
+### Error Handling
+
+Nelkon Finance includes comprehensive error handling mechanisms to gracefully manage unexpected situations. Key aspects
+of error handling include:
+
+- Proper use of try...except blocks to catch and handle exceptions.
+- Logging error details for debugging purposes while not exposing sensitive information to users.
+- Providing informative error messages to users when something goes wrong, making it easier for them to understand and
+  report issues.
+
+### Authentication and Authorization
+
+- User authentication and authorization are central to security. Passwords are securely hashed and stored using strong cryptographic algorithms.
+
+### Session Management
+
+- User sessions are managed securely, with a timeout mechanism to automatically log users out after a period of
+  inactivity.
+
+- ## Restricted Deletion
+- Before any edit or delete action is taken, there is a check to  ensure that the user trying to carry out the action is the user 
+that owns access and is authorised to carry out the action
+
+By following these defensive programming practices,the app prioritizes the security and reliability of potential users
+financial data. While no system is entirely immune to threats, these measures significantly reduce risks and contribute
+to a safer user experience.
 
 ## Getting Started
 
