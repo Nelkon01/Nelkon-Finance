@@ -913,21 +913,26 @@ I have not come around to fixing this, however, i reckon the fix could be in me 
 - There is also a slight froblem with the way heroku is handling my favicon which is returning a error. I have not come around to fixing this yet.
 
 
-## Getting Started
+## Deployment
+This site was developed using PyCharm's IDE. To keep records of different versions of all project files, git version control was used. This project is hosted using Heroku deployed from the master branch.
+
+### GitHub
+All versions and branches of the code are stored in github:
+https://github.com/Nelkon01/Nelkon-Finance
 
 ### Prerequisites
 
-- Python 3.x
+- Python 3
 - Flask (Python web framework)
 - SQLAlchemy (Python SQL toolkit)
 - Other Python packages as mentioned in `requirements.txt`
 
-### Installation
 
-1. Clone this repository to your local machine:
+### Development (Running Locally)
+PyCharm was the IDE I developed my code in. I was able to deploy my code locally using the following steps:
 
-   ```bash
-   git clone https://github.com/your-username/nelkon-finance.git
+1. Get the code base from git hub by running this command in the terminal of your IDE: 
+```$ git clone https://github.com/Nelkon01/Nelkon-Finance.git```
 
 2. Navigate to the project directory:
 
@@ -937,46 +942,80 @@ I have not come around to fixing this, however, i reckon the fix could be in me 
 3. Install the required Python packages:
     ```bash
     pip install -r requirements.txt
-    Set up the database:
-4. Set Up Database:
-    ```bash
-    flask db init
-    flask db migrate
-    flask db upgrade
-5. Start the application:
-    ```bash
-    flask run
+  
+    
+4. [set environmental variables](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html) with your own values for:
+> - os.environ.setdefault("IP", "your ip")
 
-The application should now be running locally. Access it by opening a web browser and navigating
-to http://localhost:5100.
+> - os.environ.setdefault("PORT", "your port")
 
-### Usage
+# Set your secret key for the Flask application
+> - os.environ.setdefault("SECRET_KEY", "your sectet key")
 
-- Register or log in to your account.
-- Use the "Plan Fortune" feature to create budgets for income and expenses.
-- Track your actual income and expenses with the "Track Treasure" feature.
-- Analyze your financial situation over time using the "See Goldmine" feature.
-- Edit your user profile by clicking on "Account" in the navigation bar.
+# Set the development flag
+> - os.environ.setdefault("DEVELOPMENT", "boolean, true/false")
+
+# Set your database URL
+> - os.environ.setdefault("DATABASE_URL", "your database url")
+
+> - os.environ.setdefault("DEBUG", "boolean, true/false")
+   
+- DEBUG/DEVELOPMENT -Boolean, Typically True for development and False for deployed version
+
+5. start your server by typing 
+```$ python run.py```
+
+6. access your local version of the application.
+
+### Live (Heroku)
+Heroku was used to run this site in a cloud environment to allow visibility to external users.
+
+1. Get the code base from git hub by running this command in the terminal of your IDE: 
+```bash
+   $ git clone https://github.com/nelkon01/nelkon-finance.git
+   ```
+1. Login to Heroku and set up a new app
+1. Under the **Settings** tab, click **Reveal Config Vars**
+1. Set the following variables
+> |        Variable       	|   Setting  	|
+>|:---------------------:	|:----------:	|
+>| DEBUG                	| False     	|
+>| DATABASE_URL           | YOUR_DB_URL |
+>| IP                    	| 0.0.0.0    	|
+>| PORT                  	| 5000       	|
+>| SECRET_KEY            	| YOUR_KEY  	|
+
+
+5. Go back to your IDE's terminal window and connect to heroku ```bash heroku login``` and enter your credentials
+5. Clone the heroku repository (exact command can be found on the Deployment tab for the app you just created in heroku) ```bash heroku git:clone -a 'your_app_name'```
+5. make a slight change to a file, say the readme.md file
+5. add the files, commit and push to heroku master:
+```bash
+$ git add .
+$ git commit -am "initial heroku commit" 
+$ git push heroku master
+```
+You should be able to access the application at your heroku via the url provided in the terminal window, or the open app button from your heroku app dashboard.
+Ex) https://nelkon-finance-671b974bbd16.herokuapp.com
 
 ### Contributing
 
 I welcome contributions from the community. If you'd like to contribute to Nelkon Finance, please reach out
 
-### License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ### Acknowledgments
 
-The development team at Nelkon Finance
 Flask and SQLAlchemy open-source communities for their fantastic tools
 
-First image in Carousel: Image
+- [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-add-authentication-to-your-app-with-flask-login#step-1-installing-packages): This website helped me with flask understanding
+- [Gitau Harrison Blog](https://www.gitauharrison.com/articles/data-visualization-with-flask-and-chartjs): This fantastic blog helped me with integrating flask with chart.js
+- The Fantastic team at code institite
+- [Malia Havlicek](https://github.com/maliahavlicek): My mentor for this project
+- First image in Carousel: Image
 by <a href="https://www.freepik.com/free-photo/close-up-education-economy-objects_18776317.htm#query=budget&position=0&from_view=search&track=sph">
 Image by vectorjuice</a> on Freepik
-Second image in
+- Second image in
 carousel: <a href="https://www.freepik.com/free-vector/invoice-concept-illustration_8775504.htm#query=accounting&position=16&from_view=search&track=sph">
 Image by storyset</a> on Freepik
-Third image in
+- Third image in
 carousel: <a href="https://www.freepik.com/free-vector/mobile-expense-management-abstract-concept-vector-illustration-charges-control-system-satelite-devices-checking-mobile-network-enterprise-economy-manage-telephony-costs-abstract-metaphor_12083690.htm#query=track%20expenses%20pounds&position=21&from_view=search&track=ais">
 Image by vectorjuice</a> on Freepik
