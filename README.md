@@ -221,7 +221,8 @@ access their financial data.
   to the app, and navigates to the profile page.
 - [x] Update - Users can also update their information whenever they navigate to the profile page to carry out this
   action
-- [x] Delete - The delete functionality is also active on this table, as authorised users can successfully delete user information.
+- [x] Delete - The delete functionality is also active on this table, as authorised users can successfully delete user
+  information.
 
 ### Budgeted Income Table
 
@@ -310,7 +311,8 @@ The intent is to provide a clean, simple intuitive design to users.
 
 ### Wireframes
 
-Having a rough data structure in hand, I knew what data fields I could present users managing the budget income and expenses,
+Having a rough data structure in hand, I knew what data fields I could present users managing the budget income and
+expenses,
 actual income and expenses, and to view a dashboard.
 Please note, the mock-ups are guidelines not a hard design requirements. Some aspects changed during development to make
 the site more user-friendly, simple and intuitive to use.
@@ -327,22 +329,25 @@ the site more user-friendly, simple and intuitive to use.
 **See Goldmine Page**
 <img width="452" alt="Screenshot 2023-10-05 at 11 35 05" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/a1a51c93-5bc1-4bc4-97a9-072613e80ddb">
 
-
 ### Colour Scheme
-I chose to stick with a simple dark vibe colour scheme for the project
-  ![nelkon_finance colorscheme](https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/a2dd5761-1eb7-475f-aa0b-cc2f76944908)
 
-        
+I chose to stick with a simple dark vibe colour scheme for the project
+![nelkon_finance colorscheme](https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/a2dd5761-1eb7-475f-aa0b-cc2f76944908)
+
 ### Typography
-Since this project was developed using the Bootstrap library. The font used was the default bootstrap font, which has very good compatibility with a lot of browsers.
+
+Since this project was developed using the Bootstrap library. The font used was the default bootstrap font, which has
+very good compatibility with a lot of browsers.
 
 ### Imagery
-Imagery is important to accompany messages to end-users. The main images used was on the home page to explain to new user the essence of the app
+
+Imagery is important to accompany messages to end-users. The main images used was on the home page to explain to new
+user the essence of the app
 **Header Image**
 <img width="1076" alt="app-in-action" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/4a2d935e-efa4-42f3-b657-367d529bf8d2">
 **Budget Image**
 ![budget-image](https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/bc1a6503-00ae-45b6-8dc6-64232a2639a2)
-**Tracking Image** 
+**Tracking Image**
 ![tracking-image](https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/6a8309c5-aa98-4aa8-b3bd-710ea56f0fd5)
 **Analysis Image**
 ![analysis-image](https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/cd41ad8c-0515-4d73-91ff-321755803300)
@@ -357,8 +362,8 @@ I also had icons in the "How to" section, which gives new users a quick walkthro
 **Dashboard Icon**
 ![dashboard-icon](https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/007584c8-fd7d-4f4c-b334-94a3b46a0e48)
 
-
 ### Home Page
+
 **Nav Bar**
 The nav bar is shown across all screens
 <img width="1243" alt="Screenshot 2023-10-05 at 14 58 27" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/66146b85-f159-4f92-a832-fc933829ba1f">
@@ -366,13 +371,13 @@ For smaller to mobile screen users:
 <img width="611" alt="Screenshot 2023-10-05 at 17 53 22" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/5a181d61-dd0a-4408-a19d-86edf3685e9b">
 <img width="614" alt="Screenshot 2023-10-05 at 17 54 03" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/ca67659a-f45c-4467-9887-09d12d05ed2b">
 
-
 **Hero Section**
 <img width="1243" alt="Screenshot 2023-10-05 at 15 01 52" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/a729d195-981d-4675-ad33-2ff8a4debd10">
 
 **Information Section**
-This section exists to give new users a little more information about the capabilities of the app. which are mainly **Budget Management**, **Actual Finances Tracking** and **Income and Expense Analysis**
-For Larger medium to large screen sizes, this section will be shown as a carousel, as shown in the screenshots below. 
+This section exists to give new users a little more information about the capabilities of the app. which are mainly *
+*Budget Management**, **Actual Finances Tracking** and **Income and Expense Analysis**
+For Larger medium to large screen sizes, this section will be shown as a carousel, as shown in the screenshots below.
 <img width="1246" alt="Screenshot 2023-10-05 at 15 03 33" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/0de72a77-f640-4f11-a05a-ee86db22ecfc">
 <img width="1246" alt="Screenshot 2023-10-05 at 15 03 58" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/ce1344d6-a55a-41d8-8174-65ae07886bb7">
 <img width="1247" alt="Screenshot 2023-10-05 at 15 04 29" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/46e2b618-4892-4b07-8b6e-c298d44a2068">
@@ -380,7 +385,7 @@ However, this section will be shown as normally as a stack for smaller screen si
 <img width="617" alt="Screenshot 2023-10-05 at 17 43 47" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/97c3592c-e487-4083-8eee-e0a9e5c3eed4">
 
 **How It Works Section**
-This section is there to give a new user a walkthrough on how to navigate using the web app. 
+This section is there to give a new user a walkthrough on how to navigate using the web app.
 The screenshot below shows what this section looks like.
 <img width="617" alt="Screenshot 2023-10-05 at 17 47 19" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/c2802802-54a9-4494-9ad3-d9c1d61a1d54">
 
@@ -388,34 +393,47 @@ The screenshot below shows what this section looks like.
 <img width="1162" alt="Screenshot 2023-10-05 at 18 06 58" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/bb4ed1d8-b2ab-4696-9d40-08e4d4b3784d">
 
 ### Plan Fortune Page
-This page is where users can add their budget income and expenses for respective months. Users can view their previous entries on this page and edit and delete them.
-The screenshot below shows an example of what the plan fortune page can look like. 
+
+This page is where users can add their budget income and expenses for respective months. Users can view their previous
+entries on this page and edit and delete them.
+The screenshot below shows an example of what the plan fortune page can look like.
 <img width="1166" alt="Screenshot 2023-10-05 at 18 13 38" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/ccf14938-f1a7-422f-b9c6-f90eaa2bda19">
-Once a user wants to add a new budget income or entry, they need to click on one of the "Add budget income/expense" buttons on the screen. This triggers a modal that displays a form for the user to fill in to create that data entry successfully. An example is shown in the screenshot below if a user wants to create a budget expense entry.
+Once a user wants to add a new budget income or entry, they need to click on one of the "Add budget income/expense"
+buttons on the screen. This triggers a modal that displays a form for the user to fill in to create that data entry
+successfully. An example is shown in the screenshot below if a user wants to create a budget expense entry.
 <img width="934" alt="Screenshot 2023-10-05 at 18 20 39" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/4c590d86-29c2-4d0d-a428-791cd6ddc862">
-Some fields in the form contain options that users may select from instead of manually typing all the input required for the  form filling. This was included to help with a positive user experience. An example of this is the Month field. 
+Some fields in the form contain options that users may select from instead of manually typing all the input required for
+the form filling. This was included to help with a positive user experience. An example of this is the Month field.
 <img width="499" alt="Screenshot 2023-10-05 at 18 25 04" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/660539cb-cc97-4bf6-bd3c-43960ba82c06">
-User entries can be edited as well. And this triggers a modal to render an already prefilled form for users to update that information. 
+User entries can be edited as well. And this triggers a modal to render an already prefilled form for users to update
+that information.
 <img width="609" alt="Screenshot 2023-10-05 at 18 34 30" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/60cc1b5f-44d2-4e8d-935a-e8e8eaada593">
-Entries can also be deleted. A modal that asks the user to confirm deletion is rendered to the user. This is a way to ensure that users do not accidentally delete an entry that was not intended and help improve user experience. 
+Entries can also be deleted. A modal that asks the user to confirm deletion is rendered to the user. This is a way to
+ensure that users do not accidentally delete an entry that was not intended and help improve user experience.
 <img width="618" alt="Screenshot 2023-10-05 at 18 57 30" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/11b809c9-d5a9-4360-a7b5-0da4b7281b29">
 
 ### Track Treasure Page
-This page is very similar to the Plan Fortune page. It is basically for the Actual Income and expenses but for a users actual finances.
+
+This page is very similar to the Plan Fortune page. It is basically for the Actual Income and expenses but for a users
+actual finances.
 <img width="1119" alt="Screenshot 2023-10-05 at 19 22 00" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/71cdfe5a-7339-4676-9c44-17a016b00352">
 
 ### See Goldmine Page
-This page is where users view an interactive dashboard that displays charts according to the financial information provided. Below is a screenshot example of the goldmine page.
+
+This page is where users view an interactive dashboard that displays charts according to the financial information
+provided. Below is a screenshot example of the goldmine page.
 
 <img width="1178" alt="Screenshot 2023-10-05 at 21 39 03" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/efafacd0-343e-4a26-989f-e2115a4742a1">
 
 ### Profile Page
-Once Users click the account dropdown, there is a link to the profile page, which takes the users to a page where they can update their information, change passwords, and delete their accounts.
-<img width="1194" alt="Screenshot 2023-10-05 at 21 57 21" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/913efdde-8a7e-4d25-a3e0-5ad32d85f73f">
- Users can see their existing information and change it if they want. However, the current password is not displayed to the user, so it is not exposed to prying eyes. But the current password can be changed and updated on this page. 
- When users want to delete their accounts, a modal appears to check with the user if they want to delete the account. 
- <img width="989" alt="Screenshot 2023-10-05 at 22 09 30" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/c8fc08b6-dc20-405b-b313-6925e1bbb93c">
 
+Once Users click the account dropdown, there is a link to the profile page, which takes the users to a page where they
+can update their information, change passwords, and delete their accounts.
+<img width="1194" alt="Screenshot 2023-10-05 at 21 57 21" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/913efdde-8a7e-4d25-a3e0-5ad32d85f73f">
+Users can see their existing information and change it if they want. However, the current password is not displayed to
+the user, so it is not exposed to prying eyes. But the current password can be changed and updated on this page.
+When users want to delete their accounts, a modal appears to check with the user if they want to delete the account.
+<img width="989" alt="Screenshot 2023-10-05 at 22 09 30" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/c8fc08b6-dc20-405b-b313-6925e1bbb93c">
 
 ## User Stories
 
@@ -438,8 +456,8 @@ Here are a few user stories that demonstrate how **Nelkon Finance** meets the ne
 
 #### **User Persona: Mark, the Financial Analyst**
 
-- I'm a data-driven user who wants to analyze my yearly income trends. 
-- I can easily select specific months or years to view on the dashboard and watch the charts update in real-time. 
+- I'm a data-driven user who wants to analyze my yearly income trends.
+- I can easily select specific months or years to view on the dashboard and watch the charts update in real-time.
 - This feature helps me make informed financial decisions.
 
 #### **User Persona: Lisa, the Mobile User**
@@ -454,14 +472,135 @@ analysts and mobile users.
 By focusing on UX strategy and carefully scoping the features, The aim is to deliver a valuable and user-centric
 financial management tool.
 
-
 ## Features
 
-- **Budget Management:** Create and manage budgets for different income sources and expense categories.
-- **Actual Finances Tracking:** Easily track actual income and expenses over time.
-- **Income and Expense Analysis:** Visualize income and expense trends with interactive charts.
-- **User Profiles:** Users can create and edit their profiles.
-- **Security:** User authentication and authorization with secure password storage.
+Below, we detail the key features, including implemented elements, forms, and database operations.
+
+## Implemented Elements
+
+### 1. Interactive Dashboard
+
+- **Description**: Nelkon Finance provides users with an interactive dashboard that offers a visual representation of
+  their financial data. It includes dynamic charts and graphs to help users quickly grasp their financial status.
+
+### 2. User Authentication
+
+- **Description**: The application features user authentication to ensure that financial data is secure and accessible
+  only to registered users. Users can create accounts, log in, and log out as needed.
+
+### 3. User Profile Management
+
+- **Description**: Users have the ability to manage their profiles. They can update their personal information, such as
+  username and email address, and change their passwords.
+
+## Forms
+
+### 1. Budget Planning
+
+- **Description**: Nelkon Finance allows users to plan their monthly budgets by entering budgeted income sources and
+  expenses. Users can specify the income or expense category, the description, and the planned amount for each item.
+
+### 2. Recording Actual Income and Expenses
+
+- **Description**: Users can record their actual income and expenses for each month as they occur. They can enter the
+  income or expense category, a description, and the actual amount.
+
+## Database Operations
+
+### 1. Storing User Data
+
+- **Description**: User data, including usernames, email addresses, and securely hashed passwords, is stored in the
+  database. User registration and profile management operations are handled securely.
+
+### 2. Budget Data Management
+
+- **Description**: Nelkon Finance stores budgeted income and expense data for each user. This data includes the
+  category, description, planned amount, and the associated month and year.
+
+### 3. Actual Income and Expense Tracking
+
+- **Description**: The application allows users to track their actual income and expenses on a monthly basis. This data
+  is stored in the database, associating each record with the user, category, description, actual amount, and the
+  corresponding month and year.
+
+### 4. User-Specific Data
+
+- **Description**: All data is segregated by user, ensuring that each user can only access and manipulate their own
+  financial information. User-specific queries are performed to retrieve and display the relevant data.
+
+## Additional Features
+
+### 1. Data Analysis
+
+- **Description**: Nelkon Finance offers data analysis tools to help users understand their financial patterns. Users
+  can select specific months to view charts and graphs depicting their budgeted and actual income and expenses over
+  time.
+
+### 2. Responsive Design
+
+- **Description**: The application is designed to be responsive, ensuring a seamless user experience on both desktop and
+  mobile devices.
+
+### 3. Logout Functionality
+
+- **Description**: Users can log out of their accounts to protect their financial data when using shared or public
+  computers.
+
+Nelkon Finance aims to provide users with a robust and user-friendly financial management platform. The features listed
+above empower users to take control of their financial lives by offering budget planning, expense tracking, and data
+analysis tools, all within a secure and easy-to-use application.
+
+### Future Feature Enhancements
+
+While the app offers a robust set of features for managing your finances, there are several exciting enhancements and
+features planned for future development:
+
+### 1. Expense Reminders
+
+- **Description**: Add the ability for users to set reminders for recurring expenses. This feature will help users stay
+  on top of their financial obligations and avoid missing payments.
+
+### 2. Savings Goals
+
+- **Description**: Enable users to set savings goals and track their progress. Users can allocate a portion of their
+  budgeted income towards specific goals, such as a vacation or a new car.
+
+### 3. Export Financial Reports
+
+- **Description**: Allow users to export their financial data and reports to popular formats like PDF or CSV. This
+  feature will simplify tax preparation and financial planning.
+
+### 4. Mobile App Integration
+
+- **Description**: Develop a mobile application version of Nelkon Finance for seamless on-the-go financial management.
+
+### 5. Expense Receipt Upload
+
+- **Description**: Enable users to upload and attach expense receipts to their recorded expenses for better
+  record-keeping and documentation.
+
+### 6. Collaboration and Sharing
+
+- **Description**: Implement collaboration features that allow users to share financial data with trusted family members
+  or financial advisors. Users can work together to manage household finances effectively.
+
+### 7. Bill Payment Integration
+
+- **Description**: Integrate bill payment functionality, allowing users to pay their bills directly through the
+  application. This feature will streamline the payment process and reduce manual entry.
+
+### 8. Data Backup and Recovery
+
+- **Description**: Provide users with the ability to create data backups and implement a data recovery system in case of
+  accidental data loss.
+
+### 9. Multi-Currency Support
+
+- **Description**: Add support for multiple currencies, allowing users to manage finances in different currencies,
+  especially beneficial for international users.
+
+These future enhancements are designed to make Nelkon Finance an even more powerful and versatile financial management
+platform. We are committed to continuously improving the application to meet the evolving needs of our users.
 
 ## Getting Started
 
