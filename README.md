@@ -58,86 +58,37 @@ and more.
     * [Scope](#scope)
 - [Data Structure](#data-structure)
     * [Database Choice](#database-choice)
-    * [Data Models](#data-models)
-    * [Nelkon Finance Data Structure](#nelkon-finance-data-structure)
         + [User Table](#user-table)
         + [Budgeted Income Table](#budgeted-income-table)
         + [Budgeted Expenses Table](#budgeted-expenses-table)
         + [Actual Income Table](#actual-income-table)
         + [Actual Expenses Table](#actual-expenses-table)
-    * [CRUD Flow Diagrams](#crud-flow-diagrams)
 - [Design Choices](#design-choices)
     * [Wireframes](#wireframes)
-        + [Content Considerations](#content-considerations)
-    * [Surface:](#surface)
-        + [Color Choice](#color-choice)
-        + [Typography](#typography)
-        + [Image Choice](#image-choice)
-            - [Home Page](#home-page)
-            - [Activity Icons](#activity-icons)
-            - [Input Icons](#input-icons)
-            - [Header Image](#header-image)
-            - [Modals and Errors](#modals-and-errors)
-            - [Loading Giff](#loading-giff)
-        + [Design Elements](#design-elements)
-        + [Animations & Transitions](#animations--transitions)
+    * [Colour Scheme](#colour-scheme)
+    * [Typography](#typography)
+    * [Imagery](#imagery)
 - [User Stories:](#user-stories)
     * [User Persona: Alex, the First-Time User](#user-persona-alex-the-first-time-user)
     * [User Persona: Sarah, the Budgeter](#user-persona-sarah-the-budgeter)
     * [User Persona: Mark, the Financial Analyst](#user-persona-mark-the-financial-analyst)
     * [User Persona: Lisa, the Mobile User](#user-persona-lisa-the-mobile-user)
 - [Features](#features)
-    * [Implemented Features](#implemented-features)
-        + [Structural](#structural)
-        + [Common Elements](#common-elements)
-        + [Forms](#forms)
-        + [Database Operations](#database-operations)
-        + [API Integration](#api-integration)
-        + [Metrics](#metrics)
-    * [Features Left to Implement](#features-left-to-implement)
-        + [Features Deferred from original plan](#features-deferred-from-original-plan)
-        + [User Roles & Permissions](#user-roles--permissions)
-        + [Place Administrator Dashboard](#place-administrator-dashboard)
-        + [External User Adult Dashboard](#external-user-adult-dashboard)
-        + [External User Minor Dashboard](#external-user-minor-dashboard)
-        + [Content Admin Dashboard](#content-admin-dashboard)
-        + [Site Admin Dashboard](#site-admin-dashboard)
-        + [More Sophisticated Attendance Tracking](#more-sophisticated-attendance-tracking)
-        + [API Integrations](#api-integrations)
-        + [Switch to Relational Database](#switch-to-relational-database)
-        + [Ease of Use Enhancements](#ease-of-use-enhancements)
-    * [Project Tracking](#project-tracking)
+    * [Implemented Elements](#implemented-elements)
+      * [Forms](#forms)
+      * [Database Operations](#database-operations)
+      * [Additional Features](#additional-features)
+      * [Future feature enhancements](#future-feature-enhancements)
 - [Technologies Used](#technologies-used)
-    * [Programming languages](#programming-languages)
-    * [Framework & Extensions](#framework--extensions)
-    * [Fonts](#fonts)
-    * [Tools](#tools)
-    * [APIs](#apis)
+    * [Front-End Technologies](#front-end-technologies)
+    * [Back-End Technologies](#back-end-technologies)
+    * [Deployments and hosting](#deployment-and-hosting)
+    * [Version Control and Collaboration](#version-control-and-collaboration)
 - [Defensive Programming](#defensive-programming)
-    * [Form Validation:](#form-validation)
-    * [Cross Site Forgery Protection](#cross-site-forgery-protection)
-    * [XSS Protection](#xss-protection)
-    * [Restricted Deletion](#restricted-deletion)
 - [Testing](#testing)
-    * [Validation Testing](#validation-testing)
-    * [Unit Testing](#unit-testing)
-    * [Cross Browser/ Cross Device Verification](#cross-browser-cross-device-verification)
-    * [Cross Site Scripting and Forgery](#cross-site-scripting-and-forgery)
-    * [Accessibility Testing](#accessibility-testing)
-    * [Regression Testing](#regression-testing)
-    * [Automated Testing](#automated-testing)
-    * [Defect Tracking](#defect-tracking)
-        + [Noteworthy Bugs](#noteworthy-bugs)
-        + [Outstanding Defects](#outstanding-defects)
 - [Deployment](#deployment)
-    * [GitHub](#github)
-    * [Requires](#requires)
-    * [Development (Running Locally)](#development-running-locally)
-    * [Live (Heroku)](#live-heroku)
-- [Credits](#credits)
-    * [Content](#content)
-    * [Media](#media)
-    * [Acknowledgements](#acknowledgements)
+- [Acknowledgements](#acknowledgments)
+   
 
 </details>
 
@@ -190,15 +141,13 @@ financial management, which includes:
 - **Accessibility:** The app is designed with accessibility in mind to ensure that users with varying abilities can
   comfortably navigate and use it.
 
-### Data Structure
+## Data Structure
 
-#### Database Choice:
+### Database Choice:
 
 Nelkon Finance uses PostgreSQL as its database management system. PostgreSQL was selected due to
 its robustness, support for complex queries, and scalability. It provides a reliable foundation for handling financial
 data efficiently.
-
-## Data Models
 
 ### User Table
 
@@ -721,20 +670,23 @@ to a safer user experience.
 
 ## Testing
 
-Testing is a crucial aspect of the app's development process. It ensures that the application functions correctly, meets user expectations, and remains reliable. Below are the key testing strategies and practices employed:
+Testing is a crucial aspect of the app's development process. It ensures that the application functions correctly, meets
+user expectations, and remains reliable. Below are the key testing strategies and practices employed:
 
 ### Unit Testing
 
-Unit testing involves testing individual components (functions, methods, classes) of the application in isolation. In Nelkon Finance, unit tests are implemented using popular testing frameworks like `pytest`. Key aspects of unit testing include:
+Unit testing involves testing individual components (functions, methods, classes) of the application in isolation. In
+Nelkon Finance, unit tests are implemented using popular testing frameworks like `pytest`. Key aspects of unit testing
+include:
 
 - Testing functions and methods to verify that they produce the expected output for various inputs.
 - Ensuring that error conditions are handled appropriately.
 - Testing edge cases to check for robustness.
 
-
 ### Functional Testing
 
-Functional testing assesses the application's functionality from the user's perspective. Nelkon Finance's functional testing includes:
+Functional testing assesses the application's functionality from the user's perspective. Nelkon Finance's functional
+testing includes:
 
 - Testing user interfaces (UI) to ensure they are intuitive and responsive.
 - Evaluating user workflows, such as registering, logging in, creating budgets, and generating reports.
@@ -742,59 +694,63 @@ Functional testing assesses the application's functionality from the user's pers
 
 ### End-to-End (E2E) Testing
 
-End-to-end testing assesses the application's functionality as a whole, simulating real user scenarios. In this case, E2E tests:
+End-to-end testing assesses the application's functionality as a whole, simulating real user scenarios. In this case,
+E2E tests:
 
 - Test critical user journeys, from registration to generating financial reports.
 - Ensure that the application functions correctly across different browsers and devices.
 
 ### User Acceptance Testing (UAT)
 
-User acceptance testing involves real users testing the application in a production-like environment. I collected user feedback during UAT to identify usability issues, gather insights, and make improvements based on user suggestions.
+User acceptance testing involves real users testing the application in a production-like environment. I collected user
+feedback during UAT to identify usability issues, gather insights, and make improvements based on user suggestions.
 
 ### Bug Tracking
 
-A bug tracking system is used to record, prioritize, and manage issues identified during testing and by users. I addressed every reported problem promptly by my tests subjects.
+A bug tracking system is used to record, prioritize, and manage issues identified during testing and by users. I
+addressed every reported problem promptly by my tests subjects.
 
 ### Regression Testing
 
-Regression testing is performed after code changes to verify that new features or bug fixes do not introduce new issues or break existing functionality. Manual regression tests are an integral part of Nelkon Finance's development process.
-
+Regression testing is performed after code changes to verify that new features or bug fixes do not introduce new issues
+or break existing functionality. Manual regression tests are an integral part of Nelkon Finance's development process.
 
 ### Validation Testing
+
 **Home Page**
+
 - Validator tests
   <img width="1092" alt="Screenshot 2023-10-06 at 08 20 01" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/4f2eb167-d500-4ed7-97f2-63ed0f258db5">
 - Lighthouse Audit
-<img width="443" alt="Screenshot 2023-10-06 at 08 18 32" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/49644229-1109-4dc6-8245-da3291d2301b">
-**Plan Page**
+  <img width="443" alt="Screenshot 2023-10-06 at 08 18 32" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/49644229-1109-4dc6-8245-da3291d2301b">
+  **Plan Page**
 - Validator
-<img width="1019" alt="Screenshot 2023-10-06 at 08 27 07" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/52b1733c-61a5-42af-9792-ccedc02d3411">
+  <img width="1019" alt="Screenshot 2023-10-06 at 08 27 07" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/52b1733c-61a5-42af-9792-ccedc02d3411">
 
 - Lighthouse Audit
-<img width="436" alt="Screenshot 2023-10-06 at 08 26 24" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/196473e6-8d45-409d-9ca9-978471fb5dc9">
-**Track Page**
+  <img width="436" alt="Screenshot 2023-10-06 at 08 26 24" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/196473e6-8d45-409d-9ca9-978471fb5dc9">
+  **Track Page**
 - Validator
-<img width="1019" alt="Screenshot 2023-10-06 at 08 27 07" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/f977d85f-3a61-49e5-8c62-a03026d993f6">
+  <img width="1019" alt="Screenshot 2023-10-06 at 08 27 07" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/f977d85f-3a61-49e5-8c62-a03026d993f6">
 
 - Lighthouse Audit
   <img width="447" alt="Screenshot 2023-10-06 at 08 31 56" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/5701b249-4380-4f43-a7db-47fca796bad4">
-**Goldmine page**
+  **Goldmine page**
 - Validator
-<img width="877" alt="Screenshot 2023-10-06 at 08 35 23" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/18a21c89-4858-4440-abf7-a83c20bb81d2">
+  <img width="877" alt="Screenshot 2023-10-06 at 08 35 23" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/18a21c89-4858-4440-abf7-a83c20bb81d2">
 - Lighthouse Audit
-<img width="437" alt="Screenshot 2023-10-06 at 08 34 35" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/db49e8ff-36f1-4e94-b353-f3487af20955">
-**Profile Page**
+  <img width="437" alt="Screenshot 2023-10-06 at 08 34 35" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/db49e8ff-36f1-4e94-b353-f3487af20955">
+  **Profile Page**
 - Validator
-<img width="877" alt="Screenshot 2023-10-06 at 08 35 23" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/a9aca31c-a572-46d4-92e3-4ed2322fc76b">
+  <img width="877" alt="Screenshot 2023-10-06 at 08 35 23" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/a9aca31c-a572-46d4-92e3-4ed2322fc76b">
 - Lighthouse Audit
-<img width="430" alt="Screenshot 2023-10-06 at 08 41 28" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/788889e3-174f-48cb-a6bf-e402466b5006">
-**Login Page**
+  <img width="430" alt="Screenshot 2023-10-06 at 08 41 28" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/788889e3-174f-48cb-a6bf-e402466b5006">
+  **Login Page**
 - Validator
-<img width="1108" alt="Screenshot 2023-10-06 at 08 42 52" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/38c81e9b-f17f-4576-b38c-c89f32bc9a47">
+  <img width="1108" alt="Screenshot 2023-10-06 at 08 42 52" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/38c81e9b-f17f-4576-b38c-c89f32bc9a47">
 
 - Lighthouse Audit
   <img width="445" alt="Screenshot 2023-10-06 at 08 43 14" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/37ea643d-6b39-416b-905f-6d866967b54b">
-
 
 **CSS Validation**
 <img width="1099" alt="Screenshot 2023-10-06 at 08 46 08" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/3dd62686-bb70-432f-b117-40dbcad0be68">
@@ -803,49 +759,65 @@ Regression testing is performed after code changes to verify that new features o
 Js Validation showed no errors
 <img width="530" alt="Screenshot 2023-10-06 at 08 49 51" src="https://github.com/Nelkon01/Nelkon-Finance/assets/54297166/824bc899-f024-482a-ab61-418502091f7d">
 
-
-
 ## Manual Testing
 
-Manual testing is a crucial part of ensuring the reliability and user-friendliness of this app, and manual tests that were carried out by my friends and I have confirmed that the application performs exceptionally well in various scenarios. Here's an overview of the successful manual tests:
+Manual testing is a crucial part of ensuring the reliability and user-friendliness of this app, and manual tests that
+were carried out by my friends and I have confirmed that the application performs exceptionally well in various
+scenarios. Here's an overview of the successful manual tests:
 
 ### Blank/Empty Inputs
 
-1. **Registration**: During user registration, we've verified that all required fields (e.g., name, email, password) must be filled out. Our tests included submitting the registration form with missing information, and the application responded with appropriate error messages.
+1. **Registration**: During user registration, we've verified that all required fields (e.g., name, email, password)
+   must be filled out. Our tests included submitting the registration form with missing information, and the application
+   responded with appropriate error messages.
 
-2. **Budget and Expense Creation**: When users create budgets or expenses, Nelkon Finance ensures that essential fields (e.g., budget name, expense amount) are not left blank. Validation successfully prevents incomplete submissions.
+2. **Budget and Expense Creation**: When users create budgets or expenses, Nelkon Finance ensures that essential
+   fields (e.g., budget name, expense amount) are not left blank. Validation successfully prevents incomplete
+   submissions.
 
 ### Invalid Inputs
 
-1. **Validation**: We tested by inputting invalid data in forms, such as providing a non-email format for the email field or entering text in a numeric field. The application consistently responded with clear error messages guiding users on the correct input format.
+1. **Validation**: We tested by inputting invalid data in forms, such as providing a non-email format for the email
+   field or entering text in a numeric field. The application consistently responded with clear error messages guiding
+   users on the correct input format.
 
-2. **Boundary Testing**: Nelkon Finance gracefully handles extreme values, such as very large or very small numbers. Our tests confirmed that the application behaves correctly without crashing or displaying unexpected behavior.
+2. **Boundary Testing**: Nelkon Finance gracefully handles extreme values, such as very large or very small numbers. Our
+   tests confirmed that the application behaves correctly without crashing or displaying unexpected behavior.
 
 ### Ownership Verification
 
-1. **Edit and Delete Actions**: Nelkon Finance strictly enforces that users can only edit or delete the budgets and expenses they own. Attempts to modify items owned by other users consistently result in appropriate access denied messages.
+1. **Edit and Delete Actions**: Nelkon Finance strictly enforces that users can only edit or delete the budgets and
+   expenses they own. Attempts to modify items owned by other users consistently result in appropriate access denied
+   messages.
 
 ### New User vs. Established User
 
-1. **New User Scenarios**: We've tested with both brand new users and established users. For new users, the onboarding process is seamless, allowing them to create their first budgets and expenses with ease.
+1. **New User Scenarios**: We've tested with both brand new users and established users. For new users, the onboarding
+   process is seamless, allowing them to create their first budgets and expenses with ease.
 
 ### Mobile vs. Desktop Differences
 
-1. **Responsive Design**: Nelkon Finance's responsive design elements adapt seamlessly to various devices, including mobile phones, tablets, and desktop computers.
+1. **Responsive Design**: Nelkon Finance's responsive design elements adapt seamlessly to various devices, including
+   mobile phones, tablets, and desktop computers.
 
 ### Navigation Changes
 
-1. **User State Differences**: Nelkon Finance's navigation menus and links appropriately adjust based on the user's authentication state, ensuring a consistent and user-friendly experience.
+1. **User State Differences**: Nelkon Finance's navigation menus and links appropriately adjust based on the user's
+   authentication state, ensuring a consistent and user-friendly experience.
 
 ### Duplicate Emails and Usernames
 
-1. **Uniqueness Check**: Nelkon Finance successfully enforces unique email addresses and usernames for each user. Attempts to register with the same email or username that is already in use are consistently prevented.
+1. **Uniqueness Check**: Nelkon Finance successfully enforces unique email addresses and usernames for each user.
+   Attempts to register with the same email or username that is already in use are consistently prevented.
 
-By conducting thorough manual testing that covers these scenarios, Nelkon Finance ensures a seamless and error-free experience for all users. Our tests have confirmed that the application is reliable and user-friendly, providing you with a high-quality financial management tool.
+By conducting thorough manual testing that covers these scenarios, Nelkon Finance ensures a seamless and error-free
+experience for all users. Our tests have confirmed that the application is reliable and user-friendly, providing you
+with a high-quality financial management tool.
 
 ## Noteworthy Bugs/Defects
 
-This section highlights notable bugs or defects that have been identified and require attention. Each item includes a clear description of the issue, steps to reproduce it, and its current status (e.g., open, in progress, resolved).
+This section highlights notable bugs or defects that have been identified and require attention. Each item includes a
+clear description of the issue, steps to reproduce it, and its current status (e.g., open, in progress, resolved).
 
 ### Charts not updating correctly
 
@@ -868,55 +840,62 @@ The goldmine charts were not displaying any charts even after users had all info
 
 **Additional Information:**
 
-I initially wanted to use plotly dash to achieve the interactive dashboard functionality of the app, however, i wasnt able to make it work. I therefore decided to use chart.js for this functionality, which resloved that issue for me
+I initially wanted to use plotly dash to achieve the interactive dashboard functionality of the app, however, i wasnt
+able to make it work. I therefore decided to use chart.js for this functionality, which resloved that issue for me
 
 ### Budget and Actual Income Coverage Showing wrong figures
 
 **Description:**
-The Idea behind the budget and actual income coverage and actual income coverage is to check if the income for that month covers the expense for the month. And this metric was in percentage. However, i have an issue whereby i was having values above 100% which is practically impossible.
+The Idea behind the budget and actual income coverage and actual income coverage is to check if the income for that
+month covers the expense for the month. And this metric was in percentage. However, i have an issue whereby i was having
+values above 100% which is practically impossible.
 
 **Steps to Reproduce:**
 
-11. Input Bugdet income and actual income into the database
+1. Input Bugdet income and actual income into the database
 2. Input actual income and actual expense into the database
 3. Navigate to the goldmine page and click on update charts after selecting month and year information
-
 
 **Current Status:**
 
 - [ ] Open: The bug has been reported but has not yet been assigned for resolution.
 - [ ] In Progress: The issue is actively being worked on by a developer.
 - [x] Resolved: The bug has been fixed and verified.
-      
+
 **Additional Information:**
-I realised there was a problem with my logic in the way i was making the calculation in my function, and it has been fixed
+I realised there was a problem with my logic in the way i was making the calculation in my function, and it has been
+fixed
 
 **Description:**
-The line charts in the goldmine page is showing the numerical values for months instead of the text name of the respective months. which may not be good user experience
+The line charts in the goldmine page is showing the numerical values for months instead of the text name of the
+respective months. which may not be good user experience
 
 **Steps to Reproduce:**
 
-11. Input Bugdet income and actual income into the database
+1. Input Bugdet income and actual income into the database
 2. Input actual income and actual expense into the database
 3. Navigate to the goldmine page and click on update charts after selecting month and year information
-
 
 **Current Status:**
 
 - [x] Open: The bug has been reported but has not yet been assigned for resolution.
 - [ ] In Progress: The issue is actively being worked on by a developer.
 - [ ] Resolved: The bug has been fixed and verified.
-      
+
 **Additional Information:**
-I have not come around to fixing this, however, i reckon the fix could be in me assigning a label for each number in the charts javascript code
+I have not come around to fixing this, however, i reckon the fix could be in me assigning a label for each number in the
+charts javascript code
 
-- There is also a slight froblem with the way heroku is handling my favicon which is returning a error. I have not come around to fixing this yet.
-
+- There is also a slight problem with the way heroku is handling my favicon which is returning a error. I have not come
+  around to fixing this yet.
 
 ## Deployment
-This site was developed using PyCharm's IDE. To keep records of different versions of all project files, git version control was used. This project is hosted using Heroku deployed from the master branch.
+
+This site was developed using PyCharm's IDE. To keep records of different versions of all project files, git version
+control was used. This project is hosted using Heroku deployed from the master branch.
 
 ### GitHub
+
 All versions and branches of the code are stored in github:
 https://github.com/Nelkon01/Nelkon-Finance
 
@@ -927,12 +906,12 @@ https://github.com/Nelkon01/Nelkon-Finance
 - SQLAlchemy (Python SQL toolkit)
 - Other Python packages as mentioned in `requirements.txt`
 
-
 ### Development (Running Locally)
+
 PyCharm was the IDE I developed my code in. I was able to deploy my code locally using the following steps:
 
-1. Get the code base from git hub by running this command in the terminal of your IDE: 
-```$ git clone https://github.com/Nelkon01/Nelkon-Finance.git```
+1. Get the code base from git hub by running this command in the terminal of your IDE:
+   ```$ git clone https://github.com/Nelkon01/Nelkon-Finance.git```
 
 2. Navigate to the project directory:
 
@@ -944,58 +923,70 @@ PyCharm was the IDE I developed my code in. I was able to deploy my code locally
     pip install -r requirements.txt
   
     
-4. [set environmental variables](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html) with your own values for:
-> - os.environ.setdefault("IP", "your ip")
+4. [set environmental variables](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html) with your
+   own values for:
+    
+    > - os.environ.setdefault("IP", "your ip")
+    
+    > - os.environ.setdefault("PORT", "your port")
+    
+    # Set your secret key for the Flask application
+    
+    > - os.environ.setdefault("SECRET_KEY", "your sectet key")
+    
+    # Set the development flag
+    
+    > - os.environ.setdefault("DEVELOPMENT", "boolean, true/false")
+    
+    # Set your database URL
+    
+    > - os.environ.setdefault("DATABASE_URL", "your database url")
+    
+    > - os.environ.setdefault("DEBUG", "boolean, true/false")
+    
+    - DEBUG/DEVELOPMENT -Boolean, Typically True for development and False for deployed version
 
-> - os.environ.setdefault("PORT", "your port")
-
-# Set your secret key for the Flask application
-> - os.environ.setdefault("SECRET_KEY", "your sectet key")
-
-# Set the development flag
-> - os.environ.setdefault("DEVELOPMENT", "boolean, true/false")
-
-# Set your database URL
-> - os.environ.setdefault("DATABASE_URL", "your database url")
-
-> - os.environ.setdefault("DEBUG", "boolean, true/false")
-   
-- DEBUG/DEVELOPMENT -Boolean, Typically True for development and False for deployed version
-
-5. start your server by typing 
-```$ python run.py```
+5. start your server by typing
+   ```$ python run.py```
 
 6. access your local version of the application.
 
 ### Live (Heroku)
+
 Heroku was used to run this site in a cloud environment to allow visibility to external users.
 
-1. Get the code base from git hub by running this command in the terminal of your IDE: 
-```bash
-   $ git clone https://github.com/nelkon01/nelkon-finance.git
-   ```
-1. Login to Heroku and set up a new app
-1. Under the **Settings** tab, click **Reveal Config Vars**
-1. Set the following variables
-> |        Variable       	|   Setting  	|
->|:---------------------:	|:----------:	|
->| DEBUG                	| False     	|
->| DATABASE_URL           | YOUR_DB_URL |
->| IP                    	| 0.0.0.0    	|
->| PORT                  	| 5000       	|
->| SECRET_KEY            	| YOUR_KEY  	|
+1. Get the code base from git hub by running this command in the terminal of your IDE:
+    
+    ```bash
+       $ git clone https://github.com/nelkon01/nelkon-finance.git
+       ```
 
+2. Login to Heroku and set up a new app
+3. Under the **Settings** tab, click **Reveal Config Vars**
+4. Set the following variables
+    
+    > |    Variable       	     |  Setting  	  |
+    >|:-----------------------:|:------------:|
+    >|| DEBUG                	  | False     	  |
+    >||      DATABASE_URL       | YOUR_DB_URL  |
+    >|| IP                    	 | 0.0.0.0    	 |
+    >|| PORT                  	 | 5000       	 |
+    >|| SECRET_KEY            	 | YOUR_KEY  	  |
 
 5. Go back to your IDE's terminal window and connect to heroku ```bash heroku login``` and enter your credentials
-5. Clone the heroku repository (exact command can be found on the Deployment tab for the app you just created in heroku) ```bash heroku git:clone -a 'your_app_name'```
-5. make a slight change to a file, say the readme.md file
-5. add the files, commit and push to heroku master:
+6. Clone the heroku repository (exact command can be found on the Deployment tab for the app you just created in
+   heroku) ```bash heroku git:clone -a 'your_app_name'```
+7. make a slight change to a file, say the readme.md file
+8. add the files, commit and push to heroku master:
+
 ```bash
 $ git add .
 $ git commit -am "initial heroku commit" 
 $ git push heroku master
 ```
-You should be able to access the application at your heroku via the url provided in the terminal window, or the open app button from your heroku app dashboard.
+
+You should be able to access the application at your heroku via the url provided in the terminal window, or the open app
+button from your heroku app dashboard.
 Ex) https://nelkon-finance-671b974bbd16.herokuapp.com
 
 ### Contributing
@@ -1006,16 +997,18 @@ I welcome contributions from the community. If you'd like to contribute to Nelko
 
 Flask and SQLAlchemy open-source communities for their fantastic tools
 
-- [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-add-authentication-to-your-app-with-flask-login#step-1-installing-packages): This website helped me with flask understanding
-- [Gitau Harrison Blog](https://www.gitauharrison.com/articles/data-visualization-with-flask-and-chartjs): This fantastic blog helped me with integrating flask with chart.js
+- [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-add-authentication-to-your-app-with-flask-login#step-1-installing-packages):
+  This website helped me with flask understanding
+- [Gitau Harrison Blog](https://www.gitauharrison.com/articles/data-visualization-with-flask-and-chartjs): This
+  fantastic blog helped me with integrating flask with chart.js
 - The Fantastic team at code institite
 - [Malia Havlicek](https://github.com/maliahavlicek): My mentor for this project
 - First image in Carousel: Image
-by <a href="https://www.freepik.com/free-photo/close-up-education-economy-objects_18776317.htm#query=budget&position=0&from_view=search&track=sph">
-Image by vectorjuice</a> on Freepik
+  by <a href="https://www.freepik.com/free-photo/close-up-education-economy-objects_18776317.htm#query=budget&position=0&from_view=search&track=sph">
+  Image by vectorjuice</a> on Freepik
 - Second image in
-carousel: <a href="https://www.freepik.com/free-vector/invoice-concept-illustration_8775504.htm#query=accounting&position=16&from_view=search&track=sph">
-Image by storyset</a> on Freepik
+  carousel: <a href="https://www.freepik.com/free-vector/invoice-concept-illustration_8775504.htm#query=accounting&position=16&from_view=search&track=sph">
+  Image by storyset</a> on Freepik
 - Third image in
-carousel: <a href="https://www.freepik.com/free-vector/mobile-expense-management-abstract-concept-vector-illustration-charges-control-system-satelite-devices-checking-mobile-network-enterprise-economy-manage-telephony-costs-abstract-metaphor_12083690.htm#query=track%20expenses%20pounds&position=21&from_view=search&track=ais">
-Image by vectorjuice</a> on Freepik
+  carousel: <a href="https://www.freepik.com/free-vector/mobile-expense-management-abstract-concept-vector-illustration-charges-control-system-satelite-devices-checking-mobile-network-enterprise-economy-manage-telephony-costs-abstract-metaphor_12083690.htm#query=track%20expenses%20pounds&position=21&from_view=search&track=ais">
+  Image by vectorjuice</a> on Freepik
