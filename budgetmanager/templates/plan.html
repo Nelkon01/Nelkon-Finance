@@ -50,7 +50,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="budgetIncomeModalLabel">Add Budget Income</h1>
+                            <h1 class="modal-title fs-5">Add Budget Income</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -78,9 +78,9 @@
                                 </div>
                                 <!--                        Year-->
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" name="year" id="year"
+                                    <input type="text" class="form-control" name="year" id="budget-income-year"
                                            placeholder="Select Year" minlength="4" maxlength="4" required>
-                                    <label for="year">Year</label>
+                                    <label for="budget-income-year">Year</label>
                                 </div>
                                 <!--                        Income Name-->
                                 <div class="form-floating mb-3">
@@ -132,7 +132,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="budgetExpenseModalLabel">Add Budget Expense</h1>
+                            <h1 class="modal-title fs-5">Add Budget Expense</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -160,9 +160,9 @@
                                 </div>
                                 <!--                       Year -->
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" name="year" id="year"
+                                    <input type="text" class="form-control" name="year" id="budget-expense-year"
                                            placeholder="Select Year" minlength="4" maxlength="4" required>
-                                    <label for="year">Year</label>
+                                    <label for="budget-expense-year">Year</label>
                                 </div>
                                 <!--                        Select Category-->
                                 <div class="form-floating mb-3">
@@ -180,9 +180,9 @@
                                 </div>
                                 <!--                        Amount-->
                                 <div class="form-floating mb-3">
-                                    <input type="number" class="form-control" id="budget_amount"
+                                    <input type="number" class="form-control" id="expense_budget_amount"
                                            placeholder="Month" name="budget_amount" step="0.01" required>
-                                    <label for="budget_amount">Amount</label>
+                                    <label for="expense_budget_amount">Amount</label>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
@@ -199,6 +199,7 @@
             </div>
         </div>
     </div>
+
     {#    View, Edit and Delete Entries #}
     <div class="container">
         <div class="row">
@@ -215,7 +216,7 @@
                                     <hr>
                                     <h6 class="card-text">£{{ budget_income.budget_amount }}</h6>
                                     <div class="card-footer text-muted">
-                                        <a href="#" data-bs-toggle="modal"#}
+                                        <a href="#" data-bs-toggle="modal"
                                            data-bs-target="#editBudgetIncomeModal{{ budget_income.income_id }}"
                                            class="btn btn-outline-light">Edit</a>
                                         <a href="#" data-bs-toggle="modal"
@@ -231,7 +232,7 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="editBudgetIncomeModalLabel">
+                                                    <h1 class="modal-title fs-5">
                                                         Edit Budget Income</h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
@@ -244,7 +245,7 @@
                                                         <!-- Select Month -->
                                                         <div class="form-floating mb-3">
                                                             <label for="edit_budget_income_month"></label>
-                                                            <select name="month_name" id="budget_income_month"
+                                                            <select name="month_name" id="edit_budget_income_month"
                                                                     class="form-control">
                                                                 {% for month_option in ["January", "February", "March", "April",
                                                             "May", "June", "July", "August", "September", "October", "November",
@@ -258,29 +259,29 @@
                                                         <!-- Year -->
                                                         <div class="form-floating mb-3">
                                                             <input type="text" class="form-control" name="year"
-                                                                   id="year"
+                                                                   id="edit_budget_income_year"
                                                                    placeholder="Select Year" minlength="4"
                                                                    maxlength="4"
                                                                    value="{{ budget_income.year }}" required>
-                                                            <label for="year">Year</label>
+                                                            <label for="edit_budget_income_year">Year</label>
                                                         </div>
 
                                                         <!-- Income Name -->
                                                         <div class="form-floating mb-3">
                                                             <input type="text" class="form-control"
                                                                    name="income_name"
-                                                                   id="budget_income_name" placeholder="Income Name"
+                                                                   id="edit_budget_income_name" placeholder="Income Name"
                                                                    value="{{ budget_income.income_name }}">
-                                                            <label for="budget_income_name">Income Name</label>
+                                                            <label for="edit_budget_income_name">Income Name</label>
                                                         </div>
                                                         <!-- Amount -->
                                                         <div class="form-floating mb-3">
                                                             <input type="number" class="form-control"
-                                                                   id="budget_income_amount"
+                                                                   id="edit_budget_income_amount"
                                                                    placeholder="Month" name="budget_amount"
                                                                    value="{{ budget_income.budget_amount }}"
                                                                    step="0.01">
-                                                            <label for="budget_income_amount">Amount</label>
+                                                            <label for="edit_budget_income_amount">Amount</label>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"
@@ -304,7 +305,7 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="deleteBudgetModalLabel">Confirm
+                                                    <h5 class="modal-title">Confirm
                                                         Deletion</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
@@ -344,7 +345,7 @@
                                     <hr>
                                     <h6 class="card-text">£{{ budget_expense.budget_amount }}</h6>
                                     <div class="card-footer text-muted">
-                                        <a href="#" data-bs-toggle="modal"#}
+                                        <a href="#" data-bs-toggle="modal"
                                            data-bs-target="#editBudgetExpenseModal{{ budget_expense.expense_id }}"
                                            class="btn btn-outline-light">Edit</a>
                                         <a href="#" data-bs-toggle="modal"
@@ -360,7 +361,7 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="editBudgetExpensesModalLabel">
+                                                    <h1 class="modal-title fs-5">
                                                         Edit Budget Expense</h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
@@ -387,11 +388,11 @@
                                                         <!-- Year -->
                                                         <div class="form-floating mb-3">
                                                             <input type="text" class="form-control" name="year"
-                                                                   id="year"
+                                                                   id="edit_budget_expense_year"
                                                                    placeholder="Select Year" minlength="4"
                                                                    maxlength="4"
                                                                    value="{{ budget_expense.year }}" required>
-                                                            <label for="year">Year</label>
+                                                            <label for="edit_budget_expense_year">Year</label>
                                                         </div>
 
                                                         <!--                        Select Category-->
@@ -409,11 +410,11 @@
                                                         <!-- Amount -->
                                                         <div class="form-floating mb-3">
                                                             <input type="number" class="form-control"
-                                                                   id="budget_expense_amount"
+                                                                   id="edit_budget_expense_amount"
                                                                    placeholder="Month" name="budget_amount"
                                                                    value="{{ budget_expense.budget_amount }}"
                                                                    step="0.01">
-                                                            <label for="budget_expense_amount">Amount</label>
+                                                            <label for="edit_budget_expense_amount">Amount</label>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"
@@ -437,7 +438,7 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="deleteBudgetExpenseModalLabel">Confirm
+                                                    <h5 class="modal-title">Confirm
                                                         Deletion</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
